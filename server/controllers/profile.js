@@ -6,29 +6,50 @@ const User = require("../models/User");
 // @desc Create profile
 // @access Private
 exports.createProfile = asyncHandler(async (req, res, next) => {
-  const { firstName, lastName, description } = req.body;
+  const {
+    firstName,
+    lastName,
+    gender,
+    birthdate,
+    email,
+    address,
+    description,
+  } = req.body;
   const user = await User.findById(req.user.id);
   if (!user) {
     res.status(401);
     throw new Error("Not authorized");
   }
   const profile = new Profile({
-    user: user._id,
+    userId: user._id,
     firstName: firstName,
     lastName: lastName,
+    gender: gender,
+    birthdate: birthdate,
+    email: email,
+    address: address,
     description: description,
   });
   await profile.save();
+  if (!profile) {
+    res.status(400);
+    throw new Error("bad request");
+  }
+  res.status(201).json({
+    success: {
+      profile: profile,
+    },
+  });
 });
 
-// @route PUT /profiles/:id
-// @desc Update profile by id
+// @route PUT /profiles/edit
+// @desc Update profile by user id
 // @access Private
 exports.updateProfileById = asyncHandler(async (req, res, next) => {
   const { firstName, lastName, description } = req.body;
-  const id = req.params.id;
+  const id = req.user.id;
   const profile = await Profile.findOneAndUpdate(
-    { _id: id },
+    { userId: id },
     {
       firstName: firstName,
       lastName: lastName,

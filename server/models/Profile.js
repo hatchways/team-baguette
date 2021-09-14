@@ -1,36 +1,56 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const profileSchema = new Schema({
-    user: {
-        type: Schema.Types.ObjectId,
-        ref: "User",
+const availabilitySchema = new Schema({
+  availability: {
+    date: {
+      type: Date,
     },
-    firstName: {
-        type: String,
-        required: true,
-        trim: true
+    from: {
+      type: String,
     },
-    lastName: {
-        type: String,
-        required: true,
-        trim: true
+    to: {
+      type: String,
     },
-    description: {
-        type: String,
-        required: true
-    },
-    availability: [{
-        date: {
-            type: Date
-        },
-        from: {
-            type: String
-        },
-        to:{
-            type: String
-        }
-    }]
+  },
 });
 
-module.exports = Profile = mongoose.model('profile', profileSchema);
+const profileSchema = new Schema({
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+  },
+  firstName: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  gender: {
+    type: String,
+    required: true,
+  },
+  birthDate: {
+    type: Date,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  availability: [availabilitySchema],
+});
+
+module.exports = Profile = mongoose.model("profile", profileSchema);
