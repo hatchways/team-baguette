@@ -51,6 +51,19 @@ const profileSchema = new Schema({
     required: true,
   },
   availability: [availabilitySchema],
+  availableDays: [
+    {
+      type: String,
+    },
+  ],
+  availablePeriod: {
+    start: {
+      type: Date,
+    },
+    end: {
+      type: Date,
+    },
+  },
 });
 
 module.exports = Profile = mongoose.model("profile", profileSchema);
