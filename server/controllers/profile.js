@@ -46,13 +46,25 @@ exports.createProfile = asyncHandler(async (req, res, next) => {
 // @desc Update profile by user id
 // @access Private
 exports.updateProfileById = asyncHandler(async (req, res, next) => {
-  const { firstName, lastName, description } = req.body;
+  const {
+    firstName,
+    lastName,
+    gender,
+    birthdate,
+    email,
+    address,
+    description,
+  } = req.body;
   const id = req.user.id;
   const profile = await Profile.findOneAndUpdate(
     { userId: id },
     {
       firstName: firstName,
       lastName: lastName,
+      gender: gender,
+      birthdate: birthdate,
+      email: email,
+      address: address,
       description: description,
     }
   );
