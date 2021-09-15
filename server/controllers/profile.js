@@ -45,7 +45,7 @@ exports.createProfile = asyncHandler(async (req, res, next) => {
 // @route PUT /profiles/edit
 // @desc Update profile by user id
 // @access Private
-exports.updateProfileById = asyncHandler(async (req, res, next) => {
+exports.updateProfile = asyncHandler(async (req, res, next) => {
   const {
     firstName,
     lastName,
@@ -66,7 +66,8 @@ exports.updateProfileById = asyncHandler(async (req, res, next) => {
       email: email,
       address: address,
       description: description,
-    }
+    },
+    { new: true }
   );
   if (!profile) {
     res.status(404);
@@ -100,7 +101,7 @@ exports.getProfileById = asyncHandler(async (req, res, next) => {
 // @desc Get all profiles
 // @access Public
 exports.getProfiles = asyncHandler(async (req, res, next) => {
-  const profiles = await Profile.findAll();
+  const profiles = await Profile.find();
   if (!profiles) {
     res.status(404);
     throw new Error("No profiles");
