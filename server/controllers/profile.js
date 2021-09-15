@@ -85,7 +85,7 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
 // @access Public
 exports.getProfileById = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
-  const profile = await Profile.findOne({ id });
+  const profile = await Profile.findOne({ _id: id });
   if (!profile) {
     res.status(404);
     throw new Error("No profile");
