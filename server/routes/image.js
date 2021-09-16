@@ -8,7 +8,7 @@ const {
 
 router.route('/avatar').put(protect, singleUpload
   
-  // ,updateAvatar
+  ,updateAvatar
   );
 router.route('/showcase').put(protect, singleUpload);
 

@@ -6,20 +6,22 @@ const asyncHandler = require("express-async-handler");
 // @access Private
 exports.updateAvatar = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
-  const avatarURL = await req.file
+  const avatarURL = req.avatarURL
 
-  if (!user){
-      res.status(401);
-      throw new Error("Not authorized")
-  }
-  else if (user.editAvatar(avatarURL)){
+  console.log("this happened inside the image controller")
 
-    res.status(200).json({
-        success: {
-          user: {
-            avatar: avatarURL.location
-          }
-        }
-      });
+  if (!user) {
+    res.status(401);
+    throw new Error("Not authorized")
   }
+  user.editAvatar(avatarURL)
+
+  res.status(200).json({
+    success: {
+      user: {
+        avatar: avatarURL
+      }
+    }
+  });
+
 });
