@@ -43,7 +43,9 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
         user: {
           id: user._id,
           username: user.username,
-          email: user.email
+          email: user.email,
+          avatar: user.avatar,
+          gallery: user.gallery
         }
       }
     });
@@ -75,7 +77,9 @@ exports.loginUser = asyncHandler(async (req, res, next) => {
         user: {
           id: user._id,
           username: user.username,
-          email: user.email
+          email: user.email,
+          avatar: user.avatar,
+          gallery: user.gallery
         }
       }
     });
@@ -102,7 +106,8 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
         id: user._id,
         username: user.username,
         email: user.email,
-        avatar: user.avatar
+        avatar: user.avatar,
+        gallery: user.gallery
       }
     }
   });
