@@ -51,11 +51,9 @@ userSchema.methods.editAvatar = async function (url) {
 
 
 userSchema.methods.editGallery = async function (keptImages, newImages) {
-  // await onlyUpdateNewGallery("" + this._id + "/")
 
   let oldLinks = new Set(this.gallery)
   let tempGallery = []
-  console.log("this is here")
 
   // i am cycling through keptImages which is an array of links given to me and seeing if the old gallery links have them and pushing them into a tempGallery.
   // the reason i'm doing this is to help santize what the new links that are being stored in the gallery. This way, if the api request is includes different URLs or URLS that don't exist,
@@ -70,7 +68,6 @@ userSchema.methods.editGallery = async function (keptImages, newImages) {
   await this.save()
   // this is to check that the old gallery was not empty and there were things that need to be deleted
   if (oldLinks.size > 0 && tempGallery.length > 0) {
-    console.log("it is deleting stuff")
     await cleanUpAWSFolder([...oldLinks])
   }
 }

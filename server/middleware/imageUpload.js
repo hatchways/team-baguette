@@ -54,10 +54,7 @@ exports.singleUpload = async (req, res, next) => {
         },
       });
     }
-
     next()
-
-
   })
 
 }
@@ -74,10 +71,7 @@ exports.multiUpload = async (req, res, next) => {
         },
       });
     }
-
     next()
-
-
   })
 
 }

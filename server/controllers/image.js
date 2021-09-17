@@ -63,8 +63,8 @@ exports.uploadGallery = asyncHandler(async (req, res, next) => {
     throw new Error("Not authorized")
   }
   try {
+    // i'm deciding that if they do not give keptLinks, or give it "incorrectly", that an error shouldn't be sent out and only the new images shoudl be saved.
     const keptLinks = Array.isArray(req.body.keptLinks) ? req.body.keptLinks : []
-    console.log(keptLinks)
     user.editGallery(keptLinks, galleryURLs)
     res.status(200).json({
       success: {
