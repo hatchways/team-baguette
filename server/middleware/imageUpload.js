@@ -31,7 +31,7 @@ const uploadFile = (keyName) => multer({
     },
     key: function (req, file, cb) {
       // below steps the name for each file
-      cb(null, `${keyName}-${req.user.id}.${file.mimetype.split("/")[1]}`);
+      cb(null, `${req.user.id}/${keyName}.${file.mimetype.split("/")[1]}`);
     },
   }),
 });
@@ -39,7 +39,7 @@ const uploadFile = (keyName) => multer({
 
 exports.singleUpload = async (req, res, next) => {
 
-  await uploadFile("avatar2").single("image")(req, res, function (err) {
+  await uploadFile("avatar").single("image")(req, res, function (err) {
     if (err) {
       return res.status(400).json({
         success: false,
