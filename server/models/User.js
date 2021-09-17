@@ -23,7 +23,8 @@ const userSchema = new mongoose.Schema({
   avatar: {
     type: String,
     default: ""
-  }
+  },
+  gallery: [String]
 });
 
 
@@ -45,6 +46,12 @@ userSchema.pre("save", async function (next) {
 userSchema.methods.editAvatar = async function (url) {
   this.avatar = url
   await this.save()
+}
+
+
+userSchema.methods.editGallery = async function (keptImages,newImages){
+
+  
 }
 
 module.exports = User = mongoose.model("user", userSchema);

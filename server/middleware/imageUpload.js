@@ -17,29 +17,54 @@ const fileFilter = (req, file, cb) => {
 }
 
 
-const uploadFile = (keyName) => multer({
-  fileFilter,
-  limits: {
-    fileSize: 1 * 1024 * 1024
-  },
-  storage: multerS3({
-    acl: 'public-read',
-    s3: s3Connect(),
-    bucket: process.env.BUCKET_NAME,
-    metadata: function (req, file, cb) {
-      cb(null, { fieldName: "TESTING_METADATA" });
+const uploadFile = (keyName, includeFileName = false) => {
+
+
+  return multer({
+    fileFilter,
+    limits: {
+      fileSize: 1 * 1024 * 1024
     },
-    key: function (req, file, cb) {
-      // below steps the name for each file
-      cb(null, `${req.user.id}/${keyName}.${file.mimetype.split("/")[1]}`);
-    },
-  }),
-});
+    storage: multerS3({
+      acl: 'public-read',
+      s3: s3Connect(),
+      bucket: process.env.BUCKET_NAME,
+      metadata: function (req, file, cb) {
+        cb(null, { fieldName: "TESTING_METADATA" });
+      },
+      key: function (req, file, cb) {
+        const name = includeFileName ? "-" + file.originalname : "." + file.mimetype.split("/")[1]
+        // below steps the name for each file
+        cb(null, `${req.user.id}/${keyName}${name}`);
+      },
+    }),
+  });
+}
 
 
 exports.singleUpload = async (req, res, next) => {
 
   await uploadFile("avatar").single("image")(req, res, function (err) {
+    if (err) {
+      return res.status(400).json({
+        success: false,
+        errors: {
+          title: "Image Upload Error",
+          detail: err.message
+        },
+      });
+    }
+
+    next()
+
+
+  })
+
+}
+
+exports.multiUpload = async (req, res, next) => {
+  // inside .array, the second argument is the limit of how many fields they may add
+  await uploadFile("gallery", true).array("image", 5)(req, res, function (err) {
     if (err) {
       return res.status(400).json({
         success: false,
