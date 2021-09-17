@@ -43,11 +43,8 @@ userSchema.pre("save", async function (next) {
 
 // instance method to takes a file and uploads it online and stores a new avatar link to document
 userSchema.methods.editAvatar = async function (url) {
-
   this.avatar = url
-  this.save()
-
-
+  await this.save()
 }
 
 module.exports = User = mongoose.model("user", userSchema);

@@ -6,7 +6,19 @@ const asyncHandler = require("express-async-handler");
 // @access Private
 exports.updateAvatar = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
-  const avatarURL = req.file.location
+  const imageFile = req.file
+  if (!imageFile) {
+    // the only reasons the file wouldn't be in req.file is either the file type was wrong, or there was an issue with the actual upload
+    res.status(400).send;
+    throw new Error("File was not uploaded");
+  }
+
+  const avatarURL = imageFile.location
+
+  if (!avatarURL) {
+    res.status(400).send;
+    throw new Error("There was an issue with the file upload");
+  }
 
   if (!user) {
     res.status(401);
