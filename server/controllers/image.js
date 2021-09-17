@@ -44,18 +44,18 @@ exports.updateAvatar = asyncHandler(async (req, res, next) => {
 
 exports.uploadGallery = asyncHandler(async (req, res, next) => {
   const user = await User.findById(req.user.id);
-  const imageFiles = req.files
-  if (!imageFiles) {
+  const newImageFiles = req.files
+  if (!newImageFiles || !newImageFiles.length === 0) {
     // the only reasons the file wouldn't be in req.file is either the file type was wrong, or there was an issue with the actual upload
     res.status(400).send;
     throw new Error("Files were not uploaded");
   }
 
-  const avatarURL = imageFile.location
-
-  if (!avatarURL) {
+  const galleryURLs = newImageFiles.map(file => file.location)
+  
+  if (galleryURLs.length === 0) {
     res.status(400).send;
-    throw new Error("There was an issue with the file uploads");
+    throw new Error("There was an issue with the file uploads", newImageFiles);
   }
 
   if (!user) {
@@ -63,12 +63,13 @@ exports.uploadGallery = asyncHandler(async (req, res, next) => {
     throw new Error("Not authorized")
   }
   try {
-
-    user.editAvatar(avatarURL)
+    const keptLinks = Array.isArray(req.body.keptLinks) ? req.body.keptLinks : []
+    console.log(keptLinks)
+    user.editGallery(keptLinks, galleryURLs)
     res.status(200).json({
       success: {
         user: {
-          avatar: avatarURL
+          gallery: user.gallery
         }
       }
     });
@@ -78,3 +79,4 @@ exports.uploadGallery = asyncHandler(async (req, res, next) => {
     throw new Error("Avatar couldn't update");
   }
 });
+
