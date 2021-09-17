@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '5px',
     marginLeft: '10px',
   },
-  grid: { width: '600px' },
+  grid: { maxwidth: '600px' },
   select: {
     width: '100%',
     height: '3rem',
@@ -49,8 +49,8 @@ const useStyles = makeStyles((theme) => ({
     transform: 'translate(-50%,-50%)',
     WebkitTransform: 'translate(-50%,-50%)',
     width: '30%',
+    minWidth: '300px',
     height: '15%',
-    overflow: 'auto',
     backgroundColor: 'white',
     padding: '10px',
   },
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '28px',
     fontWeight: 'bold',
     position: 'absolute',
-    right: '-10px',
+    right: '5px',
     top: '-10px',
   },
 }));
