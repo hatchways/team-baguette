@@ -73,7 +73,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ handleSubmit }) => {
     'November',
     'December',
   ];
-  const days = getRange(30, 1);
+  const days = getRange(31, 1);
   const genderSelection = ['Male', 'Female'];
 
   return (
@@ -100,10 +100,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ handleSubmit }) => {
         email: Yup.string().required('Email is required').email('Email is not valid'),
         phone: Yup.string()
           .required('Phone number is required')
-          .matches(
-            /^(\+?\d{0,4})?\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{3}\)?)\s?-?\s?(\(?\d{4}\)?)?$/,
-            'Phone number is not valid',
-          ),
+          .matches(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/, 'Phone number is not valid'),
         address: Yup.string().required('Address is required'),
         description: Yup.string().required('description is required'),
       })}
