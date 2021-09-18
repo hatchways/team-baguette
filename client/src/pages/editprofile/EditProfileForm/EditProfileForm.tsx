@@ -208,7 +208,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ handleSubmit }) => {
                 id={'day'}
                 cname={classes.select}
                 value={values.day}
-                arr={days}
+                arr={days.reverse()}
                 handleChange={handleChange}
               />
             </Grid>

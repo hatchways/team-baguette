@@ -46,6 +46,11 @@ const profileSchema = new Schema({
     type: String,
     required: true,
   },
+  phone: {
+    type: Number,
+    required: true,
+    trim: true,
+  },
   address: {
     type: String,
     required: true,

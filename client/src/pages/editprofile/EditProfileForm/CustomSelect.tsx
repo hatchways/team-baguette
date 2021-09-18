@@ -5,7 +5,7 @@ interface CustomSelectProps {
   id: string;
   cname: string;
   value: string;
-  arr: any[];
+  arr: Array<string | number>;
   handleChange: {
     (e: React.ChangeEvent<any>): void;
     <T = string | React.ChangeEvent<any>>(field: T): T extends React.ChangeEvent<any>

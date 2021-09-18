@@ -12,6 +12,7 @@ exports.createProfile = asyncHandler(async (req, res, next) => {
     gender,
     birthDate,
     email,
+    phone,
     address,
     description,
   } = req.body;
@@ -20,24 +21,30 @@ exports.createProfile = asyncHandler(async (req, res, next) => {
     res.status(401);
     throw new Error("Not authorized");
   }
-  const profile = new Profile({
+  const profile = await Profile.findOne({ userId: user._id });
+  if (profile) {
+    res.status(400);
+    throw new Error("Profile already exists");
+  }
+  const newProfile = new Profile({
     userId: user._id,
     firstName: firstName,
     lastName: lastName,
     gender: gender,
     birthDate: birthDate,
     email: email,
+    phone: phone,
     address: address,
     description: description,
   });
-  await profile.save();
-  if (!profile) {
+  await newProfile.save();
+  if (!newProfile) {
     res.status(400);
     throw new Error("bad request");
   }
   res.status(201).json({
     success: {
-      profile: profile,
+      profile: newProfile,
     },
   });
 });
@@ -52,6 +59,7 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
     gender,
     birthDate,
     email,
+    phone,
     address,
     description,
   } = req.body;
@@ -64,6 +72,7 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
       gender: gender,
       birthDate: birthDate,
       email: email,
+      phone: phone,
       address: address,
       description: description,
     },

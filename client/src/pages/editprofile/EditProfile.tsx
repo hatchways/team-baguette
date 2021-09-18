@@ -3,9 +3,12 @@ import { Paper, Box, Typography } from '@material-ui/core';
 import { FormikHelpers } from 'formik';
 import useStyles from './useStyles';
 import EditProfileForm from './EditProfileForm/EditProfileForm';
+import { createProfile, updateProfile } from '../../helpers/APICalls/profile';
+import { useSnackBar } from '../../context/useSnackbarContext';
 
 export const EditProfile: React.FC = () => {
   const classes = useStyles();
+  const { updateSnackBarMessage } = useSnackBar();
   const handleSubmit = (
     {
       firstName,
@@ -31,7 +34,6 @@ export const EditProfile: React.FC = () => {
       description: string;
     },
     {
-      setStatus,
       setSubmitting,
     }: FormikHelpers<{
       firstName: string;
@@ -46,7 +48,33 @@ export const EditProfile: React.FC = () => {
       description: string;
     }>,
   ) => {
-    console.log('x');
+    const birthDate = `${month} ${day} ${year}`;
+    createProfile(firstName, lastName, gender, birthDate, email, phone, address, description).then(async (data) => {
+      if (data.error) {
+        const response = await updateProfile(
+          firstName,
+          lastName,
+          gender,
+          birthDate,
+          email,
+          phone,
+          address,
+          description,
+        );
+        if (response.error) {
+          setSubmitting(false);
+          updateSnackBarMessage('Profile Update failed');
+        } else if (response.success) {
+          updateSnackBarMessage('Profile Updated!');
+        }
+      } else if (data.success) {
+        updateSnackBarMessage('Profile Created!');
+      } else {
+        console.error({ data });
+        setSubmitting(false);
+        updateSnackBarMessage('An unexpected error occurred. Please try again');
+      }
+    });
   };
   return (
     <Box width="100%" maxWidth={700} p={6} component={Paper} margin="auto" marginTop="100px">
