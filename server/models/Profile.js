@@ -1,20 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const availabilitySchema = new Schema({
-  availability: {
-    date: {
-      type: Date,
-    },
-    from: {
-      type: String,
-    },
-    to: {
-      type: String,
-    },
-  },
-});
-
 const profileSchema = new Schema({
   userId: {
     type: Schema.Types.ObjectId,
@@ -42,15 +28,15 @@ const profileSchema = new Schema({
     type: Date,
     required: true,
   },
-  email: {
-    type: String,
+  phone: {
+    type: Number,
     required: true,
+    trim: true,
   },
   address: {
     type: String,
     required: true,
   },
-  availability: [availabilitySchema],
   availableDays: [
     {
       type: String,
