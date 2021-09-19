@@ -8,9 +8,19 @@ export interface Profile {
   address: string;
   description: string;
 }
-export interface ProfileApiData {
-  profile?: Profile;
-  error?: { message: string };
-  success?: { message: string };
+export interface InitValue {
+  firstName: string;
+  lastName: string;
+  gender: string;
+  day: string;
+  month: string;
+  year: string;
+  email: string;
+  phone: string;
+  address: string;
+  description: string;
 }
-a2d69cecd0e54e405ad288396e9894c41e5210ab;
+export interface ProfileApiData {
+  error?: { message: string };
+  success?: Profile;
+}
