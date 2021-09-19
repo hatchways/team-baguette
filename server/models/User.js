@@ -72,6 +72,12 @@ userSchema.methods.editGallery = async function (keptImages, newImages) {
   }
 }
 
+userSchema.methods.deleteAvatar = async function () {
+  const deletedImage = this.avatar
+  this.avatar = ""
+  await this.save()
+  await cleanUpAWSFolder(deletedImage)
+}
 
 const cleanUpAWSFolder = (keys) => {
   // currently, the links begin as https://xxxxxxx.s3.amazonaws.com/{thekeyforthefilehere}. so I am splitting it so it is easier to delete

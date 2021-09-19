@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const asyncHandler = require("express-async-handler");
+const userSerializer = require("../serializers/userSerializer")
 
 // @route PUT /avatar
 // @desc add or updates user's avatar image
@@ -25,21 +26,35 @@ exports.updateAvatar = asyncHandler(async (req, res, next) => {
     throw new Error("Not authorized")
   }
   try {
-
     user.editAvatar(avatarURL)
     res.status(200).json({
       success: {
-        user: {
-          avatar: avatarURL
-        }
+        user: userSerializer(user)
       }
     });
   }
-  catch {
+  catch (err) {
+    console.log(err)
     res.status(400).send;
     throw new Error("Avatar couldn't update");
   }
 });
+
+exports.deleteAvatar = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+  await user.deleteAvatar()
+
+  try {
+
+    await user.deleteAvatar()
+    res.status(200).send("You have successfully deleted your avatar")
+  }
+  catch {
+    res.status(400).send;
+    throw new Error("Avatar couldn't be deleted");
+  }
+  ;
+})
 
 
 exports.uploadGallery = asyncHandler(async (req, res, next) => {
@@ -52,7 +67,7 @@ exports.uploadGallery = asyncHandler(async (req, res, next) => {
   }
 
   const galleryURLs = newImageFiles.map(file => file.location)
-  
+
   if (galleryURLs.length === 0) {
     res.status(400).send;
     throw new Error("There was an issue with the file uploads", newImageFiles);
@@ -68,9 +83,7 @@ exports.uploadGallery = asyncHandler(async (req, res, next) => {
     user.editGallery(keptLinks, galleryURLs)
     res.status(200).json({
       success: {
-        user: {
-          gallery: user.gallery
-        }
+        user: userSerializer(user)
       }
     });
   }
