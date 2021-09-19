@@ -41,9 +41,7 @@ exports.createProfile = asyncHandler(async (req, res, next) => {
     throw new Error("bad request");
   }
   res.status(201).json({
-    success: {
-      profile: newProfile,
-    },
+    success: newProfile,
   });
 });
 
@@ -86,9 +84,7 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
     throw new Error("No profile");
   }
   res.status(200).json({
-    success: {
-      profile: profile,
-    },
+    success: profile,
   });
 });
 
@@ -97,15 +93,20 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
 // @access Public
 exports.getProfileById = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
-  const profile = await Profile.findOne({ _id: id });
+  const profile = await Profile.findOne({ userId: id });
   if (!profile) {
     res.status(404);
     throw new Error("No profile");
   }
+  const user = await User.findOne({ _id: id });
+  if (!user) {
+    res.status(404);
+    throw new Error("No User");
+  }
+  const convertedJSON = profile.toJSON();
+  convertedJSON.email = user.email;
   res.status(200).json({
-    success: {
-      profile: profile,
-    },
+    success: convertedJSON,
   });
 });
 
@@ -119,8 +120,6 @@ exports.getProfiles = asyncHandler(async (req, res, next) => {
     throw new Error("No profiles");
   }
   res.status(200).json({
-    success: {
-      profiles: profiles,
-    },
+    success: profiles,
   });
 });
