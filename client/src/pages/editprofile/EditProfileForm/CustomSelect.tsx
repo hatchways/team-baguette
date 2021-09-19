@@ -17,7 +17,7 @@ interface CustomSelectProps {
 export const CustomSelect: React.FC<CustomSelectProps> = ({ ...props }) => {
   const { id, cname, value, arr, handleChange } = props;
   return (
-    <Select id={id} className={cname} variant="outlined" value={value} onChange={handleChange(id)}>
+    <Select id={id} className={cname} variant="outlined" value={value ? value : ''} onChange={handleChange(id)}>
       {arr.map((value) => (
         <MenuItem value={value} key={value}>
           {value}
