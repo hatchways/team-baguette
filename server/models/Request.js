@@ -2,12 +2,15 @@ const mongoose = require("mongoose")
 
 const requestSchema = new mongoose.Schema(
     {
-      user_id: {
-        type: String,
+      userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "UserId",
         required: true,
       },
-      sitter_id: {
-        type: String,
+      sitterId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "SitterId",
+        required: true,
       },
       start: {
         type: Date,
