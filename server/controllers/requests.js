@@ -1,14 +1,25 @@
 const Request = require('../models/Request')
 
-function getReqs(req, res, next) {
+async function getReqs(req, res, next) {
     try {
         if (!req.user.id) {
             return res.sendStatus(401)
         }
-        Request.find({ $or: [{ userId: req.user.id }, { sitterId: req.user.id }] 
-            }, (err, post) => {
-                res.status(200).json(post)
-        })
+        let dogReqs = await Request.find({ 
+                $or: [{
+                    sitterId: req.user.id}, 
+                    {userId: req.user.id}
+                ]
+            }) 
+            .populate("user", 'username')
+            .sort({ start: 'asc' })
+        let filteredReqs
+        if (req.params.type === 'sitter') {
+            filteredReqs = dogReqs.filter(el => el.sitterId == req.user.id)
+        } else {
+            filteredReqs = dogReqs.filter(el => el.userId == req.user.id)
+        }
+        res.status(200).json(filteredReqs)
     } catch (error) {
         next(error)
     }
@@ -16,20 +27,22 @@ function getReqs(req, res, next) {
 
 async function updateReqs(req, res, next) {
     let updateDoc
-    if (req.body.accepted) {
+    if (req.body.accepted === 'accepted') {
         updateDoc = {
-            accepted: true
+            accepted: true,
+            declined: false,
         }
     } else {
         updateDoc = {
-            declined : true
+            accepted: false,
+            declined : true,
         }
     }
     try {
-        await Request.findOneAndUpdate({_id: req.body.id}, {
+        await Request.findOneAndUpdate({_id: req.body.reqId}, {
             $set: updateDoc
         })
-        res.status(200).json({ message: "Updated Successfully"})
+        res.status(200).json({message: "Updated Successfully"})
     } catch (error) {
         next(error)
     }
@@ -41,14 +54,14 @@ async function createReqs(req, res, next) {
             return res.sendStatus(400)
         }
         await Request.create({
-            user_id: req.body.id,
-            sitter_id: req.body.sitter_id,
+            userId: req.body.userId,
+            sitterId: req.body.sitterId,
             start: req.body.start,
             end: req.body.end,
             dogType: req.body.dogType,
             specialNotes: req.body.specialNotes,
         })
-        res.status(200).json({message: "Created Successfuly"})
+        res.status(200).json({message: "Created Successfully"})
     } catch (error) {
         next(error)
     }
