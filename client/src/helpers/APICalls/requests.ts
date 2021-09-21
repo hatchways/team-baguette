@@ -7,7 +7,9 @@ export const getRequests = async (): Promise<ReqValue[]> => {
     credentials: 'include',
   })
     .then((res) => res.json())
-    .catch((err) => console.log(err));
+    .catch(() => ({
+      error: { message: 'Unable to get requests. Please try again' },
+    }));
 };
 
 export const updateReqs = async (reqId: string, status: string): Promise<ReqValue> => {
@@ -21,5 +23,7 @@ export const updateReqs = async (reqId: string, status: string): Promise<ReqValu
     credentials: 'include',
   })
     .then((res) => res.json())
-    .catch((err) => console.log(err));
+    .catch(() => ({
+      error: { message: 'Unable to update request. Please try again' },
+    }));
 };

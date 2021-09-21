@@ -23,16 +23,15 @@ const RequestMenu = ({ ind, eleId, setDateReqs, selectedDate, setNextReq }: Menu
     updateReqs(reqId, status);
     setAnchorEl(null);
     getRequests().then((data) => {
-      setDateReqs(data);
       if (data) {
+        setDateReqs(data);
         const nearestReq = data.find((ele) => new Date(ele.start).getTime() >= selectedDate.getTime() && ele.accepted);
-        nearestReq ? setNextReq(nearestReq) : null;
+        nearestReq && setNextReq(nearestReq);
       }
     });
   };
 
   const openMenu = (evnt: MouseEvent<SVGSVGElement>) => {
-    console.log(evnt.currentTarget);
     setAnchorEl(evnt.currentTarget);
   };
 
