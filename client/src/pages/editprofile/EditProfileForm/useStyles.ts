@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'right',
     lineHeight: '3rem',
     whiteSpace: 'nowrap',
+    textTransform: 'uppercase',
   },
   inputs: {
     height: '2.5rem',
