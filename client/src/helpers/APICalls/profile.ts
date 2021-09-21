@@ -7,7 +7,7 @@ export const createProfile = async (
   gender: string,
   birthDate: string,
   email: string,
-  phone: string,
+  phone: number,
   address: string,
   description: string,
 ): Promise<ProfileApiData> => {
@@ -29,7 +29,7 @@ export const updateProfile = async (
   gender: string,
   birthDate: string,
   email: string,
-  phone: string,
+  phone: number,
   address: string,
   description: string,
 ): Promise<ProfileApiData> => {

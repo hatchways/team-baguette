@@ -20,7 +20,7 @@ export const EditProfile: React.FC = () => {
     day: '',
     year: '',
     email: '',
-    phone: '',
+    phone: 0,
     address: '',
     description: '',
   });
@@ -44,7 +44,7 @@ export const EditProfile: React.FC = () => {
       day: string;
       year: string;
       email: string;
-      phone: string;
+      phone: number;
       address: string;
       description: string;
     },
@@ -58,13 +58,15 @@ export const EditProfile: React.FC = () => {
       day: string;
       year: string;
       email: string;
-      phone: string;
+      phone: number;
       address: string;
       description: string;
     }>,
   ) => {
     const birthDate = `${month} ${day} ${year}`;
-    if (Object.values(initValue).every((prop) => prop === null || prop === '')) {
+    //Checks the initial values to see if it is empty.
+    //If empty, that means profile does not exists and handleSubmit should create. Otherwise update.
+    if (Object.values(initValue).every((prop) => prop === null || prop === '' || prop === 0)) {
       createProfile(firstName, lastName, gender, birthDate, email, phone, address, description).then((data) => {
         if (data.error) {
           setSubmitting(false);
@@ -85,33 +87,33 @@ export const EditProfile: React.FC = () => {
     }
   };
   useEffect(() => {
-    if (loggedInUser) {
-      if (loggedInUser.id) {
-        getProfileById(loggedInUser.id).then((res) => {
-          if (res.success) {
-            const { firstName, lastName, gender, email, phone, address, description, birthDate } = res.success;
-            const birthDateArray = birthDate.split('T')[0].replaceAll('-', '').split('');
-            const year = birthDateArray.slice(0, 4).join().replaceAll(',', '');
-            const month = birthDateArray.slice(4, 6).join().replaceAll(',', '');
-            const day = birthDateArray.slice(6, 8).join().replaceAll(',', '');
-            const initVal = {
-              firstName,
-              lastName,
-              gender,
-              email,
-              phone,
-              address,
-              description,
-              day,
-              month,
-              year,
-            };
-            setInitValue(initVal);
-          }
-        });
-      }
+    if (loggedInUser && loggedInUser.id) {
+      getProfileById(loggedInUser.id).then((res) => {
+        if (res.success) {
+          const { firstName, lastName, gender, email, phone, address, description, birthDate } = res.success;
+          const birthDateArray = birthDate.split('T')[0].replaceAll('-', '').split('');
+          const year = birthDateArray.slice(0, 4).join().replaceAll(',', '');
+          const month = birthDateArray.slice(4, 6).join().replaceAll(',', '');
+          const day = birthDateArray.slice(6, 8).join().replaceAll(',', '');
+          const initVal = {
+            firstName,
+            lastName,
+            gender,
+            email,
+            phone,
+            address,
+            description,
+            day,
+            month,
+            year,
+          };
+          setInitValue(initVal);
+        } else {
+          updateSnackBarMessage('No profile exists!');
+        }
+      });
     }
-  }, [loggedInUser]);
+  }, [loggedInUser, updateSnackBarMessage]);
   return (
     <Box width="100%" maxWidth={700} p={6} component={Paper} margin="auto" marginTop="100px">
       <Typography className={classes.welcome} component="h1" variant="h5">

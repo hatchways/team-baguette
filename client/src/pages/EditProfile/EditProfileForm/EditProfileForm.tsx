@@ -27,7 +27,7 @@ interface EditProfileFormProps {
       day: string;
       year: string;
       email: string;
-      phone: string;
+      phone: number;
       address: string;
       description: string;
     },
@@ -42,7 +42,7 @@ interface EditProfileFormProps {
       day: string;
       year: string;
       email: string;
-      phone: string;
+      phone: number;
       address: string;
       description: string;
     }>,
@@ -62,7 +62,20 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ handleSubmit, initVal
     }
     return arr;
   };
-  const years = getRange(new Date().getUTCFullYear() - 5, 1980);
+  const years = getRange(new Date().getUTCFullYear() - 5, 1945);
+  const monthDays = new Map();
+  monthDays.set('January', 31);
+  monthDays.set('February', 28);
+  monthDays.set('March', 31);
+  monthDays.set('April', 30);
+  monthDays.set('May', 31);
+  monthDays.set('June', 30);
+  monthDays.set('July', 31);
+  monthDays.set('August', 31);
+  monthDays.set('September', 30);
+  monthDays.set('October', 31);
+  monthDays.set('November', 30);
+  monthDays.set('December', 31);
   const months = [
     'January',
     'February',
@@ -77,8 +90,11 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ handleSubmit, initVal
     'November',
     'December',
   ];
-  const days = getRange(31, 1);
   const genderSelection = ['Male', 'Female'];
+
+  const changeDays = (month: string) => {
+    return getRange(monthDays.get(month), 1);
+  };
 
   return (
     <Formik
@@ -119,7 +135,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ handleSubmit, initVal
                 <Typography className={classes.close} onClick={() => setShow(false)}>
                   x
                 </Typography>
-                <Typography style={{ marginBottom: '10px' }} component="h1" variant="h5">
+                <Typography style={{ marginBottom: '10px' }} component="h5">
                   Enter your Phone number
                 </Typography>
                 <TextField
@@ -134,7 +150,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ handleSubmit, initVal
                   error={touched.phone && Boolean(errors.phone)}
                   value={values.phone}
                   onChange={handleChange}
-                  placeholder="6470001234"
+                  placeholder="Enter your Phone number"
                 />
               </Box>
             </Box>
@@ -142,7 +158,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ handleSubmit, initVal
 
           <Grid container spacing={2} className={classes.grid}>
             <Grid item xs={3}>
-              <InputLabel className={classes.label}>FIRST NAME</InputLabel>
+              <InputLabel className={classes.label}>First Name</InputLabel>
             </Grid>
             <Grid item xs={9}>
               <TextField
@@ -163,7 +179,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ handleSubmit, initVal
               />
             </Grid>
             <Grid item xs={3}>
-              <InputLabel className={classes.label}>LAST NAME</InputLabel>
+              <InputLabel className={classes.label}>Last Name</InputLabel>
             </Grid>
             <Grid item xs={9}>
               <TextField
@@ -197,7 +213,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ handleSubmit, initVal
               />
             </Grid>
             <Grid item xs={3}>
-              <InputLabel className={classes.label}>BIRTH DATE</InputLabel>
+              <InputLabel className={classes.label}>Birth Date</InputLabel>
             </Grid>
             <Grid item xs={3}>
               <CustomSelect
@@ -213,7 +229,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ handleSubmit, initVal
                 id={'day'}
                 cname={classes.select}
                 value={values.day}
-                arr={days.reverse()}
+                arr={values.month ? changeDays(values.month).reverse() : getRange(1, 1).reverse()}
                 handleChange={handleChange}
               />
             </Grid>
@@ -227,7 +243,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ handleSubmit, initVal
               />
             </Grid>
             <Grid item xs={3}>
-              <InputLabel className={classes.label}>EMAIL ADDRESS</InputLabel>
+              <InputLabel className={classes.label}>Email Address</InputLabel>
             </Grid>
             <Grid item xs={9}>
               <TextField
@@ -247,11 +263,11 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ handleSubmit, initVal
               />
             </Grid>
             <Grid item xs={3}>
-              <InputLabel className={classes.label}>PHONE NUMBER</InputLabel>
+              <InputLabel className={classes.label}>Phone Number</InputLabel>
             </Grid>
             <Grid item xs={5}>
               <Typography style={{ lineHeight: '3rem' }}>
-                {values.phone === '' ? 'No Phone number entered' : values.phone}
+                {values.phone === 0 ? 'No Phone number entered' : values.phone}
               </Typography>
             </Grid>
             <Grid item xs={4}>
@@ -265,7 +281,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ handleSubmit, initVal
               </Button>
             </Grid>
             <Grid item xs={3}>
-              <InputLabel className={classes.label}>WHERE YOU LIVE</InputLabel>
+              <InputLabel className={classes.label}>Where you live</InputLabel>
             </Grid>
             <Grid item xs={9}>
               <TextField
@@ -286,7 +302,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ handleSubmit, initVal
               />
             </Grid>
             <Grid item xs={3}>
-              <InputLabel className={classes.label}>DESCRIBE YOURSELF</InputLabel>
+              <InputLabel className={classes.label}>Describe yourself</InputLabel>
             </Grid>
             <Grid item xs={9}>
               <TextField

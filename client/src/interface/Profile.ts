@@ -4,7 +4,7 @@ export interface Profile {
   gender: string;
   birthDate: string;
   email: string;
-  phone: string;
+  phone: number;
   address: string;
   description: string;
 }
@@ -16,7 +16,7 @@ export interface InitValue {
   month: string;
   year: string;
   email: string;
-  phone: string;
+  phone: number;
   address: string;
   description: string;
 }
