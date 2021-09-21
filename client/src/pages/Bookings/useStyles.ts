@@ -98,6 +98,13 @@ const useStyles = makeStyles(() => ({
       color: 'rgba(0,0,0,0.2)',
     },
   },
+  iconStatus: {
+    '& .MuiCardHeader-action': {
+      color: 'rgba(0,0,0,0.4)',
+      fontSize: '10px',
+      fontWeight: '900',
+    },
+  },
   customSelectedDay: {
     '& button': {
       backgroundColor: 'rgb(240, 69, 69)',
