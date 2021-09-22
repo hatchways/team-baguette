@@ -43,7 +43,6 @@ userSchema.pre("save", async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-// instance method to takes a file and uploads it online and stores a new avatar link to document
 userSchema.methods.editAvatar = async function (url) {
   this.avatar = url
   await this.save()
@@ -80,9 +79,8 @@ userSchema.methods.deleteAvatar = async function () {
 }
 
 const cleanUpAWSFolder = (keys) => {
-  // currently, the links begin as https://xxxxxxx.s3.amazonaws.com/{thekeyforthefilehere}. so I am splitting it so it is easier to delete
   if (Array.isArray(keys)) {
-    deleteFile(keys.map(element => element.split(".s3.amazonaws.com/")[1]))
+    deleteFile(keys.map(element => element.split(".s3.amazonaws.com/").pop()))
   }
   else {
     deleteFile(keys.split(".s3.amazonaws.com/")[1])
