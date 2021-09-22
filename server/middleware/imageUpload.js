@@ -34,7 +34,6 @@ const uploadFile = (keyName, includeFileName = false) => {
       },
       key: function (req, file, cb) {
         const name = includeFileName ? "-" + file.originalname : "." + file.mimetype.split("/")[1]
-        // below steps the name for each file
         cb(null, `${req.user.id}/${keyName}${name}`);
       },
     }),
@@ -60,7 +59,6 @@ exports.singleUpload = async (req, res, next) => {
 }
 
 exports.multiUpload = async (req, res, next) => {
-  // inside .array, the second argument is the limit of how many fields they may add
   await uploadFile("gallery", true).array("image", 5)(req, res, function (err) {
     if (err) {
       return res.status(400).json({

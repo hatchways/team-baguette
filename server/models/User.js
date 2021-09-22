@@ -49,26 +49,30 @@ userSchema.methods.editAvatar = async function (url) {
 }
 
 
-userSchema.methods.editGallery = async function (keptImages, newImages) {
+userSchema.methods.addToGallery = async function (newImages) {
+  this.gallery.push(...newImages)
+  await this.save()
 
-  let oldLinks = new Set(this.gallery)
-  let tempGallery = []
+}
 
-  // i am cycling through keptImages which is an array of links given to me and seeing if the old gallery links have them and pushing them into a tempGallery.
-  // the reason i'm doing this is to help santize what the new links that are being stored in the gallery. This way, if the api request is includes different URLs or URLS that don't exist,
-  // they will just be ignored.
-  keptImages.forEach(element => {
-    if (oldLinks.delete(element)) {
-      tempGallery.push(element)
+userSchema.methods.deleteFromGallery = async function (links) {
+  let tempGallery = new Set(this.gallery)
+  let filesToBeDeleted = []
+
+  links.forEach(element => {
+    if (tempGallery.delete(element)) {
+      filesToBeDeleted.push(element)
     }
   })
 
-  this.gallery = [...tempGallery, ...newImages]
+  this.gallery = [...tempGallery]
+
   await this.save()
-  // this is to check that the old gallery was not empty and there were things that need to be deleted
-  if (oldLinks.size > 0 && tempGallery.length > 0) {
+
+  if (filesToBeDeleted.length) {
     await cleanUpAWSFolder([...oldLinks])
   }
+
 }
 
 userSchema.methods.deleteAvatar = async function () {

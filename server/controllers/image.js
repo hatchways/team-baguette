@@ -55,23 +55,22 @@ exports.deleteAvatar = asyncHandler(async (req, res, next) => {
 exports.uploadGallery = asyncHandler(async (req, res, next) => {
   const user = req.user
   const newImageFiles = req.files
-  if (!newImageFiles || !newImageFiles.length === 0) {
+  if (!newImageFiles || !newImageFiles.length) {
     // the only reasons the file wouldn't be in req.file is either the file type was wrong, or there was an issue with the actual upload
     res.status(400).send;
-    throw new Error("Files were not uploaded");
+    throw new Error("No files found");
   }
 
   const galleryURLs = newImageFiles.map(file => file.location)
 
-  if (galleryURLs.length === 0) {
+  if (!galleryURLs.length) {
     res.status(400).send;
     throw new Error("There was an issue with the file uploads", newImageFiles);
   }
 
   try {
     // i'm deciding that if they do not give keptLinks, or give it "incorrectly", that an error shouldn't be sent out and only the new images shoudl be saved.
-    const keptLinks = Array.isArray(req.body.keptLinks) ? req.body.keptLinks : []
-    user.editGallery(keptLinks, galleryURLs)
+    user.addToGallery(galleryURLs)
     res.status(200).json({
       success: {
         user: userSerializer(user)
