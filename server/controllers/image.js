@@ -6,7 +6,7 @@ const userSerializer = require("../serializers/userSerializer")
 // @desc add or updates user's avatar image
 // @access Private
 exports.updateAvatar = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user.id);
+  const user = req.user;
   const imageFile = req.file
   if (!imageFile) {
     // the only reasons the file wouldn't be in req.file is either the file type was wrong, or there was an issue with the actual upload
@@ -19,11 +19,6 @@ exports.updateAvatar = asyncHandler(async (req, res, next) => {
   if (!avatarURL) {
     res.status(400).send;
     throw new Error("There was an issue with the file upload");
-  }
-
-  if (!user) {
-    res.status(401);
-    throw new Error("Not authorized")
   }
   try {
     user.editAvatar(avatarURL)
@@ -41,7 +36,7 @@ exports.updateAvatar = asyncHandler(async (req, res, next) => {
 });
 
 exports.deleteAvatar = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user.id);
+  const user = req.user
   await user.deleteAvatar()
 
   try {
@@ -58,7 +53,7 @@ exports.deleteAvatar = asyncHandler(async (req, res, next) => {
 
 
 exports.uploadGallery = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user.id);
+  const user = req.user
   const newImageFiles = req.files
   if (!newImageFiles || !newImageFiles.length === 0) {
     // the only reasons the file wouldn't be in req.file is either the file type was wrong, or there was an issue with the actual upload
@@ -73,10 +68,6 @@ exports.uploadGallery = asyncHandler(async (req, res, next) => {
     throw new Error("There was an issue with the file uploads", newImageFiles);
   }
 
-  if (!user) {
-    res.status(401);
-    throw new Error("Not authorized")
-  }
   try {
     // i'm deciding that if they do not give keptLinks, or give it "incorrectly", that an error shouldn't be sent out and only the new images shoudl be saved.
     const keptLinks = Array.isArray(req.body.keptLinks) ? req.body.keptLinks : []
