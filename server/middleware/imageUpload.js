@@ -59,7 +59,12 @@ exports.singleUpload = async (req, res, next) => {
 }
 
 exports.multiUpload = async (req, res, next) => {
-  await uploadFile("gallery", true).array("image", 5)(req, res, function (err) {
+  const gallerySize = req.user.gallery.length
+  const maxUploadLength = 5
+  const permittedUploadLength = ((maxUploadLength - gallerySize) < 1) ? 0 : maxUploadLength - gallerySize
+
+  if( maxUploadLength - )
+  await uploadFile("gallery", true).array("image", (permittedUploadLength))(req, res, function (err) {
     if (err) {
       return res.status(400).json({
         success: false,
