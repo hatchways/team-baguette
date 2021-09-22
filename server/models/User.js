@@ -59,18 +59,20 @@ userSchema.methods.deleteFromGallery = async function (links) {
   let tempGallery = new Set(this.gallery)
   let filesToBeDeleted = []
 
+
   links.forEach(element => {
     if (tempGallery.delete(element)) {
       filesToBeDeleted.push(element)
     }
   })
 
+
   this.gallery = [...tempGallery]
 
   await this.save()
 
   if (filesToBeDeleted.length) {
-    await cleanUpAWSFolder([...oldLinks])
+    await cleanUpAWSFolder([...filesToBeDeleted])
   }
 
 }

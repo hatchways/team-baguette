@@ -67,7 +67,6 @@ exports.uploadGallery = asyncHandler(async (req, res, next) => {
   }
 
   try {
-    // i'm deciding that if they do not give keptLinks, or give it "incorrectly", that an error shouldn't be sent out and only the new images shoudl be saved.
     user.addToGallery(galleryURLs)
     res.status(200).json({
       success: {
@@ -80,4 +79,26 @@ exports.uploadGallery = asyncHandler(async (req, res, next) => {
     throw new Error("Avatar couldn't update");
   }
 });
+
+exports.deleteGallery = asyncHandler(async (req, res, next) => {
+  const user = req.user
+  const deleteLinks = req.body.deleteLinks;
+
+  try {
+    await user.deleteFromGallery(deleteLinks)
+    res.status(200).json({
+      success: {
+        user: userSerializer(user)
+      }
+    });
+  }
+  catch {
+    res.status(400).send;
+    throw new Error("Images could not be deleted from the gallery");
+  }
+  ;
+
+
+});
+
 
