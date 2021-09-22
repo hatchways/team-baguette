@@ -37,10 +37,8 @@ exports.updateAvatar = asyncHandler(async (req, res, next) => {
 
 exports.deleteAvatar = asyncHandler(async (req, res, next) => {
   const user = req.user
-  await user.deleteAvatar()
 
   try {
-
     await user.deleteAvatar()
     res.status(200).send("You have successfully deleted your avatar")
   }
