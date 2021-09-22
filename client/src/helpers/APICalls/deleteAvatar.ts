@@ -1,18 +1,10 @@
 import { AvatarApiData } from '../../interface/AvatarApiData';
+import { FetchOptions } from '../../interface/FetchOptions';
 
-interface FetchOptions {
-  method: string;
-  headers?: {
-    'Content-Type': string;
-  };
-  body?: FormData;
-  credentials: RequestCredentials;
-}
-
-const uploadImage = async (formData: FormData): Promise<AvatarApiData> => {
+const deleteAvatar = async (): Promise<AvatarApiData> => {
   const fetchOptions: FetchOptions = {
-    method: 'PUT',
-    body: formData,
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
     credentials: 'include',
   };
   return await fetch(`/image/avatar`, fetchOptions)
@@ -22,4 +14,4 @@ const uploadImage = async (formData: FormData): Promise<AvatarApiData> => {
     }));
 };
 
-export default uploadImage;
+export default deleteAvatar;

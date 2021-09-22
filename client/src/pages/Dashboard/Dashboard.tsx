@@ -35,7 +35,7 @@ export default function Dashboard(): JSX.Element {
         <ChatSideBanner loggedInUser={loggedInUser} />
       </Grid>
       <Grid item>
-        <Link to="/settings">what it do?</Link>
+        <Link to="/settings/profile_picture">Shortcut link to Profile_picture</Link>
       </Grid>
     </Grid>
   );

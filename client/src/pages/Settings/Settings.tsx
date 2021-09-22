@@ -30,6 +30,10 @@ export default function Settings(): JSX.Element {
   return (
     <Grid container component="main" className={`${classes.root} ${classes.settings}`}>
       <CssBaseline />
+      <Grid item xs={12} style={{ backgroundColor: 'pink', marginBottom: '5em', padding: '2em' }}>
+        Header place holder
+      </Grid>
+
       <Grid item className={classes.drawerWrapper}>
         <ChatSideBanner loggedInUser={loggedInUser} />
       </Grid>

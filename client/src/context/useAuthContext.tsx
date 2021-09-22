@@ -1,6 +1,8 @@
 import { useState, useContext, createContext, FunctionComponent, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AuthApiData, AuthApiDataSuccess } from '../interface/AuthApiData';
+import { AvatarApiDataSuccess } from '../interface/AvatarApiData';
+
 import { User } from '../interface/User';
 import loginWithCookies from '../helpers/APICalls/loginWithCookies';
 import logoutAPI from '../helpers/APICalls/logout';
@@ -8,12 +10,16 @@ import logoutAPI from '../helpers/APICalls/logout';
 interface IAuthContext {
   loggedInUser: User | null | undefined;
   updateLoginContext: (data: AuthApiDataSuccess) => void;
+  updateAvatarContext: (data: AvatarApiDataSuccess) => void;
+  deleteAvatarContext: () => void;
   logout: () => void;
 }
 
 export const AuthContext = createContext<IAuthContext>({
   loggedInUser: undefined,
   updateLoginContext: () => null,
+  updateAvatarContext: () => null,
+  deleteAvatarContext: () => null,
   logout: () => null,
 });
 
@@ -29,6 +35,18 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
     },
     [history],
   );
+
+  const updateAvatarContext = (data: AvatarApiDataSuccess) => {
+    setLoggedInUser(data.user);
+  };
+
+  const deleteAvatarContext = () => {
+    const tempUser = loggedInUser;
+    if (tempUser) {
+      tempUser.avatar = '';
+      setLoggedInUser(tempUser);
+    }
+  };
 
   const logout = useCallback(async () => {
     // needed to remove token cookie
@@ -57,7 +75,13 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
     checkLoginWithCookies();
   }, [updateLoginContext, history]);
 
-  return <AuthContext.Provider value={{ loggedInUser, updateLoginContext, logout }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider
+      value={{ loggedInUser, updateLoginContext, logout, updateAvatarContext, deleteAvatarContext }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export function useAuth(): IAuthContext {
