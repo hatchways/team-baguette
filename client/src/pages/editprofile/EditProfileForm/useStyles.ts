@@ -55,6 +55,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'white',
     padding: '10px',
   },
+  modalButton: {
+    border: '1px solid red',
+    color: 'red',
+    width: '100%',
+    lineHeight: '2rem',
+  },
   modalContent: { position: 'relative', margin: 'auto', padding: '20px', width: '90%' },
   close: {
     color: '#aaaaaa',

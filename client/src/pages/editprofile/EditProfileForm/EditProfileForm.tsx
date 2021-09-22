@@ -4,6 +4,7 @@ import { Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import useStyles from './useStyles';
 import { CustomSelect } from './CustomSelect';
+import { getRange, years, monthDays, months } from './DateHelper';
 
 interface EditProfileFormProps {
   handleSubmit: (
@@ -51,41 +52,7 @@ interface EditProfileFormProps {
 const EditProfileForm: React.FC<EditProfileFormProps> = ({ handleSubmit }) => {
   const classes = useStyles();
   const [show, setShow] = useState(false);
-  const getRange = (from: number, to: number) => {
-    const arr = [];
-    for (let i = from; i >= to; i--) {
-      arr.push(i);
-    }
-    return arr;
-  };
-  const years = getRange(new Date().getUTCFullYear() - 5, 1945);
-  const monthDays = new Map();
-  monthDays.set('January', 31);
-  monthDays.set('February', 28);
-  monthDays.set('March', 31);
-  monthDays.set('April', 30);
-  monthDays.set('May', 31);
-  monthDays.set('June', 30);
-  monthDays.set('July', 31);
-  monthDays.set('August', 31);
-  monthDays.set('September', 30);
-  monthDays.set('October', 31);
-  monthDays.set('November', 30);
-  monthDays.set('December', 31);
-  const months = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
+
   const genderSelection = ['Male', 'Female'];
 
   const changeDays = (month: string) => {
@@ -143,7 +110,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ handleSubmit }) => {
                   autoFocus
                   helperText={touched.phone ? errors.phone : ''}
                   error={touched.phone && Boolean(errors.phone)}
-                  value={values.phone}
+                  value={values.phone === 0 ? '' : values.phone}
                   onChange={handleChange}
                   placeholder="Enter your phone number"
                 />
@@ -267,7 +234,7 @@ const EditProfileForm: React.FC<EditProfileFormProps> = ({ handleSubmit }) => {
             </Grid>
             <Grid item xs={4}>
               <Button
-                style={{ border: '1px solid red', color: 'red', width: '100%', lineHeight: '2rem' }}
+                className={classes.modalButton}
                 onClick={() => {
                   setShow(true);
                 }}
