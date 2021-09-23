@@ -28,6 +28,7 @@ exports.registerUser = asyncHandler(async (req, res, next) => {
     password
   });
 
+
   if (user) {
     const token = generateToken(user._id);
     const secondsInWeek = 604800;
@@ -100,7 +101,8 @@ exports.loadUser = asyncHandler(async (req, res, next) => {
       user: {
         id: user._id,
         username: user.username,
-        email: user.email
+        email: user.email,
+        avatar: user.avatar
       }
     }
   });
