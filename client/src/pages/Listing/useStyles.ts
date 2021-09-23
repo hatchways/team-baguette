@@ -17,6 +17,11 @@ const useStyles = makeStyles((theme) => ({
   inputBox: {
     position: 'relative',
     border: '1px solid lightgray',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  dateInput: {
+    width: '8vw',
   },
   inputIcon: {
     position: 'absolute',

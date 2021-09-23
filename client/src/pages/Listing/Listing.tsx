@@ -3,11 +3,14 @@ import React, { useState } from 'react';
 import { CustomCard } from './CustomCard';
 import { dummyData } from './DummyData';
 import useStyles from './useStyles';
-import { Search, DateRange } from '@material-ui/icons';
+import { Search } from '@material-ui/icons';
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 
 export const Listing: React.FC = () => {
   const classes = useStyles();
-  const [selectedDate, setSelectedDate] = useState('16~17 Sep 2021');
+  const [dateFrom, setDateFrom] = useState<Date | null>(new Date());
+  const [dateTo, setDateTo] = useState<Date | null>(new Date());
   return (
     <Box width="100%" maxWidth={800} p={3} margin="auto">
       <Typography className={classes.header} component="h1" variant="h5">
@@ -26,21 +29,36 @@ export const Listing: React.FC = () => {
             placeholder="Address"
           />
         </Box>
-        <Box className={classes.inputBox}>
-          <DateRange className={classes.inputIcon} style={{ color: 'gray' }} />
-          <Typography className={classes.reset} onClick={() => setSelectedDate('')}>
-            x
-          </Typography>
-          <TextField
-            id="date"
-            InputProps={{ disableUnderline: true, classes: { input: classes.inputs } }}
-            name="date"
-            autoComplete="date"
-            autoFocus
-            value={selectedDate}
-            placeholder="Select the date range"
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          <KeyboardDatePicker
+            className={classes.inputBox}
+            clearable
+            value={dateFrom}
+            placeholder="09/22/2021"
+            onChange={(date) => setDateFrom(date)}
+            minDate={new Date()}
+            format="MM/dd/yyyy"
+            InputAdornmentProps={{ position: 'start' }}
+            InputProps={{
+              disableUnderline: true,
+              classes: { input: classes.dateInput },
+            }}
           />
-        </Box>
+          <KeyboardDatePicker
+            className={classes.inputBox}
+            clearable
+            value={dateTo}
+            placeholder="09/22/2021"
+            onChange={(date) => setDateTo(date)}
+            minDate={new Date()}
+            format="MM/dd/yyyy"
+            InputAdornmentProps={{ position: 'start' }}
+            InputProps={{
+              disableUnderline: true,
+              classes: { input: classes.dateInput },
+            }}
+          />
+        </MuiPickersUtilsProvider>
       </Box>
       <Grid container spacing={4}>
         {dummyData.map((data) => (

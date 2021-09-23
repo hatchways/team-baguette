@@ -1,3 +1,4 @@
+//dummy data for testing the fontend UI prior to integration
 export const dummyData = [
   {
     fullName: 'Norma Byers',

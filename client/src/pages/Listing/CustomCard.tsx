@@ -21,7 +21,7 @@ export const CustomCard: React.FC<CustomCardProps> = ({ ...props }) => {
           className={classes.avatar}
           component="img"
           image="https://mui.com/static/images/cards/contemplative-reptile.jpg"
-          alt="green iguana"
+          alt="placeholder avatar"
         />
         <CardContent>
           <Typography className={classes.fullName}>{fullName}</Typography>
