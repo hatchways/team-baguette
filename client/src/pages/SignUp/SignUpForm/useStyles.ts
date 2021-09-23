@@ -6,18 +6,19 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   label: {
-    fontSize: 19,
-    color: 'rgb(0,0,0,0.4)',
+    fontSize: 16,
     paddingLeft: '5px',
+    textTransform: 'uppercase',
+    color: 'black',
+    fontFamily: 'Poppins-Bold',
   },
   inputs: {
     marginTop: '.8rem',
     height: '2rem',
     padding: '5px',
-  },
-  forgot: {
-    paddingRight: 10,
-    color: '#3a8dff',
+    fontFamily: 'Poppins-Regular',
+    border: '1px solid rgba(0,0,0,0.2)',
+    borderRadius: '5px',
   },
   submit: {
     margin: theme.spacing(3, 2, 2),
@@ -26,9 +27,12 @@ const useStyles = makeStyles((theme) => ({
     height: 56,
     borderRadius: theme.shape.borderRadius,
     marginTop: 49,
-    fontSize: 16,
-    backgroundColor: '#3a8dff',
-    fontWeight: 'bold',
+    fontSize: 14,
+    backgroundColor: 'rgb(240, 69, 69)',
+    color: 'white',
+    textTransform: 'uppercase',
+    fontFamily: 'Poppins-Regular',
+    letterSpacing: 1.1,
   },
 }));
 
