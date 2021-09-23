@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardActionArea, CardMedia, Typography, CardContent, Box } from '@material-ui/core';
 import useStyles from './useStyles';
+import { LocationOn } from '@material-ui/icons';
 
 interface CustomCardProps {
   fullName: string;
@@ -33,10 +34,20 @@ export const CustomCard: React.FC<CustomCardProps> = ({ ...props }) => {
           />
           <Typography className={classes.desc}>{description}</Typography>
           <Box className={classes.bottomContent}>
+            <LocationOn
+              style={{
+                color: 'red',
+              }}
+            />
             <Typography component="span" className={classes.address}>
               {address}
             </Typography>
-            <Typography component="span" className={classes.price}>
+            <Typography
+              component="span"
+              style={{
+                fontWeight: 900,
+              }}
+            >
               {price}
             </Typography>
           </Box>
