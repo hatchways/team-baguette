@@ -57,6 +57,7 @@ const useStyles = makeStyles(() => ({
     fontSize: '10px',
     padding: '10px 0 10px 16px',
     alignSelf: 'start',
+    textTransform: 'uppercase',
   },
   typographyPast: {
     fontWeight: 900,

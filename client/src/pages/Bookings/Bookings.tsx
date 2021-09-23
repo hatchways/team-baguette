@@ -3,7 +3,6 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import CardHeader from '@material-ui/core/CardHeader';
 import Settings from '@material-ui/icons/Settings';
@@ -23,6 +22,7 @@ export default function Bookings(): JSX.Element {
     currentMonth: boolean,
     DayComponent: ReactElement,
   ) => {
+    // TODO: for implementing on ticket 31
     // const days = day ? day.getTime() : null;
     // const stateDays = dateReqs.filter((el) => el.accepted).map((el) => new Date(el.start).getTime());
     // if (days === stateDays.find((el) => el === days && days >= selectedDate.getTime())) {
@@ -37,7 +37,7 @@ export default function Bookings(): JSX.Element {
         <Grid item xs={5} className={classes.bookingsList} container direction={'column'} spacing={1}>
           <Grid item>
             <Card elevation={2} className={classes.bookingsCardNext}>
-              <Typography className={classes.typographyCurrent}>YOUR NEXT BOOKING:</Typography>
+              <Typography className={classes.typographyCurrent}>Your next booking:</Typography>
               <CardContent className={classes.bookingsCardContent}>
                 <Typography variant={'h6'} noWrap display={'inline'}>
                   17 Sept 2021, 10-12AM
@@ -50,7 +50,7 @@ export default function Bookings(): JSX.Element {
 
           <Grid item>
             <Card elevation={2} className={classes.bookingsCardContainer}>
-              <Typography className={classes.typographyCurrent}>CURRENT BOOKINGS:</Typography>
+              <Typography className={classes.typographyCurrent}>Current bookings:</Typography>
               <Box className={classes.scrollableBox}>
                 <Card variant={'outlined'} className={classes.bookingsCardItem}>
                   <CardContent className={classes.bookingsCardContent}>
@@ -62,7 +62,7 @@ export default function Bookings(): JSX.Element {
                   <CardHeader avatar={'avatar'} title={'logan test name'} action={'status'} />
                 </Card>
 
-                <Typography className={classes.typographyPast}>PAST BOOKINGS:</Typography>
+                <Typography className={classes.typographyPast}>Past bookings:</Typography>
                 <Card variant={'outlined'} className={classes.bookingsCardItem}>
                   <CardContent className={classes.bookingsCardContent}>
                     <Typography variant={'h6'} noWrap display={'inline'}>
