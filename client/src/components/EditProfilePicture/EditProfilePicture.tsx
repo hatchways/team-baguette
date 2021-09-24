@@ -20,13 +20,14 @@ interface HTMLInputEvent extends Event {
 const EditProfilePicture = ({ loggedInUser }: Props): JSX.Element => {
   const classes = useStyles();
   const { updateAvatarContext, deleteAvatarContext } = useAuth();
-  const [avatarFile, setAvatarFile] = useState<File | undefined>(undefined);
+  const [avatarFile, setAvatarFile] = useState<File | null>(null);
 
   function changeHandler(e: HTMLInputEvent) {
     e.preventDefault();
-    if (!e.target.files) return;
-    const file = e.target.files[0];
-    setAvatarFile(file);
+    if (e.target.files) {
+      const file = e.target.files[0];
+      setAvatarFile(file);
+    }
   }
 
   async function submitHandler() {
@@ -37,11 +38,8 @@ const EditProfilePicture = ({ loggedInUser }: Props): JSX.Element => {
       if (data.error) {
         alert(data.error.message);
       } else if (data.success) {
-        setAvatarFile(undefined);
+        setAvatarFile(null);
         updateAvatarContext(data.success);
-      } else {
-        // should not get here from backend but this catch is for an unknown issue
-        console.error({ data });
       }
     });
   }
@@ -55,9 +53,6 @@ const EditProfilePicture = ({ loggedInUser }: Props): JSX.Element => {
           alert(data.error.message);
         } else if (data.success) {
           deleteAvatarContext();
-        } else {
-          // should not get here from backend but this catch is for an unknown issue
-          console.error({ data });
         }
       });
     }
@@ -67,7 +62,7 @@ const EditProfilePicture = ({ loggedInUser }: Props): JSX.Element => {
     return avatarFile ? (
       <>
         <Avatar alt="Profile Image" className={classes.avatar} src={URL.createObjectURL(avatarFile)} />
-        <Button variant="contained" color="secondary" onClick={() => setAvatarFile(undefined)}>
+        <Button variant="contained" color="secondary" onClick={() => setAvatarFile(null)}>
           Cancel Upload
         </Button>
       </>

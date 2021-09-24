@@ -10,7 +10,6 @@ interface Props {
 
 const AvatarDisplay = ({ user, className }: Props): JSX.Element => {
   const avatarURL: string = user.avatar ? user.avatar : `https://robohash.org/${user.email}.png`;
-  // const avatarURL = `https://robohash.org/${user.email}.png`;
 
   return <Avatar alt="Profile Image" src={avatarURL} className={className} />;
 };
