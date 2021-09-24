@@ -39,6 +39,7 @@ const useStyles = makeStyles(() => ({
   button: {
     padding: '1em 3em 1em 3em',
     justifyContent: 'space-between',
+    marginTop: '15px',
   },
 }));
 

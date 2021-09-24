@@ -62,7 +62,7 @@ const EditProfilePicture = ({ loggedInUser }: Props): JSX.Element => {
     return avatarFile ? (
       <>
         <Avatar alt="Profile Image" className={classes.avatar} src={URL.createObjectURL(avatarFile)} />
-        <Button variant="contained" color="secondary" onClick={() => setAvatarFile(null)}>
+        <Button variant="contained" color="secondary" onClick={() => setAvatarFile(null)} className={classes.button}>
           Cancel Upload
         </Button>
       </>
