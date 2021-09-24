@@ -61,8 +61,8 @@ export const Listing: React.FC = () => {
         </MuiPickersUtilsProvider>
       </Box>
       <Grid container spacing={4}>
-        {dummyData.map((data) => (
-          <Grid item xs={4} key={data.fullName}>
+        {dummyData.map((data, index) => (
+          <Grid item xs={4} key={index}>
             <CustomCard
               fullName={data.fullName}
               intro={data.intro}
