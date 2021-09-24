@@ -14,7 +14,8 @@ import { ReactElement, useState } from 'react';
 export default function Bookings(): JSX.Element {
   const classes = useStyles();
   const [selectedDate, handleDateChange] = useState<Date>(new Date());
-  const dateTester = useState<Date>(new Date('09/13/2021'));
+  //TODO : with implementing on ticket 31
+  // const dateTester = useState<Date>(new Date('09/13/2021'));
 
   const renderDayCalendar = (
     day: Date | null,
