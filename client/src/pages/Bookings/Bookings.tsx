@@ -74,6 +74,7 @@ export default function Bookings(): JSX.Element {
                     ind={nextReq._id}
                     eleId={nextReq._id}
                     setDateReqs={setDateReqs}
+                    dateReqs={dateReqs}
                     selectedDate={selectedDate}
                     setNextReq={setNextReq}
                   />
@@ -99,6 +100,7 @@ export default function Bookings(): JSX.Element {
                             ind={ind}
                             eleId={ele._id}
                             setDateReqs={setDateReqs}
+                            dateReqs={dateReqs}
                             selectedDate={selectedDate}
                             setNextReq={setNextReq}
                           />
