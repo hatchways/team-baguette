@@ -30,9 +30,6 @@ export default function Register(): JSX.Element {
       } else if (data.success) {
         updateLoginContext(data.success);
       } else {
-        // should not get here from backend but this catch is for an unknown issue
-
-        console.error({ data });
         setSubmitting(false);
         updateSnackBarMessage('An unexpected error occurred. Please try again');
       }
@@ -50,9 +47,6 @@ export default function Register(): JSX.Element {
       } else if (data.success) {
         updateLoginContext(data.success);
       } else {
-        // should not get here from backend but this catch is for an unknown issue
-        console.error({ data });
-
         setSubmitting(false);
         updateSnackBarMessage('An unexpected error occurred. Please try again');
       }
