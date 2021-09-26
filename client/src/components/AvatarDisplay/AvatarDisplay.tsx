@@ -1,9 +1,9 @@
 import Avatar from '@material-ui/core/Avatar';
-import { User } from '../../interface/User';
+import { User, UserFromProfile } from '../../interface/User';
 
 interface Props {
   loggedIn: boolean;
-  user: User;
+  user: User | UserFromProfile;
 }
 
 const AvatarDisplay = ({ user }: Props): JSX.Element => {
