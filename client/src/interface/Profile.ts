@@ -7,6 +7,7 @@ export interface Profile {
   phone: number;
   address: string;
   description: string;
+  gallery: string[];
 }
 export interface InitValue {
   firstName: string;
@@ -19,6 +20,7 @@ export interface InitValue {
   phone: number;
   address: string;
   description: string;
+  gallery: string[];
 }
 export interface ProfileApiData {
   error?: { message: string };
