@@ -11,6 +11,7 @@ const logger = require("morgan");
 
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
+const requestsRouter = require("./routes/requests")
 const profileRouter = require("./routes/profile");
 const imageRouter = require("./routes/image");
 
@@ -43,6 +44,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/requests", requestsRouter)
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/profiles", profileRouter);
