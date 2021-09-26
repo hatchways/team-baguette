@@ -3,23 +3,15 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import useStyles from './useStyles';
 import { useAuth } from '../../context/useAuthContext';
-import { useSocket } from '../../context/useSocketContext';
-import { useHistory, Switch, Route, Link } from 'react-router-dom';
-import ChatSideBanner from '../../components/ChatSideBanner/ChatSideBanner';
-import { useEffect } from 'react';
+import { useHistory, Switch, Route } from 'react-router-dom';
 import EditProfilePicture from '../../components/EditProfilePicture/EditProfilePicture';
 
 export default function Settings(): JSX.Element {
   const classes = useStyles();
 
   const { loggedInUser } = useAuth();
-  const { initSocket } = useSocket();
 
   const history = useHistory();
-
-  useEffect(() => {
-    initSocket();
-  }, [initSocket]);
 
   if (loggedInUser === undefined) return <CircularProgress />;
   if (!loggedInUser) {
@@ -29,18 +21,16 @@ export default function Settings(): JSX.Element {
   return (
     <Grid container component="main" className={`${classes.root} ${classes.settings}`}>
       <CssBaseline />
-      <Grid item xs={12} style={{ backgroundColor: 'pink', marginBottom: '5em', padding: '2em' }}>
+      <Grid item xs={12}>
         Header place holder
       </Grid>
 
       <Grid item className={classes.drawerWrapper}>
-        <ChatSideBanner loggedInUser={loggedInUser} />
+        A placeholder for the settings sidebar
       </Grid>
       <Grid item xs={12} sm={8} className={classes.mainContent}>
         <Switch>
-          <Route path={`/settings/profile_picture`} render={() => <EditProfilePicture loggedInUser={loggedInUser} />} />
-
-          <Route path="*" render={() => <Link to={'/settings/profile_picture'}>edit avatar</Link>} />
+          <Route path={`/settings/profile-picture`} render={() => <EditProfilePicture loggedInUser={loggedInUser} />} />
         </Switch>
       </Grid>
     </Grid>

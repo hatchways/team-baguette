@@ -110,9 +110,9 @@ const EditProfilePicture = ({ loggedInUser }: Props): JSX.Element => {
         ) : (
           <>
             <AvatarForm changeHandler={changeHandler} />
-            <Typography component="p" variant="body1">
-              Supported file extensions:
-              <strong>.jpg, .png </strong>
+            <Typography component="p" variant="body1" align="center">
+              Supported file extensions: <strong>.jpg, .png </strong>
+              <br />
               Maximum file size: <strong>1MB</strong>
             </Typography>
           </>
