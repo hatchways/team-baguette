@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const profileSchema = new Schema({
-  userId: {
+  user: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: "user",
   },
   firstName: {
     type: String,
@@ -49,6 +49,9 @@ const profileSchema = new Schema({
     end: {
       type: Date,
     },
+  },
+  owner: {
+    type: Boolean
   },
 });
 

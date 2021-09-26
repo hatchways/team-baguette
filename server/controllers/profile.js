@@ -15,18 +15,14 @@ exports.createProfile = asyncHandler(async (req, res, next) => {
     address,
     description,
   } = req.body;
-  const user = await User.findById(req.user.id);
-  if (!user) {
-    res.status(401);
-    throw new Error("Not authorized");
-  }
-  const profile = await Profile.findOne({ userId: user._id });
+  const user = req.user;
+  const profile = await Profile.findOne({ user: user._id });
   if (profile) {
     res.status(400);
     throw new Error("Profile already exists");
   }
   const newProfile = new Profile({
-    userId: user._id,
+    user: user._id,
     firstName: firstName,
     lastName: lastName,
     gender: gender,
@@ -59,14 +55,9 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
     address,
     description,
   } = req.body;
-  const id = req.user.id;
-  const user = await User.findOne({ _id: id });
-  if (!user) {
-    res.status(401);
-    throw new Error("Not authorized");
-  }
+  const user = req.user;
   const profile = await Profile.findOneAndUpdate(
-    { userId: id },
+    { user: user._id },
     {
       firstName: firstName,
       lastName: lastName,
@@ -93,7 +84,7 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
 // @access Public
 exports.getProfileById = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
-  const profile = await Profile.findOne({ userId: id });
+  const profile = await Profile.findOne({ user: id });
   if (!profile) {
     res.status(404);
     throw new Error("No profile");
@@ -114,7 +105,7 @@ exports.getProfileById = asyncHandler(async (req, res, next) => {
 // @desc Get all profiles
 // @access Public
 exports.getProfiles = asyncHandler(async (req, res, next) => {
-  const profiles = await Profile.find();
+  const profiles = await Profile.find({$and:[{user: {$ne: req.user.id}},{owner: false}]}).populate('user', 'avatar')
   if (!profiles) {
     res.status(404);
     throw new Error("No profiles");

@@ -1,16 +1,25 @@
 import { Box, Button, Grid, TextField, Typography } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CustomCard } from './CustomCard';
-import { dummyData } from './DummyData';
 import useStyles from './useStyles';
 import { Search } from '@material-ui/icons';
 import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import { getProfiles } from '../../helpers/APICalls/profile';
+import { ProfileListing } from '../../interface/Profile';
 
 export const Listing: React.FC = () => {
   const classes = useStyles();
   const [dateFrom, setDateFrom] = useState<Date | null>(new Date());
   const [dateTo, setDateTo] = useState<Date | null>(new Date());
+  const [profiles, setProfiles] = useState<Array<ProfileListing>>([]);
+  useEffect(() => {
+    getProfiles().then((res) => {
+      if (res.success) {
+        setProfiles(res.success);
+      }
+    });
+  }, []);
   return (
     <Box width="100%" maxWidth={800} p={3} margin="auto">
       <Typography className={classes.header} component="h1" variant="h5">
@@ -61,14 +70,15 @@ export const Listing: React.FC = () => {
         </MuiPickersUtilsProvider>
       </Box>
       <Grid container spacing={4}>
-        {dummyData.map((data) => (
-          <Grid item xs={4} key={data.id}>
+        {profiles.map((profile) => (
+          <Grid item xs={4} key={profile.user._id}>
             <CustomCard
-              fullName={data.fullName}
-              intro={data.intro}
-              description={data.description}
-              address={data.address}
-              price={data.price}
+              fullName={`${profile.firstName} ${profile.lastName}`}
+              intro={'Loving pet sitter'}
+              description={profile.description}
+              address={profile.address}
+              price={'$15/hr'}
+              avatar={profile.user.avatar}
             />
           </Grid>
         ))}

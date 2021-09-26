@@ -20,7 +20,21 @@ export interface InitValue {
   address: string;
   description: string;
 }
+export interface ProfileListing {
+  firstName: string;
+  lastName: string;
+  description: string;
+  address: string;
+  user: {
+    _id: string;
+    avatar: string;
+  };
+}
 export interface ProfileApiData {
   error?: { message: string };
   success?: Profile;
+}
+export interface ProfileListingApiData {
+  error?: { message: string };
+  success?: ProfileListing[];
 }

@@ -48,6 +48,8 @@ const AuthMenu = (): JSX.Element => {
       >
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
         <MenuItem onClick={handleBookings}>Bookings</MenuItem>
+        <MenuItem onClick={() => history.push('/edit')}>Edit Profile</MenuItem>
+        <MenuItem onClick={() => history.push('/listing')}>Listing</MenuItem>
       </Menu>
     </div>
   );

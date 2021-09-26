@@ -10,20 +10,16 @@ interface CustomCardProps {
   intro: string;
   address: string;
   price: string;
+  avatar: string;
 }
 
 export const CustomCard: React.FC<CustomCardProps> = ({ ...props }) => {
-  const { fullName, description, intro, address, price } = props;
+  const { fullName, description, intro, address, price, avatar } = props;
   const classes = useStyles();
   return (
     <Card className={classes.card}>
       <CardActionArea className={classes.cardButton}>
-        <CardMedia
-          className={classes.avatar}
-          component="img"
-          image="https://mui.com/static/images/cards/contemplative-reptile.jpg"
-          alt="placeholder avatar"
-        />
+        <CardMedia className={classes.avatar} component="img" image={avatar} alt="placeholder avatar" />
         <CardContent>
           <Typography className={classes.fullName}>{fullName}</Typography>
           <Typography className={classes.intro}>{intro}</Typography>
