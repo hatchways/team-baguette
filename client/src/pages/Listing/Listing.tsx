@@ -16,7 +16,7 @@ export const Listing: React.FC = () => {
       <Typography className={classes.header} component="h1" variant="h5">
         Your Search Results
       </Typography>
-      <Box className={classes.search}>
+      <Box display="flex" justifyContent="center" marginTop="1rem" marginBottom="4rem">
         <Box className={classes.inputBox}>
           <Search className={classes.inputIcon} style={{ color: 'red' }} />
           <TextField
@@ -61,8 +61,8 @@ export const Listing: React.FC = () => {
         </MuiPickersUtilsProvider>
       </Box>
       <Grid container spacing={4}>
-        {dummyData.map((data, index) => (
-          <Grid item xs={4} key={index}>
+        {dummyData.map((data) => (
+          <Grid item xs={4} key={data.id}>
             <CustomCard
               fullName={data.fullName}
               intro={data.intro}

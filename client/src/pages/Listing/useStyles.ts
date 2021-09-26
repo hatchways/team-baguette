@@ -8,12 +8,6 @@ const useStyles = makeStyles((theme) => ({
     color: '#000000',
     fontWeight: 700,
   },
-  search: {
-    marginTop: '1vh',
-    marginBottom: '5vh',
-    display: 'flex',
-    justifyContent: 'center',
-  },
   inputBox: {
     position: 'relative',
     border: '1px solid lightgray',
@@ -77,29 +71,10 @@ const useStyles = makeStyles((theme) => ({
     letterSpacing: '-1px',
     color: 'gray',
   },
-  rating: {
-    width: '90px',
-    marginLeft: 'auto',
-    marginRight: 'auto',
-    marginTop: '4px',
-    marginBottom: '3px',
-    height: '1.5vh',
-  },
   desc: {
     textAlign: 'center',
     fontSize: 14,
     letterSpacing: '-1px',
-  },
-  bottomContent: {
-    position: 'absolute',
-    width: '100%',
-    height: '5vh',
-    bottom: 0,
-    left: 0,
-    borderTop: '1px solid lightgray',
-    display: 'flex',
-    justifyContent: 'space-around',
-    alignItems: 'center',
   },
   address: {
     marginLeft: '-35px',
@@ -116,7 +91,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: 'none',
     textTransform: 'uppercase',
     margin: '0 auto',
-    marginTop: '4vh',
+    marginTop: '3rem',
     display: 'block',
   },
 }));

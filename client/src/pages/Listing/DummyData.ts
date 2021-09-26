@@ -1,6 +1,7 @@
 //dummy data for testing the fontend UI prior to integration
 export const dummyData = [
   {
+    id: 1,
     fullName: 'Norma Byers',
     intro: 'Loving pet sitter',
     description: 'Dog sitting, cat sitting, pocket pet and bird care.',
@@ -8,6 +9,7 @@ export const dummyData = [
     price: '$14/hr',
   },
   {
+    id: 2,
     fullName: 'Michael Carnahan',
     intro: 'Professional dog trainer',
     description: 'I would love to work with your dog.',
@@ -15,6 +17,7 @@ export const dummyData = [
     price: '$20/hr',
   },
   {
+    id: 3,
     fullName: 'Jessica Pearson',
     intro: 'Dog care helper',
     description: 'I have had dogs as pets for most of my life.',
@@ -22,6 +25,7 @@ export const dummyData = [
     price: '$15/hr',
   },
   {
+    id: 4,
     fullName: 'Charles Compton',
     intro: 'Passionate pet sitter',
     description: 'I provide dog walking and pet sitting services.',
@@ -29,6 +33,7 @@ export const dummyData = [
     price: '$15/hr',
   },
   {
+    id: 5,
     fullName: 'Charlotte Butler',
     intro: 'Animal lover',
     description: "I am dog walker that can't wait to meet your pet!",
@@ -36,6 +41,7 @@ export const dummyData = [
     price: '$17/hr',
   },
   {
+    id: 6,
     fullName: 'Joan Blakeney',
     intro: 'Loving pet walker',
     description: 'I have experience walking and working with dogs.',
