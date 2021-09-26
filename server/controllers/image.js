@@ -52,6 +52,7 @@ exports.deleteAvatar = asyncHandler(async (req, res, next) => {
 
 exports.uploadGallery = asyncHandler(async (req, res, next) => {
   const user = req.user
+  // const profile = 
   const newImageFiles = req.files
   if (!newImageFiles || !newImageFiles.length) {
     // the only reasons the file wouldn't be in req.file is either the file type was wrong, or there was an issue with the actual upload
