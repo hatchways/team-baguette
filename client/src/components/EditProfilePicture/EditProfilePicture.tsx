@@ -21,7 +21,7 @@ const EditProfilePicture = ({ loggedInUser }: Props): JSX.Element => {
   const classes = useStyles();
   const { updateAvatarContext, deleteAvatarContext } = useAuth();
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
-  const [snackbarMessage, setSnackbarMessage] = useState({ className: '', message: '', open: true });
+  const [snackbarMessage, setSnackbarMessage] = useState({ className: '', message: '', open: false });
 
   function changeHandler(e: HTMLInputEvent) {
     e.preventDefault();
@@ -78,49 +78,62 @@ const EditProfilePicture = ({ loggedInUser }: Props): JSX.Element => {
   }
 
   function displayAvatar(): JSX.Element {
-    return avatarFile ? (
+    return (
       <>
-        <Avatar alt="Profile Image" className={classes.avatar} src={URL.createObjectURL(avatarFile)} />
-        <Button variant="contained" color="secondary" onClick={cancelHandler} className={classes.button}>
-          Cancel Upload
-        </Button>
-      </>
-    ) : (
-      <>
-        <AvatarDisplay loggedIn={true} user={loggedInUser} className={classes.avatar} />
-        <Grid item xs={12} md={8} className={classes.subheader}>
-          Be sure to use a photo that clearly shows your face
-        </Grid>
-      </>
-    );
-  }
-
-  function fileOrSubmit(): JSX.Element {
-    return avatarFile ? (
-      <Button className={classes.button} color="primary" variant="contained" component="label" onClick={submitHandler}>
-        Confirm Avatar Upload
-      </Button>
-    ) : (
-      <>
-        <AvatarForm changeHandler={changeHandler} />
-        <p>
-          Supported file extensions:
-          <strong>.jpg, .png </strong>
-          Maximum file size: <strong>1MB</strong>
-        </p>
+        <div className={classes.picture}>
+          {avatarFile ? (
+            <>
+              <Avatar alt="Profile Image" className={classes.avatar} src={URL.createObjectURL(avatarFile)} />
+              <Button variant="contained" color="secondary" onClick={cancelHandler} className={classes.button}>
+                Cancel Upload
+              </Button>
+            </>
+          ) : (
+            <>
+              <AvatarDisplay loggedIn={true} user={loggedInUser} className={classes.avatar} />
+              <Grid item xs={12} md={8} className={classes.subheader}>
+                Be sure to use a photo that clearly shows your face
+              </Grid>
+            </>
+          )}
+        </div>
+        {avatarFile ? (
+          <Button
+            className={classes.button}
+            color="primary"
+            variant="contained"
+            component="label"
+            onClick={submitHandler}
+          >
+            Confirm Avatar Upload
+          </Button>
+        ) : (
+          <>
+            <AvatarForm changeHandler={changeHandler} />
+            <Typography component="p" variant="body1">
+              Supported file extensions:
+              <strong>.jpg, .png </strong>
+              Maximum file size: <strong>1MB</strong>
+            </Typography>
+          </>
+        )}
       </>
     );
   }
 
   return (
-    <Box>
+    <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
       <Paper elevation={3} className={classes.paper}>
-        <Typography className={classes.header}> Profile Photo </Typography>
-        <div className={classes.picture}>{displayAvatar()}</div>
-        {fileOrSubmit()}
-        <Button className={classes.button} startIcon={<DeleteIcon />} onClick={deleteHandler}>
-          Delete Photo
-        </Button>
+        <Typography variant="h3" align="center" className={classes.header}>
+          Profile Photo
+        </Typography>
+        <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
+          {displayAvatar()}
+
+          <Button className={classes.button} startIcon={<DeleteIcon />} onClick={deleteHandler}>
+            Delete Photo
+          </Button>
+        </Box>
       </Paper>
       <Snackbar
         ContentProps={{

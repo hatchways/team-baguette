@@ -11,12 +11,9 @@ const useStyles = makeStyles(() => ({
     paddingBottom: '2em',
   },
   paper: {
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 0.5,
-    paddingTop: '5em',
-    paddingBottom: '5em',
-    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+    padding: '5em 2em 5em 2em',
   },
   picture: {
     display: 'flex',
@@ -27,18 +24,15 @@ const useStyles = makeStyles(() => ({
   },
   header: {
     fontSize: 30,
-    textAlign: 'center',
     fontWeight: 'bolder',
   },
   subheader: { fontSize: '1em', marginTop: ' 1em', textAlign: 'center', color: 'grey' },
   avatar: {
     height: '10em',
     width: '10em',
-    backgroundColor: 'pink',
   },
   button: {
     padding: '1em 3em 1em 3em',
-    justifyContent: 'space-between',
     marginTop: '15px',
   },
   error: {
