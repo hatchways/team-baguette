@@ -41,6 +41,13 @@ const useStyles = makeStyles(() => ({
     justifyContent: 'space-between',
     marginTop: '15px',
   },
+  error: {
+    backgroundColor: 'red',
+    color: 'white',
+  },
+  success: {
+    backgroundColor: 'green',
+  },
 }));
 
 export default useStyles;

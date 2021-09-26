@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { User } from '../../interface/User';
-import { Grid, Paper, Box, Typography, Avatar, Button } from '@material-ui/core';
+import { Grid, Paper, Box, Typography, Avatar, Button, Snackbar } from '@material-ui/core';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import AvatarForm from './AvatarForm/AvatarForm';
@@ -21,6 +21,7 @@ const EditProfilePicture = ({ loggedInUser }: Props): JSX.Element => {
   const classes = useStyles();
   const { updateAvatarContext, deleteAvatarContext } = useAuth();
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
+  const [snackbarMessage, setSnackbarMessage] = useState({ className: '', message: '', open: true });
 
   function changeHandler(e: HTMLInputEvent) {
     e.preventDefault();
@@ -30,16 +31,25 @@ const EditProfilePicture = ({ loggedInUser }: Props): JSX.Element => {
     }
   }
 
+  function cancelHandler(): void {
+    setAvatarFile(null);
+  }
+
   async function submitHandler() {
     if (!avatarFile) return;
     const formData: FormData = new FormData();
     formData.append('image', avatarFile);
     await uploadImage(formData).then((data) => {
       if (data.error) {
-        alert(data.error.message);
+        setSnackbarMessage({ className: classes.error, open: true, message: data.error.message });
       } else if (data.success) {
         setAvatarFile(null);
         updateAvatarContext(data.success);
+        setSnackbarMessage({
+          className: classes.success,
+          open: true,
+          message: 'Avatar has been successfully updated!',
+        });
       }
     });
   }
@@ -50,19 +60,28 @@ const EditProfilePicture = ({ loggedInUser }: Props): JSX.Element => {
     if (avatarLink) {
       await deleteAvatar().then((data) => {
         if (data.error) {
-          alert(data.error.message);
+          setSnackbarMessage({ className: classes.error, open: true, message: 'Avatar failed to be deleted' });
         } else if (data.success) {
+          setSnackbarMessage({
+            className: classes.success,
+            open: true,
+            message: 'Avatar has been successfully deleted!',
+          });
           deleteAvatarContext();
         }
       });
     }
   }
 
+  function closingSnackbar(): void {
+    setSnackbarMessage({ className: '', message: '', open: false });
+  }
+
   function displayAvatar(): JSX.Element {
     return avatarFile ? (
       <>
         <Avatar alt="Profile Image" className={classes.avatar} src={URL.createObjectURL(avatarFile)} />
-        <Button variant="contained" color="secondary" onClick={() => setAvatarFile(null)} className={classes.button}>
+        <Button variant="contained" color="secondary" onClick={cancelHandler} className={classes.button}>
           Cancel Upload
         </Button>
       </>
@@ -103,6 +122,18 @@ const EditProfilePicture = ({ loggedInUser }: Props): JSX.Element => {
           Delete Photo
         </Button>
       </Paper>
+      <Snackbar
+        ContentProps={{
+          classes: {
+            root: snackbarMessage.className,
+          },
+        }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        open={snackbarMessage.open}
+        onClose={closingSnackbar}
+        message={snackbarMessage.message}
+        key="alert message"
+      />
     </Box>
   );
 };
