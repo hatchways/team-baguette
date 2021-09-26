@@ -50,6 +50,8 @@ const profileSchema = new Schema({
       type: Date,
     },
   },
+  gallery: [String],
 });
+
 
 module.exports = Profile = mongoose.model("profile", profileSchema);
