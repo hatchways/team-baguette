@@ -11,6 +11,7 @@ import { SnackBarProvider } from './context/useSnackbarContext';
 
 import './App.css';
 import { EditProfile } from './pages/EditProfile/EditProfile';
+import ProfileDetails from './pages/ProfileDetails/ProfileDetails';
 
 function App(): JSX.Element {
   return (
@@ -29,6 +30,7 @@ function App(): JSX.Element {
                 <Route exact path="/bookings">
                   <Bookings />
                 </Route>
+                <Route path="/profile/:id" component={ProfileDetails} />
                 <Route path="*">
                   <Redirect to="/login" />
                 </Route>

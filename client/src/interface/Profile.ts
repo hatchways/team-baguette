@@ -7,6 +7,7 @@ export interface Profile {
   phone: number;
   address: string;
   description: string;
+  owner?: boolean;
 }
 export interface InitValue {
   firstName: string;
