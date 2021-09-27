@@ -21,44 +21,49 @@ const RequestMenu = ({ ind, eleId, setDateReqs, selectedDate, setNextReq, dateRe
   const [anchorEl, setAnchorEl] = useState<SVGSVGElement | null>(null);
 
   const handleUpdate = (reqId: string, status: string) => {
-    updateReqs(reqId, status);
+    updateReqs(reqId, status).then((res) => {
+      if (res.hasOwnProperty('message')) {
+        const dateReqsCopy = [...dateReqs];
+        const foundRequest = dateReqsCopy.map((ele) => ele._id).indexOf(reqId);
+        if (status === 'declined') {
+          dateReqsCopy[foundRequest].accepted = false;
+          dateReqsCopy[foundRequest].declined = true;
+        } else {
+          dateReqsCopy[foundRequest].accepted = true;
+          dateReqsCopy[foundRequest].declined = false;
+        }
+        const nearestReq = dateReqsCopy.find(
+          (ele) => new Date(ele.start).getTime() >= selectedDate.getTime() && ele.accepted,
+        );
+        nearestReq
+          ? setNextReq(nearestReq)
+          : setNextReq({
+              _id: '-',
+              user: {
+                username: 'No Accepted Requests',
+                _id: '-',
+              },
+              sitterId: '-',
+              accepted: false,
+              declined: false,
+              dogType: '-',
+              end: new Date(),
+              paid: false,
+              specialNotes: '-',
+              start: new Date(),
+            });
+        setDateReqs(dateReqsCopy);
+      } else {
+        console.error({ error: 'Update unsuccessful.' });
+      }
+    });
     setAnchorEl(null);
-    const dateReqsCopy = [...dateReqs];
-    const foundRequest = dateReqsCopy.map((ele) => ele._id).indexOf(reqId);
-    if (status === 'declined') {
-      dateReqsCopy[foundRequest].accepted = false;
-      dateReqsCopy[foundRequest].declined = true;
-    } else {
-      dateReqsCopy[foundRequest].accepted = true;
-      dateReqsCopy[foundRequest].declined = false;
-    }
-    const nearestReq = dateReqsCopy.find(
-      (ele) => new Date(ele.start).getTime() >= selectedDate.getTime() && ele.accepted,
-    );
-    nearestReq
-      ? setNextReq(nearestReq)
-      : setNextReq({
-          _id: '-',
-          user: {
-            username: 'No Accepted Requests',
-            _id: '-',
-          },
-          sitterId: '-',
-          accepted: false,
-          declined: false,
-          dogType: '-',
-          end: new Date(),
-          paid: false,
-          specialNotes: '-',
-          start: new Date(),
-        });
-    setDateReqs(dateReqsCopy);
   };
 
   const openMenu = (evnt: MouseEvent<SVGSVGElement>) => {
     setAnchorEl(evnt.currentTarget);
   };
-
+  
   const handleClose = () => {
     setAnchorEl(null);
   };
