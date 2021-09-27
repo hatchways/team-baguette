@@ -63,7 +63,7 @@ const RequestMenu = ({ ind, eleId, setDateReqs, selectedDate, setNextReq, dateRe
   const openMenu = (evnt: MouseEvent<SVGSVGElement>) => {
     setAnchorEl(evnt.currentTarget);
   };
-  
+
   const handleClose = () => {
     setAnchorEl(null);
   };
