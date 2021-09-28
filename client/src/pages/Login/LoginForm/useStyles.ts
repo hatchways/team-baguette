@@ -10,13 +10,12 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: '5px',
     textTransform: 'uppercase',
     color: 'black',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: theme.typography.bolded.fontFamily,
   },
   inputs: {
     marginTop: '.8rem',
     height: '2rem',
     padding: '5px',
-    fontFamily: 'Poppins-Regular',
     border: '1px solid rgba(0,0,0,0.2)',
     borderRadius: '5px',
   },
@@ -35,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: 'rgb(240, 69, 69)',
     color: 'white',
     textTransform: 'uppercase',
-    fontFamily: 'Poppins-Regular',
     letterSpacing: 1.1,
   },
 }));

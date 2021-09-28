@@ -1,3 +1,4 @@
+const { LexModelBuildingService } = require("aws-sdk");
 const aws = require("aws-sdk");
 
 
@@ -15,5 +16,29 @@ const s3Connect = () => {
 
 }
 
+// a s3 connection is established and a string of key or an array of keys are passed through to delete the file from s3 bucket
+const deleteFile = (keyName) => {
+    s3Connect().deleteObject({
+        Bucket: process.env.BUCKET_NAME,
+        Key: keyName
+    },
+        (err, data) => {
+            if (err) {
+                console.log("this is the error from deleting", err)
+            }
+            else {
+                console.log("This is the data after deleting", data)
+            }
+        }
+    )
+}
 
-module.exports = s3Connect
+
+
+
+
+module.exports = {
+    s3Connect,
+    deleteFile
+
+}

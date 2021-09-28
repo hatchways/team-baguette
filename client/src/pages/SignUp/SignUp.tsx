@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import register from '../../helpers/APICalls/register';
 import SignUpForm from './SignUpForm/SignUpForm';
-import AuthHeader from '../../components/AuthHeader/AuthHeader';
+import AuthLinks from '../../components/AuthLinks/AuthLinks';
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import DemoLogin from '../../components/DemoLogin/DemoLogin';

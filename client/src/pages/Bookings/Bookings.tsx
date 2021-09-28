@@ -9,11 +9,40 @@ import Settings from '@material-ui/icons/Settings';
 import Box from '@material-ui/core/Box';
 import { MuiPickersUtilsProvider, DatePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { ReactElement, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
+import { ReqValue } from '../../interface/Request';
+import { getRequests } from '../../helpers/APICalls/requests';
+import RequestMenu from '../../components/RequestMenu/RequestMenu';
 
 export default function Bookings(): JSX.Element {
   const classes = useStyles();
   const [selectedDate, handleDateChange] = useState<Date>(new Date());
+  const [dateReqs, setDateReqs] = useState(new Array<ReqValue>());
+  const [nextReq, setNextReq] = useState<ReqValue>({
+    _id: '-',
+    user: {
+      username: 'No Accepted Requests',
+      _id: '-',
+    },
+    sitterId: '-',
+    accepted: false,
+    declined: false,
+    dogType: '-',
+    end: new Date(),
+    paid: false,
+    specialNotes: '-',
+    start: new Date(),
+  });
+
+  useEffect(() => {
+    getRequests().then((data) => {
+      if (data) {
+        setDateReqs(data);
+        const nearestReq = data.find((ele) => new Date(ele.start).getTime() >= selectedDate.getTime() && ele.accepted);
+        nearestReq && setNextReq(nearestReq);
+      }
+    });
+  }, [selectedDate]);
 
   const renderDayCalendar = (
     day: Date | null,
@@ -21,13 +50,11 @@ export default function Bookings(): JSX.Element {
     currentMonth: boolean,
     DayComponent: ReactElement,
   ) => {
-    // TODO: for implementing on ticket 31
-    // const dateTester = useState<Date>(new Date('09/13/2021'));
-    // const days = day ? day.getTime() : null;
-    // const stateDays = dateReqs.filter((el) => el.accepted).map((el) => new Date(el.start).getTime());
-    // if (days === stateDays.find((el) => el === days && days >= selectedDate.getTime())) {
-    //   return <div className={classes.customSelectedDay}>{DayComponent}</div>;
-    // }
+    const days = day ? day.getTime() : null;
+    const stateDays = dateReqs.filter((el) => el.accepted).map((el) => new Date(el.start).getTime());
+    if (days === stateDays.find((el) => el === days && days >= selectedDate.getTime())) {
+      return <div className={classes.customSelectedDay}>{DayComponent}</div>;
+    }
     return DayComponent;
   };
 
@@ -36,61 +63,109 @@ export default function Bookings(): JSX.Element {
       <Grid xs={12} item className={classes.bookingsWrapper} container>
         <Grid item xs={5} className={classes.bookingsList} container direction={'column'} spacing={1}>
           <Grid item>
-            <Card elevation={2} className={classes.bookingsCardNext}>
-              <Typography className={classes.typographyCurrent}>Your next booking:</Typography>
-              <CardContent className={classes.bookingsCardContent}>
-                <Typography variant={'h6'} noWrap display={'inline'}>
-                  17 Sept 2021, 10-12AM
-                </Typography>
-                <Settings className={classes.iconSettings} />
-              </CardContent>
-              <CardHeader avatar={'avatar'} title={'logan test name'} action={'status'} />
-            </Card>
+            {nextReq && (
+              <Card key={nextReq._id} elevation={2} className={classes.bookingsCardNext}>
+                <Typography className={classes.typographyCurrent}>YOUR NEXT BOOKING:</Typography>
+                <CardContent className={classes.bookingsCardContent}>
+                  <Typography variant={'h6'} noWrap display={'inline'}>
+                    {new Date(nextReq.start).toDateString()}
+                  </Typography>
+                  <RequestMenu
+                    ind={nextReq._id}
+                    eleId={nextReq._id}
+                    setDateReqs={setDateReqs}
+                    dateReqs={dateReqs}
+                    selectedDate={selectedDate}
+                    setNextReq={setNextReq}
+                  />
+                </CardContent>
+                <CardHeader className={classes.iconStatus} avatar={'avatar'} title={`${nextReq.user.username}`} />
+              </Card>
+            )}
           </Grid>
 
           <Grid item>
             <Card elevation={2} className={classes.bookingsCardContainer}>
-              <Typography className={classes.typographyCurrent}>Current bookings:</Typography>
               <Box className={classes.scrollableBox}>
-                <Card variant={'outlined'} className={classes.bookingsCardItem}>
-                  <CardContent className={classes.bookingsCardContent}>
-                    <Typography variant={'h6'} noWrap display={'inline'}>
-                      17 Sept 2021, 10-12AM
-                    </Typography>
-                    <Settings className={classes.iconSettings} />
-                  </CardContent>
-                  <CardHeader avatar={'avatar'} title={'logan test name'} action={'status'} />
-                </Card>
+                <Typography className={classes.typographyPast}>CURRENT BOOKINGS:</Typography>
+                {!!dateReqs.length &&
+                  dateReqs.map((ele, ind) =>
+                    selectedDate.getTime() < new Date(ele.start).getTime() ? (
+                      <Card key={ele._id} variant={'outlined'} className={classes.bookingsCardItem}>
+                        <CardContent className={classes.bookingsCardContent}>
+                          <Typography variant={'h6'} noWrap display={'inline'}>
+                            {new Date(ele.start).toDateString()}
+                          </Typography>
+                          <RequestMenu
+                            ind={ind}
+                            eleId={ele._id}
+                            setDateReqs={setDateReqs}
+                            dateReqs={dateReqs}
+                            selectedDate={selectedDate}
+                            setNextReq={setNextReq}
+                          />
+                        </CardContent>
+                        <CardHeader
+                          className={classes.iconStatus}
+                          avatar={'avatar'}
+                          title={`${ele.user.username}`}
+                          action={ele.accepted ? 'ACCEPTED' : ele.declined ? 'DECLINED' : 'PENDING'}
+                        />
+                      </Card>
+                    ) : null,
+                  )}
 
-                <Typography className={classes.typographyPast}>Past bookings:</Typography>
-                <Card variant={'outlined'} className={classes.bookingsCardItem}>
-                  <CardContent className={classes.bookingsCardContent}>
-                    <Typography variant={'h6'} noWrap display={'inline'}>
-                      17 Sept 2021, 10-12AM
-                    </Typography>
-                    <Settings className={classes.iconSettings} />
-                  </CardContent>
-                  <CardHeader avatar={'avatar'} title={'logan test name'} action={'status'} />
-                </Card>
+                <Typography className={classes.typographyPast}>PAST BOOKINGS:</Typography>
+                {!!dateReqs.length &&
+                  dateReqs.map((ele) =>
+                    new Date(ele.start).getTime() < selectedDate.getTime() ? (
+                      <Card key={ele._id} variant={'outlined'} className={classes.bookingsCardItem}>
+                        <CardContent className={classes.bookingsCardContent}>
+                          <Typography variant={'h6'} noWrap display={'inline'}>
+                            {new Date(ele.start).toDateString()}
+                          </Typography>
+                          <Settings className={classes.iconSettings} />
+                        </CardContent>
+                        <CardHeader
+                          className={classes.iconStatus}
+                          avatar={'avatar'}
+                          title={`${ele.user.username}`}
+                          action={ele.accepted ? 'ACCEPTED' : ele.declined ? 'DECLINED' : 'PENDING'}
+                        />
+                      </Card>
+                    ) : null,
+                  )}
               </Box>
             </Card>
           </Grid>
         </Grid>
-        <Grid item xs={7} className={classes.bookingsCalendar} direction={'column'}>
+        <Grid item xs={7} className={classes.bookingsCalendar} direction={'column'} container>
           <Paper elevation={2} className={classes.calendarContainer}>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <DatePicker
-                autoOk
-                disableToolbar
-                orientation="landscape"
-                variant="static"
-                value={selectedDate}
-                disabled
-                renderDay={(day, selectedDay, currentMonth, DayComponent) =>
-                  renderDayCalendar(day, selectedDay, currentMonth, DayComponent)
-                }
-                onChange={() => handleDateChange(new Date())}
-              />
+              {dateReqs.length ? (
+                <DatePicker
+                  autoOk
+                  disableToolbar
+                  orientation="landscape"
+                  variant="static"
+                  value={selectedDate}
+                  disabled
+                  renderDay={(day, selectedDay, currentMonth, DayComponent) =>
+                    renderDayCalendar(day, selectedDay, currentMonth, DayComponent)
+                  }
+                  onChange={() => handleDateChange(new Date())}
+                />
+              ) : (
+                <DatePicker
+                  autoOk
+                  disableToolbar
+                  orientation="landscape"
+                  variant="static"
+                  value={selectedDate}
+                  disabled
+                  onChange={() => handleDateChange(new Date())}
+                />
+              )}
             </MuiPickersUtilsProvider>
           </Paper>
         </Grid>

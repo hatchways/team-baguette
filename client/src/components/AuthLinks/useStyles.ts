@@ -1,17 +1,17 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   authHeader: {
     alignSelf: 'flex-end',
     justifyContent: 'center',
     alignItems: 'center',
     display: 'flex',
     flexWrap: 'wrap',
-    fontFamily: 'Poppins-Bold',
+    fontFamily: theme.typography.bolded.fontFamily,
   },
   accAside: {
     fontSize: 13,
-    fontFamily: 'Poppins-Bold',
+    fontFamily: theme.typography.bolded.fontFamily,
     textAlign: 'center',
     marginRight: 5,
     whiteSpace: 'nowrap',
