@@ -13,8 +13,7 @@ const useStyles = makeStyles(() => ({
     display: 'flex',
     flexGrow: 8,
     flexDirection: 'column',
-    backgroundColor: 'red',
-    justifyContent: 'space-evenly',
+    justifyContent: 'flex-start',
   },
 }));
 

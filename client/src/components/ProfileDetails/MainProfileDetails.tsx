@@ -54,18 +54,12 @@ export default function MainProfileDetails({ profile }: Props): JSX.Element {
   };
   return (
     <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-      <Card className={classes.card} elevation={20}>
-        <Box
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          alignItems="center"
-          style={{ position: 'relative' }}
-        >
+      <Card className={classes.root} elevation={20}>
+        <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" position="relative">
           <CardMedia
             component="img"
             image="https://tg-cdn.azureedge.net/sites/default/files/images/paragraph/italrb/easy_guide_grass.jpg"
-            alt="backgroundwhatever"
+            alt="profile banner image"
             className={classes.banner}
           />
           <Avatar
@@ -78,8 +72,8 @@ export default function MainProfileDetails({ profile }: Props): JSX.Element {
               {`${firstName} ${lastName}`}
             </Typography>
             <Typography className={classes.subheader}>Loving pet sitter</Typography>
-            <Typography variant="subtitle2" className={classes.subheader}>
-              <RoomRoundedIcon color="error" /> {address}
+            <Typography variant="subtitle2" className={classes.location}>
+              <RoomRoundedIcon color="error" fontSize="small" /> {address}
             </Typography>
           </CardContent>
         </Box>
@@ -101,10 +95,10 @@ export default function MainProfileDetails({ profile }: Props): JSX.Element {
 
       <Modal open={active} onClose={() => setActive(false)}>
         <Box display="flex" flexDirection="column" justifyContent="center" alignItems="flex-start">
-          <IconButton onClick={() => setActive(false)}>
-            <CloseIcon style={{ color: 'white' }} fontSize="large" />
+          <IconButton className={classes.icon} onClick={() => setActive(false)}>
+            <CloseIcon fontSize="large" />
           </IconButton>
-          <img src={gallery[activeIndex]} className={classes.icon} />
+          <img src={gallery[activeIndex]} className={classes.modalImage} />
         </Box>
       </Modal>
     </Box>

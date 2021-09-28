@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Grid, Paper, Box, Typography } from '@material-ui/core';
-import CssBaseline from '@material-ui/core/CssBaseline';
 
 import useStyles from './useStyles';
 
@@ -25,7 +24,9 @@ export default function ProfileDetails(): JSX.Element {
 
   return (
     <Grid container component="main" className={classes.root}>
-      <CssBaseline />
+      <Grid item xs={12} style={{ marginBottom: '3em' }}>
+        Header place holder
+      </Grid>
 
       <Grid item xs={12} sm={6} className={classes.mainContent}>
         {profile && <MainProfileDetails profile={profile} />}
