@@ -38,20 +38,11 @@ export const CustomCard: React.FC<CustomCardProps> = ({ ...props }) => {
             left={0}
             borderTop="1px solid lightgray"
           >
-            <LocationOn
-              style={{
-                color: 'red',
-              }}
-            />
+            <LocationOn color="secondary" />
             <Typography component="span" className={classes.address}>
               {address}
             </Typography>
-            <Typography
-              component="span"
-              style={{
-                fontWeight: 900,
-              }}
-            >
+            <Typography component="span" className={classes.price}>
               {price}
             </Typography>
           </Box>

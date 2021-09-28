@@ -1,25 +1,29 @@
-import { Box, Button, Grid, TextField, Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { CustomCard } from './CustomCard';
-import useStyles from './useStyles';
+import { Box, Button, Grid, TextField, Typography } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
-import DateFnsUtils from '@date-io/date-fns';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
+import { CustomCard } from './CustomCard';
+import DateFnsUtils from '@date-io/date-fns';
 import { getProfiles } from '../../helpers/APICalls/profile';
 import { ProfileListing } from '../../interface/Profile';
+import { useSnackBar } from '../../context/useSnackbarContext';
+import useStyles from './useStyles';
 
 export const Listing: React.FC = () => {
   const classes = useStyles();
   const [dateFrom, setDateFrom] = useState<Date | null>(new Date());
   const [dateTo, setDateTo] = useState<Date | null>(new Date());
   const [profiles, setProfiles] = useState<Array<ProfileListing>>([]);
+  const { updateSnackBarMessage } = useSnackBar();
   useEffect(() => {
     getProfiles().then((res) => {
       if (res.success) {
         setProfiles(res.success);
+      } else {
+        updateSnackBarMessage('Failed to get sitter profiles');
       }
     });
-  }, []);
+  }, [updateSnackBarMessage]);
   return (
     <Box width="100%" maxWidth={800} p={3} margin="auto">
       <Typography className={classes.header} component="h1" variant="h5">
@@ -27,7 +31,7 @@ export const Listing: React.FC = () => {
       </Typography>
       <Box display="flex" justifyContent="center" marginTop="1rem" marginBottom="4rem">
         <Box className={classes.inputBox}>
-          <Search className={classes.inputIcon} style={{ color: 'red' }} />
+          <Search className={classes.inputIcon} color="secondary" />
           <TextField
             id="address"
             InputProps={{ disableUnderline: true, classes: { input: classes.inputs } }}
