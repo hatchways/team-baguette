@@ -97,23 +97,6 @@ export default function Login({ handleSubmit }: Props): JSX.Element {
           </form>
         )}
       </Formik>
-      <Formik
-        initialValues={{
-          email: `${process.env.REACT_APP_DEMO_USER}`,
-          password: `${process.env.REACT_APP_DEMO_PW}`,
-        }}
-        onSubmit={handleSubmit}
-      >
-        {({ handleSubmit, isSubmitting }) => (
-          <form onSubmit={handleSubmit} className={classes.form} noValidate>
-            <Box textAlign="center">
-              <Button type="submit" size="large" variant="contained" color="secondary" className={classes.demoSubmit}>
-                {isSubmitting ? <CircularProgress style={{ color: 'white' }} /> : 'Demo'}
-              </Button>
-            </Box>
-          </form>
-        )}
-      </Formik>
     </>
   );
 }

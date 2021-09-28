@@ -3,28 +3,31 @@ import { Formik, FormikHelpers } from 'formik';
 import { CircularProgress } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
+import login from '../../helpers/APICalls/login';
+import { useSnackBar } from '../../context/useSnackbarContext';
+import { useAuth } from '../../context/useAuthContext';
 
-interface Props {
-  handleSubmit: (
-    {
-      email,
-      password,
-    }: {
-      email: string;
-      password: string;
-    },
-    {
-      setStatus,
-      setSubmitting,
-    }: FormikHelpers<{
-      email: string;
-      password: string;
-    }>,
-  ) => void;
-}
-
-export default function DemoLogin({ handleSubmit }: Props): JSX.Element {
+export default function DemoLogin(): JSX.Element {
   const classes = useStyles();
+  const { updateSnackBarMessage } = useSnackBar();
+  const { updateLoginContext } = useAuth();
+
+  const handleSubmit = (
+    { email, password }: { email: string; password: string },
+    { setSubmitting }: FormikHelpers<{ email: string; password: string }>,
+  ) => {
+    login(email, password).then((data) => {
+      if (data.error) {
+        setSubmitting(false);
+        updateSnackBarMessage(data.error.message);
+      } else if (data.success) {
+        updateLoginContext(data.success);
+      } else {
+        setSubmitting(false);
+        updateSnackBarMessage('An unexpected error occurred. Please try again');
+      }
+    });
+  };
 
   return (
     <>

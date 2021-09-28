@@ -10,8 +10,7 @@ import SignUpForm from './SignUpForm/SignUpForm';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
-import DemoLogin from './SignUpForm/DemoLogin';
-import login from '../../helpers/APICalls/login';
+import DemoLogin from '../../components/DemoLogin/DemoLogin';
 
 export default function Register(): JSX.Element {
   const classes = useStyles();
@@ -25,23 +24,6 @@ export default function Register(): JSX.Element {
     register(username, email, password).then((data) => {
       if (data.error) {
         console.error({ error: data.error.message });
-        setSubmitting(false);
-        updateSnackBarMessage(data.error.message);
-      } else if (data.success) {
-        updateLoginContext(data.success);
-      } else {
-        setSubmitting(false);
-        updateSnackBarMessage('An unexpected error occurred. Please try again');
-      }
-    });
-  };
-
-  const handleDemoLogin = (
-    { email, password }: { email: string; password: string },
-    { setSubmitting }: FormikHelpers<{ email: string; password: string }>,
-  ) => {
-    login(email, password).then((data) => {
-      if (data.error) {
         setSubmitting(false);
         updateSnackBarMessage(data.error.message);
       } else if (data.success) {
@@ -67,7 +49,7 @@ export default function Register(): JSX.Element {
               </Grid>
             </Grid>
             <SignUpForm handleSubmit={handleSubmit} />
-            <DemoLogin handleSubmit={handleDemoLogin} />
+            <DemoLogin />
             <AuthHeader linkTo="/login" asideText="Already a member?" btnText="Login" />
           </Box>
           <Box p={1} alignSelf="center" />

@@ -10,6 +10,7 @@ import LoginForm from './LoginForm/LoginForm';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
+import DemoLogin from '../../components/DemoLogin/DemoLogin';
 
 export default function Login(): JSX.Element {
   const classes = useStyles();
@@ -47,6 +48,7 @@ export default function Login(): JSX.Element {
               </Grid>
             </Grid>
             <LoginForm handleSubmit={handleSubmit} />
+            <DemoLogin />
             <AuthHeader linkTo="/signup" asideText="Don't have an account?" btnText="Create account" />
           </Box>
           <Box p={1} alignSelf="center" />
