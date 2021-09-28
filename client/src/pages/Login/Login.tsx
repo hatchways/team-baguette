@@ -10,6 +10,7 @@ import LoginForm from './LoginForm/LoginForm';
 import AuthLinks from '../../components/AuthLinks/AuthLinks';
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
+import DemoLogin from '../../components/DemoLogin/DemoLogin';
 
 export default function Login(): JSX.Element {
   const classes = useStyles();
@@ -27,9 +28,6 @@ export default function Login(): JSX.Element {
       } else if (data.success) {
         updateLoginContext(data.success);
       } else {
-        // should not get here from backend but this catch is for an unknown issue
-        console.error({ data });
-        
         setSubmitting(false);
         updateSnackBarMessage('An unexpected error occurred. Please try again');
       }
@@ -50,7 +48,8 @@ export default function Login(): JSX.Element {
               </Grid>
             </Grid>
             <LoginForm handleSubmit={handleSubmit} />
-            <AuthLinks linkTo="/signup" asideText="Don't have an account?" btnText="Create account" />
+            <DemoLogin />
+            <AuthHeader linkTo="/signup" asideText="Don't have an account?" btnText="Create account" />
           </Box>
           <Box p={1} alignSelf="center" />
         </Box>

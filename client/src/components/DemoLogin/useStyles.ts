@@ -5,21 +5,8 @@ const useStyles = makeStyles((theme) => ({
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
-  label: {
-    fontSize: 16,
-    paddingLeft: '5px',
-    textTransform: 'uppercase',
-    color: 'black',
-    fontFamily: theme.typography.bolded.fontFamily,
-  },
-  inputs: {
-    marginTop: '.8rem',
-    height: '2rem',
-    padding: '5px',
-    border: '1px solid rgba(0,0,0,0.2)',
-    borderRadius: '5px',
-  },
-  submit: {
+  demoSubmit: {
+    margin: theme.spacing(1, 2, 2),
     padding: 10,
     width: 160,
     height: 56,

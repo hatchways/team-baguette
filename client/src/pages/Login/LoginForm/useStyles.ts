@@ -36,19 +36,6 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'uppercase',
     letterSpacing: 1.1,
   },
-  demoSubmit: {
-    margin: theme.spacing(3, 2, 2),
-    padding: 10,
-    width: 160,
-    height: 56,
-    borderRadius: theme.shape.borderRadius,
-    marginTop: 49,
-    fontSize: 14,
-    backgroundColor: 'rgb(240, 69, 69)',
-    color: 'white',
-    textTransform: 'uppercase',
-    letterSpacing: 1.1,
-  },
 }));
 
 export default useStyles;
