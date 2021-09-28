@@ -15,3 +15,8 @@ interface User {
   username: string;
   _id: string;
 }
+
+export interface ReqValueApiData {
+  error?: {message: string};
+  success?: string;
+}

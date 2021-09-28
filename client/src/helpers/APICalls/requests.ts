@@ -1,4 +1,4 @@
-import { ReqValue } from '../../interface/Request';
+import { ReqValue, ReqValueApiData } from '../../interface/Request';
 
 export const getRequests = async (): Promise<ReqValue[]> => {
   return await fetch('/requests/sitter', {
@@ -12,7 +12,7 @@ export const getRequests = async (): Promise<ReqValue[]> => {
     }));
 };
 
-export const updateReqs = async (reqId: string, status: string): Promise<ReqValue> => {
+export const updateReqs = async (reqId: string, status: string): Promise<ReqValueApiData> => {
   return await fetch('/requests', {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },

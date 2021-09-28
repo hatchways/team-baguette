@@ -22,7 +22,7 @@ const RequestMenu = ({ ind, eleId, setDateReqs, selectedDate, setNextReq, dateRe
 
   const handleUpdate = (reqId: string, status: string) => {
     updateReqs(reqId, status).then((res) => {
-      if (res.hasOwnProperty('message')) {
+      if (res.success) {
         const dateReqsCopy = [...dateReqs];
         const foundRequest = dateReqsCopy.map((ele) => ele._id).indexOf(reqId);
         if (status === 'declined') {
