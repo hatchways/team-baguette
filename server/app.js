@@ -44,7 +44,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/requests", requestsRouter)
+app.use("/requests", requestsRouter);
 app.use("/auth", authRouter);
 app.use("/users", userRouter);
 app.use("/profiles", profileRouter);
