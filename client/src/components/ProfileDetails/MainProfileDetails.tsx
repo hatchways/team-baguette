@@ -77,9 +77,9 @@ export default function MainProfileDetails({ profile }: Props): JSX.Element {
             </Typography>
           </CardContent>
         </Box>
-        <Box>
+        <Box className={classes.cardBody}>
           <CardContent>
-            <Typography variant="h4" component="div" gutterBottom>
+            <Typography variant="h4" component="div" gutterBottom className={classes.header}>
               About Me
             </Typography>
             <Typography variant="body1">{description}</Typography>

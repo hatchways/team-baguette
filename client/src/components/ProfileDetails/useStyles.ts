@@ -8,6 +8,9 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     height: '100%',
   },
+  cardBody: {
+    padding: '1em',
+  },
   header: {
     fontSize: 30,
     fontWeight: 'bolder',
@@ -40,6 +43,13 @@ const useStyles = makeStyles(() => ({
   },
   icon: {
     color: 'white',
+  },
+  button: {
+    padding: '2em 5em 2em 5em',
+    textTransform: 'uppercase',
+  },
+  price: {
+    fontWeight: 900,
   },
 }));
 
