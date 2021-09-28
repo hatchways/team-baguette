@@ -41,8 +41,8 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
   };
 
   const deleteAvatarContext = () => {
-    if(loggedInUser && loggedInUser.email && loggedInUser.avatar){
-      setLoggedInUser({...loggedInUser, avatar: ""});
+    if (loggedInUser && loggedInUser.email && loggedInUser.avatar) {
+      setLoggedInUser({ ...loggedInUser, avatar: '' });
     }
   };
 

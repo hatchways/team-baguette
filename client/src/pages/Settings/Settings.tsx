@@ -20,7 +20,6 @@ export default function Settings(): JSX.Element {
   }
   return (
     <Grid container component="main" className={`${classes.root} ${classes.settings}`}>
-      <CssBaseline />
       <Grid item xs={12}>
         Header place holder
       </Grid>

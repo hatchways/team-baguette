@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { User } from '../../interface/User';
-import { Grid, Paper, Box, Typography, Avatar, Button, Snackbar } from '@material-ui/core';
+import { Grid, Paper, Box, Typography, Avatar, Button } from '@material-ui/core';
 import DeleteIcon from '@mui/icons-material/Delete';
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import AvatarForm from './AvatarForm/AvatarForm';
@@ -8,6 +8,7 @@ import useStyles from './useStyles';
 import uploadImage from '../../helpers/APICalls/uploadImage';
 import deleteAvatar from '../../helpers/APICalls/deleteAvatar';
 import { useAuth } from '../../context/useAuthContext';
+import { useSnackBar } from '../../context/useSnackbarContext';
 
 interface Props {
   loggedInUser: User;
@@ -19,9 +20,9 @@ interface HTMLInputEvent extends Event {
 
 const EditProfilePicture = ({ loggedInUser }: Props): JSX.Element => {
   const classes = useStyles();
+  const { updateSnackBarMessage } = useSnackBar();
   const { updateAvatarContext, deleteAvatarContext } = useAuth();
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
-  const [snackbarMessage, setSnackbarMessage] = useState({ className: '', message: '', open: false });
 
   function changeHandler(e: HTMLInputEvent) {
     e.preventDefault();
@@ -41,15 +42,11 @@ const EditProfilePicture = ({ loggedInUser }: Props): JSX.Element => {
     formData.append('image', avatarFile);
     await uploadImage(formData).then((data) => {
       if (data.error) {
-        setSnackbarMessage({ className: classes.error, open: true, message: data.error.message });
+        updateSnackBarMessage(data.error.message);
       } else if (data.success) {
         setAvatarFile(null);
         updateAvatarContext(data.success);
-        setSnackbarMessage({
-          className: classes.success,
-          open: true,
-          message: 'Avatar has been successfully updated!',
-        });
+        updateSnackBarMessage('Avatar has been successfully updated!');
       }
     });
   }
@@ -60,27 +57,25 @@ const EditProfilePicture = ({ loggedInUser }: Props): JSX.Element => {
     if (avatarLink) {
       await deleteAvatar().then((data) => {
         if (data.error) {
-          setSnackbarMessage({ className: classes.error, open: true, message: 'Avatar failed to be deleted' });
+          updateSnackBarMessage('Avatar failed to be deleted');
         } else if (data.success) {
-          setSnackbarMessage({
-            className: classes.success,
-            open: true,
-            message: 'Avatar has been successfully deleted!',
-          });
+          updateSnackBarMessage('Avatar has been successfully deleted!');
           deleteAvatarContext();
         }
       });
     }
   }
 
-  function closingSnackbar(): void {
-    setSnackbarMessage({ className: '', message: '', open: false });
-  }
-
   function displayAvatar(): JSX.Element {
     return (
       <>
-        <div className={classes.picture}>
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          className={classes.picture}
+        >
           {avatarFile ? (
             <>
               <Avatar alt="Profile Image" className={classes.avatar} src={URL.createObjectURL(avatarFile)} />
@@ -96,7 +91,7 @@ const EditProfilePicture = ({ loggedInUser }: Props): JSX.Element => {
               </Grid>
             </>
           )}
-        </div>
+        </Box>
         {avatarFile ? (
           <Button
             className={classes.button}
@@ -123,7 +118,7 @@ const EditProfilePicture = ({ loggedInUser }: Props): JSX.Element => {
 
   return (
     <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
-      <Paper elevation={3} className={classes.paper}>
+      <Paper elevation={3} className={classes.root}>
         <Typography variant="h3" align="center" className={classes.header}>
           Profile Photo
         </Typography>
@@ -135,18 +130,6 @@ const EditProfilePicture = ({ loggedInUser }: Props): JSX.Element => {
           </Button>
         </Box>
       </Paper>
-      <Snackbar
-        ContentProps={{
-          classes: {
-            root: snackbarMessage.className,
-          },
-        }}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        open={snackbarMessage.open}
-        onClose={closingSnackbar}
-        message={snackbarMessage.message}
-        key="alert message"
-      />
     </Box>
   );
 };

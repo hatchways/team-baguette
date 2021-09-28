@@ -2,24 +2,11 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
   root: {
-    marginLeft: 41,
-    marginRight: 41,
-    display: 'flex',
-    flexDirection: 'column',
-    flexGrow: 1,
-    paddingTop: '2em',
-    paddingBottom: '2em',
-  },
-  paper: {
     width: '100%',
     height: '100%',
-    padding: '5em 2em 5em 2em',
+    padding: '4em 2em 4em 2em',
   },
   picture: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
     padding: '2em',
   },
   header: {
