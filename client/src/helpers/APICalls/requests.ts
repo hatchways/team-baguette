@@ -1,4 +1,4 @@
-import { ReqValueApiData, ReqValue } from '../../interface/Request';
+import { ReqValue, ReqValueApiData } from '../../interface/Request';
 
 export const getRequests = async (): Promise<ReqValue[]> => {
   return await fetch('/requests/sitter', {

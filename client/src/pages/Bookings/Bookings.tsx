@@ -74,9 +74,9 @@ export default function Bookings(): JSX.Element {
                     ind={nextReq._id}
                     eleId={nextReq._id}
                     setDateReqs={setDateReqs}
+                    dateReqs={dateReqs}
                     selectedDate={selectedDate}
                     setNextReq={setNextReq}
-                    dateReqs={dateReqs}
                   />
                 </CardContent>
                 <CardHeader className={classes.iconStatus} avatar={'avatar'} title={`${nextReq.user.username}`} />

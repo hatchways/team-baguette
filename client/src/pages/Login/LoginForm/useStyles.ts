@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   forgot: {
     paddingRight: 10,
-    color: '#3a8dff',
+    color: '#3A8DFF',
     display: 'none',
   },
   submit: {
