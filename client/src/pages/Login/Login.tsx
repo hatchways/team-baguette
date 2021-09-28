@@ -49,7 +49,7 @@ export default function Login(): JSX.Element {
             </Grid>
             <LoginForm handleSubmit={handleSubmit} />
             <DemoLogin />
-            <AuthHeader linkTo="/signup" asideText="Don't have an account?" btnText="Create account" />
+            <AuthLinks linkTo="/signup" asideText="Don't have an account?" btnText="Create account" />
           </Box>
           <Box p={1} alignSelf="center" />
         </Box>
