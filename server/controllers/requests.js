@@ -5,7 +5,7 @@ async function getReqs(req, res, next) {
         if (!req.user?.id) {
             return res.sendStatus(401)
         }
-        let dogReqs = await Request.find({ 
+        const dogReqs = await Request.find({ 
                 $or: [{
                     sitterId: req.user.id}, 
                     {user: req.user.id
@@ -13,13 +13,7 @@ async function getReqs(req, res, next) {
             }) 
             .populate("user", 'username')
             .sort({ start: 'asc' })
-        let filteredReqs
-        if (req.params.type === 'sitter') {
-            filteredReqs = dogReqs.filter(el => el.sitterId == req.user.id)
-        } else {
-            filteredReqs = dogReqs.filter(el => el.userId == req.user.id)
-        }
-        res.status(200).json(filteredReqs)
+        res.status(200).json(dogReqs)
     } catch (error) {
         next(error)
     }
