@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import login from '../../helpers/APICalls/login';
 import LoginForm from './LoginForm/LoginForm';
-import AuthHeader from '../../components/AuthHeader/AuthHeader';
+import AuthLinks from '../../components/AuthLinks/AuthLinks';
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
 
@@ -50,7 +50,7 @@ export default function Login(): JSX.Element {
               </Grid>
             </Grid>
             <LoginForm handleSubmit={handleSubmit} />
-            <AuthHeader linkTo="/signup" asideText="Don't have an account?" btnText="Create account" />
+            <AuthLinks linkTo="/signup" asideText="Don't have an account?" btnText="Create account" />
           </Box>
           <Box p={1} alignSelf="center" />
         </Box>

@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import useStyles from './useStyles';
 import register from '../../helpers/APICalls/register';
 import SignUpForm from './SignUpForm/SignUpForm';
-import AuthHeader from '../../components/AuthHeader/AuthHeader';
+import AuthLinks from '../../components/AuthLinks/AuthLinks';
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
 
@@ -51,7 +51,7 @@ export default function Register(): JSX.Element {
               </Grid>
             </Grid>
             <SignUpForm handleSubmit={handleSubmit} />
-            <AuthHeader linkTo="/login" asideText="Already a member?" btnText="Login" />
+            <AuthLinks linkTo="/login" asideText="Already a member?" btnText="Login" />
           </Box>
           <Box p={1} alignSelf="center" />
         </Box>
