@@ -2,8 +2,6 @@ const Notification = require("../models/Notification");
 const asyncHandler = require("express-async-handler");
 const Profile = require("../models/Profile");
 
-//Creating a notification for request is done during booking.
-//Logan is using two date pickers in his Booking page, so calculate the difference in time in hours
 const calculateTime = (start, end) => {
   const day1 = new Date(`${start}`);
   const day2 = new Date(`${end}`);
@@ -22,19 +20,21 @@ exports.createNotification = asyncHandler(async (req, res, next) => {
     "user",
     "avatar"
   );
-  let desc;
+  let description;
   if (type === "request") {
-    desc = `${capitalizeFirst(
+    description = `${capitalizeFirst(
       userProfile.firstName
     )} has requested your service for ${calculateTime(start, end)} hours`;
   } else if (type === "message") {
-    desc = `${capitalizeFirst(userProfile.firstName)} has sent you a message`;
+    description = `${capitalizeFirst(
+      userProfile.firstName
+    )} has sent you a message`;
   }
   const notification = new Notification({
-    type: type,
-    title: title,
+    type,
+    title,
     date: start,
-    description: desc,
+    description,
     avatar: userProfile.user.avatar,
   });
   await notification.save();
@@ -54,9 +54,9 @@ exports.createNotification = asyncHandler(async (req, res, next) => {
 // @desc Update notification status
 // @access Private
 exports.updateNotification = asyncHandler(async (req, res, next) => {
-  const { notificationId } = req.body;
+  const { id } = req.params;
   const notification = await Notification.findOneAndUpdate(
-    { _id: notificationId },
+    { _id: id },
     { read: true },
     { new: true }
   );
@@ -74,9 +74,7 @@ exports.updateNotification = asyncHandler(async (req, res, next) => {
 // @access Private
 exports.getNotifications = asyncHandler(async (req, res, next) => {
   const user = req.user;
-  const profile = await Profile.findOne({ user: user }).populate(
-    "notification"
-  );
+  const profile = await Profile.findOne({ user }).populate("notification");
   if (!profile) {
     res.status(404);
     throw new Error("Could not retrieve the profile");
@@ -91,19 +89,12 @@ exports.getNotifications = asyncHandler(async (req, res, next) => {
 // @access Private
 exports.getUnreadNotifications = asyncHandler(async (req, res, next) => {
   const user = req.user;
-  const profile = await Profile.findOne({ user: user }).populate(
-    "notification"
-  );
+  const profile = await Profile.findOne({ user }).populate("notification");
   if (!profile) {
     res.status(404);
     throw new Error("Could not retrieve the profile");
   }
-  let unreadNotifications = [];
-  profile.notification.forEach((noti) => {
-    if (!noti.read) {
-      unreadNotifications.push(noti);
-    }
-  });
+  const unreadNotifications = profile.notification.filter((noti) => !noti.read);
   res.status(200).json({
     success: unreadNotifications,
   });
