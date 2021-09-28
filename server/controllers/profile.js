@@ -105,7 +105,10 @@ exports.getProfileById = asyncHandler(async (req, res, next) => {
 // @desc Get all profiles
 // @access Public
 exports.getProfiles = asyncHandler(async (req, res, next) => {
-  const profiles = await Profile.find({$and:[{user: {$ne: req.user.id}},{owner: false}]}).populate('user', 'avatar')
+  const profiles = await Profile.find({ owner: false }).populate(
+    "User",
+    "avatar"
+  );
   if (!profiles) {
     res.status(404);
     throw new Error("No profiles");

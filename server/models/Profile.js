@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const profileSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: "user",
+    ref: "User",
   },
   firstName: {
     type: String,
@@ -51,8 +51,8 @@ const profileSchema = new Schema({
     },
   },
   owner: {
-    type: Boolean
+    type: Boolean,
   },
 });
 
-module.exports = Profile = mongoose.model("profile", profileSchema);
+module.exports = Profile = mongoose.model("Profile", profileSchema);

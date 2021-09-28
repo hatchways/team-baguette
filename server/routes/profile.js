@@ -11,6 +11,6 @@ const {
 router.route("/").post(protect, createProfile);
 router.route("/").put(protect, updateProfile);
 router.route("/:id").get(getProfileById);
-router.route("/").get(protect, getProfiles);
+router.route("/").get(getProfiles);
 
 module.exports = router;

@@ -30,7 +30,7 @@ export const Listing: React.FC = () => {
         Your Search Results
       </Typography>
       <Box display="flex" justifyContent="center" marginTop="1rem" marginBottom="4rem">
-        <Box className={classes.inputBox}>
+        <Box position="relative" border="1px solid lightgray" display="flex" justifyContent="center">
           <Search className={classes.inputIcon} color="secondary" />
           <TextField
             id="address"
