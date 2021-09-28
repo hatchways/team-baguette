@@ -51,8 +51,14 @@ const profileSchema = new Schema({
     },
   },
   owner: {
-    type: Boolean
+    type: Boolean,
   },
+  notification: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "notification",
+    },
+  ],
 });
 
 module.exports = Profile = mongoose.model("profile", profileSchema);
