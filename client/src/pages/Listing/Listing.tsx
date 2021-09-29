@@ -4,11 +4,10 @@ import { Search } from '@material-ui/icons';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import { CustomCard } from './CustomCard';
 import DateFnsUtils from '@date-io/date-fns';
-import { getProfiles, getProfilesForSitter } from '../../helpers/APICalls/profile';
+import { getProfiles } from '../../helpers/APICalls/profile';
 import { ProfileListing } from '../../interface/Profile';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import useStyles from './useStyles';
-import { useAuth } from '../../context/useAuthContext';
 
 export const Listing: React.FC = () => {
   const classes = useStyles();
@@ -16,27 +15,16 @@ export const Listing: React.FC = () => {
   const [dateTo, setDateTo] = useState<Date | null>(new Date());
   const [profiles, setProfiles] = useState<Array<ProfileListing>>([]);
   const { updateSnackBarMessage } = useSnackBar();
-  const { loggedInUser } = useAuth();
 
   useEffect(() => {
-    if (loggedInUser) {
-      getProfilesForSitter().then((res) => {
-        if (res.success) {
-          setProfiles(res.success);
-        } else {
-          updateSnackBarMessage('Failed to get sitter profiles');
-        }
-      });
-    } else {
-      getProfiles().then((res) => {
-        if (res.success) {
-          setProfiles(res.success);
-        } else {
-          updateSnackBarMessage('Failed to get sitter profiles');
-        }
-      });
-    }
-  }, [updateSnackBarMessage, loggedInUser]);
+    getProfiles().then((res) => {
+      if (res.success) {
+        setProfiles(res.success);
+      } else {
+        updateSnackBarMessage('Failed to get sitter profiles');
+      }
+    });
+  }, [updateSnackBarMessage]);
 
   return (
     <Box width="100%" maxWidth={800} p={3} margin="auto">

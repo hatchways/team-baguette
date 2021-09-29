@@ -6,13 +6,14 @@ const {
   updateProfile,
   getProfileById,
   getProfiles,
-  getProfilesForSitter,
 } = require("../controllers/profile");
 
 router.route("/").post(protect, createProfile);
 router.route("/").put(protect, updateProfile);
-router.route("/sitter").get(protect, getProfilesForSitter);
 router.route("/:id").get(getProfileById);
-router.route("/").get(getProfiles);
+router.route("/").get((req, res, next) => {
+  if (req.cookies.token) return protect(req, res, next);
+  next();
+}, getProfiles);
 
 module.exports = router;

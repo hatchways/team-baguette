@@ -67,14 +67,3 @@ export const getProfiles = async (): Promise<ProfileListingApiData> => {
       error: { message: 'Failed to get user profile' },
     }));
 };
-export const getProfilesForSitter = async (): Promise<ProfileListingApiData> => {
-  const fetchOptions: FetchOptions = {
-    method: 'GET',
-    credentials: 'include',
-  };
-  return await fetch(`/profiles/sitter`, fetchOptions)
-    .then((res) => res.json())
-    .catch(() => ({
-      error: { message: 'Failed to get user profile' },
-    }));
-};
