@@ -28,7 +28,7 @@ const AuthMenu = (): JSX.Element => {
   const handleBookings = () => {
     history.push('/bookings');
   };
-
+  //TODO remove editprofiles/listing/bookings once navbar/sidebar is merged
   return (
     <div>
       <IconButton aria-label="show auth menu" aria-controls="auth-menu" aria-haspopup="true" onClick={handleClick}>
