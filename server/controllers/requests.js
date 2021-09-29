@@ -36,7 +36,7 @@ async function updateReqs(req, res, next) {
         await Request.findOneAndUpdate({_id: req.body.reqId}, {
             $set: updateDoc
         })
-        res.status(200).json({message: "Updated Successfully"})
+        res.status(200).json({success: "Updated Successfully"})
     } catch (error) {
         next(error)
     }
