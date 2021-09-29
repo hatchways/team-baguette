@@ -1,5 +1,5 @@
 import Avatar from '@material-ui/core/Avatar';
-import { classicNameResolver } from 'typescript';
+
 import { User } from '../../interface/User';
 
 interface Props {

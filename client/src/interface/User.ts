@@ -10,3 +10,9 @@ export interface SearchUsersApiData {
   users?: User[];
   error?: { message: string };
 }
+
+export interface UserFromProfile {
+  id: string;
+  username: string;
+  avatar: string;
+}
