@@ -50,8 +50,9 @@ const profileSchema = new Schema({
       type: Date,
     },
   },
-  owner: {
+  sitter: {
     type: Boolean,
+    default: false,
   },
 });
 

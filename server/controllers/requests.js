@@ -13,7 +13,7 @@ async function getReqs(req, res, next) {
         { user: req.user.id },
       ],
     })
-      .populate("User", "username")
+      .populate("user", "username")
       .sort({ start: "asc" });
     res.status(200).json(dogReqs);
   } catch (error) {
