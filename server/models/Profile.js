@@ -57,7 +57,7 @@ const profileSchema = new Schema({
 
 profileSchema.statics.findByUserIdPopulated = async function (userId) {
   return (
-    await this.findOne({ userId: userId }).populate("user", "_id username avatar")
+    await this.findOne({ user: userId }).populate("user", "_id username avatar")
   )
 }
 

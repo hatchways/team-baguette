@@ -22,7 +22,7 @@ exports.createProfile = asyncHandler(async (req, res, next) => {
     throw new Error("Profile already exists");
   }
   const newProfile = new Profile({
-    userId: user._id,
+    user: user._id,
     firstName: firstName,
     lastName: lastName,
     gender: gender,
