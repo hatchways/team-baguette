@@ -9,18 +9,19 @@ const useStyles = makeStyles(() => ({
   },
   authWrapper: {
     display: 'flex',
-    alignItems: 'flex-start',
-    justifyContent: 'space-between',
-    flexDirection: 'column',
+    alignItems: 'center',
+    minWidth: '100vw',
     minHeight: '100vh',
+    justifyContent: 'space-around',
+    flexDirection: 'column',
     paddingTop: 23,
   },
   welcome: {
-    fontSize: 26,
+    fontSize: 32,
     paddingBottom: 20,
     color: '#000000',
-    fontWeight: 700,
-    fontFamily: "'Open Sans'",
+    fontFamily: 'Poppins-Bold',
+    textAlign: 'center',
   },
 }));
 

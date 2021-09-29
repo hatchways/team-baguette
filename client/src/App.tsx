@@ -5,6 +5,7 @@ import Login from './pages/Login/Login';
 import Signup from './pages/SignUp/SignUp';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Bookings from './pages/Bookings/Bookings';
+import Settings from './pages/Settings/Settings';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
@@ -12,6 +13,7 @@ import { SnackBarProvider } from './context/useSnackbarContext';
 import './App.css';
 import { EditProfile } from './pages/EditProfile/EditProfile';
 import ProfileDetails from './pages/ProfileDetails/ProfileDetails';
+import { Listing } from './pages/Listing/Listing';
 
 function App(): JSX.Element {
   return (
@@ -24,6 +26,7 @@ function App(): JSX.Element {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/edit" component={EditProfile} />
+                <Route exact path="/listing" component={Listing} />
                 <Route exact path="/dashboard">
                   <Dashboard />
                 </Route>
@@ -31,6 +34,7 @@ function App(): JSX.Element {
                   <Bookings />
                 </Route>
                 <Route path="/profile/:id" component={ProfileDetails} />
+                <Route path="/settings" component={Settings} />
                 <Route path="*">
                   <Redirect to="/login" />
                 </Route>
