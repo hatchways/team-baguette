@@ -4,14 +4,13 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { useAuth } from '../../context/useAuthContext';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useStyles from './useStyles';
 
 const AuthMenu = (): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const { logout } = useAuth();
-  const history = useHistory();
   const classes = useStyles();
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -27,8 +26,8 @@ const AuthMenu = (): JSX.Element => {
     logout();
   };
 
-  const handleEditProfile = () => {
-    history.push('/edit');
+  const handleProfile = () => {
+    setAnchorEl(null);
   };
 
   return (
@@ -48,7 +47,9 @@ const AuthMenu = (): JSX.Element => {
         }}
         getContentAnchorEl={null}
       >
-        <MenuItem onClick={handleEditProfile}>Profile</MenuItem>
+        <Link to="/profile">
+          <MenuItem onClick={handleProfile}>Profile</MenuItem>
+        </Link>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>
