@@ -10,23 +10,23 @@ interface Props {
 
 export default function ProfileBookingCard({ profile }: Props): JSX.Element {
   const classes = useStyles();
-  const [dropIn, setDropIn] = useState({ date: new Date(), time: '' });
-  const [dropOff, setDropOff] = useState({ date: new Date(), time: '' });
+  const [dropIn, setDropIn] = useState({ date: '', time: '' });
+  const [dropOff, setDropOff] = useState({ date: '', time: '' });
 
-  const changeDropInHandler = (event: any) => {
-    event.preventDefault();
-    setDropIn({ ...dropIn, [event.target.name]: event.target.value });
+  const changeDropInHandler = (e: React.SyntheticEvent): void => {
+    const target = e.target as HTMLInputElement;
+    setDropIn({ ...dropIn, [target.name]: target.value });
   };
 
-  const changeDropOffHandler = (event: any) => {
-    event.preventDefault();
-    setDropOff({ ...dropOff, [event.target.name]: event.target.value });
+  const changeDropOffHandler = (e: React.SyntheticEvent): void => {
+    const target = e.target as HTMLInputElement;
+    setDropOff({ ...dropOff, [target.name]: target.value });
   };
 
   return (
     <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
       <Card className={`${classes.root} ${classes.cardBody}`} elevation={20}>
-        <CardContent style={{ textAlign: 'center' }}>
+        <CardContent className={classes.profileCardContent}>
           <Typography variant="h5" gutterBottom className={classes.price}>
             $14/hr
           </Typography>
@@ -43,6 +43,7 @@ export default function ProfileBookingCard({ profile }: Props): JSX.Element {
             id="Drop-in-date"
             type="date"
             InputLabelProps={{ shrink: true }}
+            className={classes.dateFields}
           />
           <TextField
             onChange={changeDropInHandler}
@@ -52,6 +53,7 @@ export default function ProfileBookingCard({ profile }: Props): JSX.Element {
             name="time"
             type="time"
             InputLabelProps={{ shrink: true }}
+            className={classes.timeFields}
           />
         </CardContent>
         <CardContent>
@@ -65,6 +67,7 @@ export default function ProfileBookingCard({ profile }: Props): JSX.Element {
             id="Drop-off-date"
             type="date"
             InputLabelProps={{ shrink: true }}
+            className={classes.dateFields}
           />
           <TextField
             onChange={changeDropOffHandler}
@@ -74,9 +77,10 @@ export default function ProfileBookingCard({ profile }: Props): JSX.Element {
             name="time"
             type="time"
             InputLabelProps={{ shrink: true }}
+            className={classes.timeFields}
           />
         </CardContent>
-        <CardContent style={{ textAlign: 'center' }}>
+        <CardContent className={classes.profileCardContent}>
           <Button
             variant="contained"
             color="secondary"

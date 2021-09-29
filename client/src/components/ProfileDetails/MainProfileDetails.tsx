@@ -6,7 +6,6 @@ import {
   CardMedia,
   CardActionArea,
   Typography,
-  Avatar,
   Grid,
   Modal,
   IconButton,
@@ -26,21 +25,14 @@ export default function MainProfileDetails({ profile }: Props): JSX.Element {
   const classes = useStyles();
   const [active, setActive] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-  const { firstName, lastName, description, address } = profile;
-  const gallery = [
-    'https://team-baguette-loving-sitter.s3.amazonaws.com/6141d6b0fd48a965b0fc299d/gallery-jewelry_3.png',
-    'https://team-baguette-loving-sitter.s3.amazonaws.com/6141d6b0fd48a965b0fc299d/gallery-engagement.jpg',
-    'https://team-baguette-loving-sitter.s3.amazonaws.com/6141d6b0fd48a965b0fc299d/gallery-enlightenment.jpg',
-    'https://team-baguette-loving-sitter.s3.amazonaws.com/6141d6b0fd48a965b0fc299d/gallery-enrichment.jpg',
-    'https://team-baguette-loving-sitter.s3.amazonaws.com/6141d6b0fd48a965b0fc299d/gallery-mission.jpg',
-  ];
+  const { firstName, lastName, description, address, gallery, user } = profile;
 
   const renderGalleryCards = () => {
     return gallery.map((item, index) => {
       return (
         <Grid item xs={2} key={`gallery-image-${index}`}>
           <CardActionArea
-            style={{ height: '100%' }}
+            className={classes.card}
             onClick={() => {
               setActive(true);
               setActiveIndex(index);
@@ -62,11 +54,7 @@ export default function MainProfileDetails({ profile }: Props): JSX.Element {
             alt="profile banner image"
             className={classes.banner}
           />
-          <Avatar
-            alt="Profile Image"
-            src={` https://avatars.dicebear.com/api/big-ears-neutral/${firstName}.svg`}
-            className={classes.avatar}
-          />
+          <AvatarDisplay user={user} className={classes.avatar} />
           <CardContent className={classes.profileName}>
             <Typography variant="h3" className={classes.header}>
               {`${firstName} ${lastName}`}
@@ -94,7 +82,13 @@ export default function MainProfileDetails({ profile }: Props): JSX.Element {
       </Card>
 
       <Modal open={active} onClose={() => setActive(false)}>
-        <Box display="flex" flexDirection="column" justifyContent="center" alignItems="flex-start">
+        <Box
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          alignItems="flex-start"
+          className={classes.modal}
+        >
           <IconButton className={classes.icon} onClick={() => setActive(false)}>
             <CloseIcon fontSize="large" />
           </IconButton>

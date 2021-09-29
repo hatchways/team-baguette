@@ -1,3 +1,5 @@
+const {UserFromProfile} = require("./User")
+
 export interface Profile {
   firstName: string;
   lastName: string;
@@ -9,6 +11,7 @@ export interface Profile {
   description: string;
   owner?: boolean;
   gallery: string[];
+  user?: typeof UserFromProfile;
 }
 export interface InitValue {
   firstName: string;

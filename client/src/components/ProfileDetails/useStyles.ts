@@ -8,6 +8,9 @@ const useStyles = makeStyles(() => ({
     width: '100%',
     height: '100%',
   },
+  card: {
+    height: '100%',
+  },
   cardBody: {
     padding: '1em',
   },
@@ -36,8 +39,11 @@ const useStyles = makeStyles(() => ({
   banner: {
     height: `${bannerHeight}em`,
   },
+  modal: {
+    height: '100%',
+  },
   modalImage: {
-    height: '40em',
+    height: '20em',
     alignSelf: 'center',
     justifySelf: 'center',
   },
@@ -50,6 +56,15 @@ const useStyles = makeStyles(() => ({
   },
   price: {
     fontWeight: 900,
+  },
+  dateFields: {
+    width: '18ch',
+  },
+  timeFields: {
+    width: '15ch',
+  },
+  profileCardContent: {
+    textAlign: 'center',
   },
 }));
 
