@@ -115,7 +115,15 @@ export const EditProfile: React.FC = () => {
     }
   }, [loggedInUser, updateSnackBarMessage]);
   return (
-    <Box width="100%" maxWidth={700} p={6} component={Paper} margin="auto" marginTop="100px">
+    <Box
+      width="100%"
+      maxWidth={700}
+      p={6}
+      component={Paper}
+      margin="auto"
+      marginTop="10px"
+      boxShadow="0 0 10px rgba(0,0,0,0.2)"
+    >
       <Typography className={classes.welcome} component="h1" variant="h5">
         Edit Profile
       </Typography>

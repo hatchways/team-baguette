@@ -27,8 +27,8 @@ const AuthMenu = (): JSX.Element => {
     logout();
   };
 
-  const handleEditProfile = () => {
-    history.push('/edit');
+  const handleProfile = () => {
+    history.push('/profile');
   };
 
   return (
@@ -48,7 +48,7 @@ const AuthMenu = (): JSX.Element => {
         }}
         getContentAnchorEl={null}
       >
-        <MenuItem onClick={handleEditProfile}>Profile</MenuItem>
+        <MenuItem onClick={handleProfile}>Profile</MenuItem>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>
