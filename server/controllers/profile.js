@@ -122,19 +122,3 @@ exports.getProfiles = asyncHandler(async (req, res, next) => {
     success: profiles,
   });
 });
-
-// @route GET /profiles/sitter
-// @desc Get all profiles but the current user
-// @access Private
-exports.getProfilesForSitter = asyncHandler(async (req, res, next) => {
-  const profiles = await Profile.find({
-    $and: [{ user: { $ne: req.user.id } }, { sitter: true }],
-  }).populate("user", "avatar");
-  if (!profiles) {
-    res.status(404);
-    throw new Error("No profiles");
-  }
-  res.status(200).json({
-    success: profiles,
-  });
-});

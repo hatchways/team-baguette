@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   dateInput: {
-    width: '8vw',
+    width: '6vw',
+    minWidth: '100px',
   },
   inputIcon: {
     position: 'absolute',
