@@ -82,6 +82,9 @@ const useStyles = makeStyles((theme) => ({
     fontSize: 11,
     lineHeight: '5vh',
   },
+  price: {
+    fontWeight: 900,
+  },
   button: {
     width: 170,
     height: 54,

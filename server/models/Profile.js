@@ -52,12 +52,16 @@ const profileSchema = new Schema({
       type: Date,
     },
   },
+  sitter: {
+    type: Boolean,
+    default: false,
+  },
   gallery: [String],
 });
 
 profileSchema.statics.findByUserIdPopulated = async function (userId) {
   return (
-    await this.findOne({ userId: userId }).populate("user", "_id username avatar")
+    await this.findOne({ user: userId }).populate("user", "_id username avatar")
   )
 }
 
@@ -92,5 +96,4 @@ const cleanUpAWSFolder = (keys) => {
   deleteFile(keys.map(element => element.split(".s3.amazonaws.com/").pop()))
 }
 
-
-module.exports = Profile = mongoose.model("profile", profileSchema);
+module.exports = Profile = mongoose.model("Profile", profileSchema);

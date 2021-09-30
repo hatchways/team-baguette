@@ -28,7 +28,7 @@ const AuthMenu = (): JSX.Element => {
   const handleBookings = () => {
     history.push('/bookings');
   };
-
+  //TODO remove editprofiles/listing/bookings once navbar/sidebar is merged
   return (
     <div>
       <IconButton aria-label="show auth menu" aria-controls="auth-menu" aria-haspopup="true" onClick={handleClick}>
@@ -48,6 +48,8 @@ const AuthMenu = (): JSX.Element => {
       >
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
         <MenuItem onClick={handleBookings}>Bookings</MenuItem>
+        <MenuItem onClick={() => history.push('/edit')}>Edit Profile</MenuItem>
+        <MenuItem onClick={() => history.push('/listing')}>Listing</MenuItem>
       </Menu>
     </div>
   );
