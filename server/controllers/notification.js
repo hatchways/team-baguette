@@ -2,48 +2,20 @@ const Notification = require("../models/Notification");
 const asyncHandler = require("express-async-handler");
 const Profile = require("../models/Profile");
 
-const calculateTime = (start, end) => {
-  const day1 = new Date(`${start}`);
-  const day2 = new Date(`${end}`);
-  return (day2.getTime() - day1.getTime()) / 1000 / 60 / 60;
-};
-const capitalizeFirst = (string) => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
 // @route POST /notification
 // @desc Create notification
 // @access Private
 exports.createNotification = asyncHandler(async (req, res, next) => {
-  const { type, title, sitterId, start, end } = req.body;
-  const userProfile = await Profile.findOne({ user: req.user.id }).populate(
-    "user",
-    "avatar"
-  );
-  let description;
-  if (type === "request") {
-    description = `${capitalizeFirst(
-      userProfile.firstName
-    )} has requested your service for ${calculateTime(start, end)} hours`;
-  } else if (type === "message") {
-    description = `${capitalizeFirst(
-      userProfile.firstName
-    )} has sent you a message`;
-  }
-  const notification = new Notification({
+  const { type, receiverId, start, end } = req.body;
+  const notification = new Notification();
+  const receiver = await notification.createNotification(
     type,
-    title,
-    date: start,
-    description,
-    avatar: userProfile.user.avatar,
-  });
-  await notification.save();
-  const sitter = await Profile.findOneAndUpdate(
-    { user: sitterId },
-    { $push: { notification: notification._id } },
-    { new: true }
+    req.user.id,
+    receiverId,
+    start,
+    end
   );
-  if (!sitter) {
+  if (!receiver) {
     res.status(400);
     throw new Error("Failed to push notification");
   }
@@ -74,7 +46,10 @@ exports.updateNotification = asyncHandler(async (req, res, next) => {
 // @access Private
 exports.getNotifications = asyncHandler(async (req, res, next) => {
   const user = req.user;
-  const profile = await Profile.findOne({ user }).populate("notification");
+  const profile = await Profile.findOne({ user }).populate({
+    path: "notification",
+    populate: { path: "user", model: "User", select: "avatar" },
+  });
   if (!profile) {
     res.status(404);
     throw new Error("Could not retrieve the profile");
@@ -89,7 +64,10 @@ exports.getNotifications = asyncHandler(async (req, res, next) => {
 // @access Private
 exports.getUnreadNotifications = asyncHandler(async (req, res, next) => {
   const user = req.user;
-  const profile = await Profile.findOne({ user }).populate("notification");
+  const profile = await Profile.findOne({ user }).populate({
+    path: "notification",
+    populate: { path: "user", model: "User", select: "avatar" },
+  });
   if (!profile) {
     res.status(404);
     throw new Error("Could not retrieve the profile");
