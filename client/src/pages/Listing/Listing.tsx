@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Grid, TextField, Typography } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
@@ -26,7 +25,7 @@ export const Listing: React.FC = () => {
       }
     });
   }, [updateSnackBarMessage]);
-    
+
   return (
     <Box width="100%" maxWidth={800} p={3} margin="auto">
       <Typography className={classes.header} component="h1" variant="h5">
