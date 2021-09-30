@@ -6,7 +6,7 @@ const { deleteFile } = require("../utils/aws")
 const profileSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: "user",
+    ref: "User",
   },
   firstName: {
     type: String,

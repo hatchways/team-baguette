@@ -20,7 +20,6 @@ export interface InitValue {
   phone: number;
   address: string;
   description: string;
-  gallery: string[];
 }
 export interface ProfileListing {
   firstName: string;

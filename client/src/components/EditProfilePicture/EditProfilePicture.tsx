@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { User } from '../../interface/User';
 import { Grid, Paper, Box, Typography, Avatar, Button } from '@material-ui/core';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Delete } from '@material-ui/icons';
 import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import AvatarForm from './AvatarForm/AvatarForm';
 import useStyles from './useStyles';
@@ -125,7 +125,7 @@ const EditProfilePicture = ({ loggedInUser }: Props): JSX.Element => {
         <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
           {displayAvatar()}
 
-          <Button className={classes.button} startIcon={<DeleteIcon />} onClick={deleteHandler}>
+          <Button className={classes.button} startIcon={<Delete />} onClick={deleteHandler}>
             Delete Photo
           </Button>
         </Box>
