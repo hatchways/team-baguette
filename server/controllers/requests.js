@@ -22,29 +22,26 @@ async function getReqs(req, res, next) {
 }
 
 async function updateReqs(req, res, next) {
-  let updateDoc;
-  if (req.body.accepted === "accepted") {
-    updateDoc = {
-      accepted: true,
-      declined: false,
-    };
-  } else {
-    updateDoc = {
-      accepted: false,
-      declined: true,
-    };
-  }
-  try {
-    await Request.findOneAndUpdate(
-      { _id: req.body.reqId },
-      {
-        $set: updateDoc,
-      }
-    );
-    res.status(200).json({ message: "Updated Successfully" });
-  } catch (error) {
-    next(error);
-  }
+    let updateDoc
+    if (req.body.accepted === 'accepted') {
+        updateDoc = {
+            accepted: true,
+            declined: false,
+        }
+    } else {
+        updateDoc = {
+            accepted: false,
+            declined : true,
+        }
+    }
+    try {
+        await Request.findOneAndUpdate({_id: req.body.reqId}, {
+            $set: updateDoc
+        })
+        res.status(200).json({success: "Updated Successfully"})
+    } catch (error) {
+        next(error)
+    }
 }
 
 async function createReqs(req, res, next) {

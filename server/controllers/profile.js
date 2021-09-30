@@ -84,7 +84,7 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
 // @access Public
 exports.getProfileById = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
-  const profile = await Profile.findOne({ user: id });
+  const profile = await Profile.findByUserIdPopulated(id)
   if (!profile) {
     res.status(404);
     throw new Error("No profile");
@@ -94,6 +94,7 @@ exports.getProfileById = asyncHandler(async (req, res, next) => {
     res.status(404);
     throw new Error("No User");
   }
+
   const convertedJSON = profile.toJSON();
   convertedJSON.email = user.email;
   res.status(200).json({

@@ -23,9 +23,8 @@ const userSchema = new mongoose.Schema({
   },
   avatar: {
     type: String,
-    default: "",
-  },
-  gallery: [String],
+    default: ""
+  }
 });
 
 userSchema.methods.matchPassword = async function (enteredPassword) {
@@ -46,30 +45,6 @@ userSchema.methods.editAvatar = async function (url) {
   await this.save();
 };
 
-userSchema.methods.addToGallery = async function (newImages) {
-  this.gallery.push(...newImages);
-  await this.save();
-};
-
-userSchema.methods.deleteFromGallery = async function (links) {
-  let tempGallery = new Set(this.gallery);
-  let filesToBeDeleted = [];
-
-  links.forEach((element) => {
-    if (tempGallery.delete(element)) {
-      filesToBeDeleted.push(element);
-    }
-  });
-
-  this.gallery = [...tempGallery];
-
-  await this.save();
-
-  if (filesToBeDeleted.length) {
-    await cleanUpAWSFolder([...filesToBeDeleted]);
-  }
-};
-
 userSchema.methods.deleteAvatar = async function () {
   const deletedImage = this.avatar;
   this.avatar = "";
@@ -78,13 +53,7 @@ userSchema.methods.deleteAvatar = async function () {
 };
 
 const cleanUpAWSFolder = (keys) => {
-  if (Array.isArray(keys)) {
-    deleteFile(
-      keys.map((element) => element.split(".s3.amazonaws.com/").pop())
-    );
-  } else {
-    deleteFile(keys.split(".s3.amazonaws.com/")[1]);
-  }
-};
+  deleteFile(keys.split(".s3.amazonaws.com/")[1])
+}
 
 module.exports = User = mongoose.model("User", userSchema);
