@@ -12,9 +12,9 @@ function profileSerializer(profile) {
         ,
         availablePeriod: profile.availablePeriod
         ,
-        gallery: profile.gallery
-    }
-    )
+        gallery: profile.gallery,
+        user: profile.user
+    })
 }
 
 module.exports = profileSerializer

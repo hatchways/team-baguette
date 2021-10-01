@@ -57,7 +57,13 @@ const profileSchema = new Schema({
 
 profileSchema.statics.findByUserIdPopulated = async function (userId) {
   return (
-    await this.findOne({ user: userId }).populate("user", "_id username avatar")
+    await this.findOne({ user: userId }).populate("user", userPopulateFields)
+  )
+}
+
+profileSchema.statics.findAndPopulateUser = async function (profileId){
+  return(
+    await this.findById(profileId).populate("user", userPopulateFields)
   )
 }
 
@@ -91,6 +97,8 @@ profileSchema.methods.deleteFromGallery = async function (links) {
 const cleanUpAWSFolder = (keys) => {
   deleteFile(keys.map(element => element.split(".s3.amazonaws.com/").pop()))
 }
+
+const userPopulateFields = "_id username avatar"
 
 
 module.exports = Profile = mongoose.model("profile", profileSchema);
