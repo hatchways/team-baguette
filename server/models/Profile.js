@@ -52,6 +52,12 @@ const profileSchema = new Schema({
       type: Date,
     },
   },
+  notification: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Notification",
+    },
+  ],
   sitter: {
     type: Boolean,
     default: false,
@@ -74,13 +80,11 @@ profileSchema.methods.deleteFromGallery = async function (links) {
   let tempGallery = new Set(this.gallery)
   let filesToBeDeleted = []
 
-
   links.forEach(element => {
     if (tempGallery.delete(element)) {
       filesToBeDeleted.push(element)
     }
   })
-
 
   this.gallery = [...tempGallery]
 
@@ -89,7 +93,6 @@ profileSchema.methods.deleteFromGallery = async function (links) {
   if (filesToBeDeleted.length) {
     await cleanUpAWSFolder([...filesToBeDeleted])
   }
-
 }
 
 const cleanUpAWSFolder = (keys) => {
