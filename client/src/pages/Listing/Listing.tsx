@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { Box, Button, Grid, TextField, Typography } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
@@ -15,6 +16,7 @@ export const Listing: React.FC = () => {
   const [dateTo, setDateTo] = useState<Date | null>(new Date());
   const [profiles, setProfiles] = useState<Array<ProfileListing>>([]);
   const { updateSnackBarMessage } = useSnackBar();
+
   useEffect(() => {
     getProfiles().then((res) => {
       if (res.success) {
@@ -24,14 +26,16 @@ export const Listing: React.FC = () => {
       }
     });
   }, [updateSnackBarMessage]);
+    
   return (
     <Box width="100%" maxWidth={800} p={3} margin="auto">
       <Typography className={classes.header} component="h1" variant="h5">
         Your Search Results
       </Typography>
       <Box display="flex" justifyContent="center" marginTop="1rem" marginBottom="4rem">
-        <Box className={classes.inputBox}>
+        <Box position="relative" border="1px solid lightgray" display="flex" justifyContent="center">
           <Search className={classes.inputIcon} color="secondary" />
+
           <TextField
             id="address"
             InputProps={{ disableUnderline: true, classes: { input: classes.inputs } }}
