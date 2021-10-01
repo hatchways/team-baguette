@@ -85,7 +85,6 @@ export default function ProfileBookingCard({ profile }: Props): JSX.Element {
             variant="contained"
             color="secondary"
             className={classes.button}
-            onClick={() => console.log(dropIn, dropOff)}
           >
             Send Request
           </Button>
