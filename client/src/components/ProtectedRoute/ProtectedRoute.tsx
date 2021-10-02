@@ -1,5 +1,6 @@
 import { Route, Redirect, RouteProps, Switch } from 'react-router-dom';
 import { useAuth } from '../../context/useAuthContext';
+import { CircularProgress } from '@material-ui/core';
 
 export interface IProps extends RouteProps {
   exact?: boolean;
@@ -10,7 +11,7 @@ export interface IProps extends RouteProps {
 const ProtectedRoute = ({ component: Component, ...rest }: IProps): JSX.Element => {
   const { loggedInUser, isLoading } = useAuth();
 
-  if (isLoading) return <div>loading...</div>;
+  if (isLoading) return <CircularProgress />;
 
   return (
     <Switch>
