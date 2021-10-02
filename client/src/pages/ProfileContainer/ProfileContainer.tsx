@@ -12,7 +12,7 @@ const ProfileContainer = (): JSX.Element => {
       <NavBarProfile />
       <Grid item xs={9}>
         <Switch>
-          <Route path="/profile/editprofile">
+          <Route path="/profile/edit-profile">
             <EditProfile />
           </Route>
         </Switch>
