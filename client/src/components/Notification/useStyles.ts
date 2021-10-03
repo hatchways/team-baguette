@@ -1,11 +1,15 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
+  customBadge: {
+    backgroundColor: '#00FF00',
+  },
   dropDownContent: {
     position: 'absolute',
     minWidth: '180px',
-    left: '50%',
-    transform: 'translateX(-50%)',
+    // TODO add once navbar is implemented and notification component is moved
+    // left: '50%',
+    // transform: 'translateX(-50%)',
     zIndex: 1,
   },
   itemContainer: {

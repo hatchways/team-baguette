@@ -5,7 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { useAuth } from '../../context/useAuthContext';
 import { useHistory } from 'react-router';
-import { Notification } from '../Notification/Notification';
+import { Notifications } from '../Notification/Notifications';
 
 const AuthMenu = (): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -51,7 +51,7 @@ const AuthMenu = (): JSX.Element => {
         <MenuItem onClick={handleBookings}>Bookings</MenuItem>
         <MenuItem onClick={() => history.push('/edit')}>Edit Profile</MenuItem>
         <MenuItem onClick={() => history.push('/listing')}>Listing</MenuItem>
-        <Notification />
+        <Notifications />
       </Menu>
     </div>
   );

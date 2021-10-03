@@ -26,15 +26,15 @@ exports.createNotification = asyncHandler(async (req, res, next) => {
 // @desc Update notification status
 // @access Private
 exports.updateNotification = asyncHandler(async (req, res, next) => {
-  const { id } = req.params;
-  const notification = await Notification.findOneAndUpdate(
-    { _id: id },
-    { read: true },
-    { new: true }
+  const { id } = req.user;
+  const profile = await Profile.findOne({ user: id });
+  const notification = await Notification.updateMany(
+    { _id: { $in: profile.notification } },
+    { $set: { read: true } }
   );
-  if (!notification) {
-    res.status(404);
-    throw new Error("Notification does not exist");
+  if (notification.nModified === 0) {
+    res.status(400);
+    throw new Error("Notification could not be updated");
   }
   res.status(200).json({
     success: notification,
@@ -48,7 +48,7 @@ exports.getNotifications = asyncHandler(async (req, res, next) => {
   const user = req.user;
   const profile = await Profile.findOne({ user }).populate({
     path: "notification",
-    populate: { path: "user", model: "User", select: "avatar" },
+    populate: { path: "sender", model: "User", select: "avatar" },
   });
   if (!profile) {
     res.status(404);
@@ -66,7 +66,7 @@ exports.getUnreadNotifications = asyncHandler(async (req, res, next) => {
   const user = req.user;
   const profile = await Profile.findOne({ user }).populate({
     path: "notification",
-    populate: { path: "user", model: "User", select: "avatar" },
+    populate: { path: "sender", model: "User", select: "avatar" },
   });
   if (!profile) {
     res.status(404);

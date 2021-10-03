@@ -91,10 +91,10 @@ export const EditProfile: React.FC = () => {
       getProfileById(loggedInUser.id).then((res) => {
         if (res.success) {
           const { firstName, lastName, gender, email, phone, address, description, birthDate } = res.success;
-          const birthDateArray = birthDate.split('T')[0].replaceAll('-', '').split('');
-          const year = birthDateArray.slice(0, 4).join().replaceAll(',', '');
-          const month = birthDateArray.slice(4, 6).join().replaceAll(',', '');
-          const day = birthDateArray.slice(6, 8).join().replaceAll(',', '');
+          const bDate = new Date(birthDate);
+          const year = bDate.getFullYear().toString();
+          const month = (bDate.getMonth() + 1).toString();
+          const day = bDate.getDate().toString();
           const initVal = {
             firstName,
             lastName,
