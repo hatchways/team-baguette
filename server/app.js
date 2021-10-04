@@ -11,7 +11,7 @@ const logger = require("morgan");
 
 const authRouter = require("./routes/auth");
 const userRouter = require("./routes/user");
-const requestsRouter = require("./routes/requests")
+const requestsRouter = require("./routes/requests");
 const profileRouter = require("./routes/profile");
 const imageRouter = require("./routes/image");
 
@@ -27,8 +27,21 @@ const io = socketio(server, {
   },
 });
 
+io.use((socket, next) => {
+  console.log("COOKIE: ", socket.handshake.headers.cookie, '\n', 'TOKEN: ', socket.handshake)
+  if (socket.handshake.headers.cookie) {
+    next()
+  } else {
+    console.log("error")
+    next(new Error('Auth error'))
+  }
+})
+
 io.on("connection", (socket) => {
-  console.log("connected");
+  console.log(socket.id, "connected");
+  socket.on('emit-msg', (num, str) => {
+    console.log(num, '\n', str)
+  })
 });
 
 if (process.env.NODE_ENV === "development") {
