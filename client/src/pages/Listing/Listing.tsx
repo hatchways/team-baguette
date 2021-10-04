@@ -4,7 +4,7 @@ import { Search } from '@material-ui/icons';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import { CustomCard } from './CustomCard';
 import DateFnsUtils from '@date-io/date-fns';
-import { getProfiles } from '../../helpers/APICalls/profile';
+import { getProfiles, searchProfiles } from '../../helpers/APICalls/profile';
 import { ProfileListing } from '../../interface/Profile';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import useStyles from './useStyles';
@@ -15,6 +15,16 @@ export const Listing: React.FC = () => {
   const [dateTo, setDateTo] = useState<Date | null>(new Date());
   const [profiles, setProfiles] = useState<Array<ProfileListing>>([]);
   const { updateSnackBarMessage } = useSnackBar();
+
+  const queryProfiles = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    searchProfiles(e.target.value).then((res) => {
+      if (res.success) {
+        setProfiles(res.success);
+      } else {
+        updateSnackBarMessage('Failed to get sitter profiles');
+      }
+    });
+  };
 
   useEffect(() => {
     getProfiles().then((res) => {
@@ -41,8 +51,8 @@ export const Listing: React.FC = () => {
             name="address"
             autoComplete="address"
             autoFocus
-            value={'Toronto, Ontario'}
             placeholder="Address"
+            onChange={(e) => queryProfiles(e)}
           />
         </Box>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>

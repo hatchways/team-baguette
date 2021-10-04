@@ -6,6 +6,7 @@ const {
   updateProfile,
   getProfileById,
   getProfiles,
+  searchProfiles,
 } = require("../controllers/profile");
 
 router.route("/").post(protect, createProfile);
@@ -15,5 +16,9 @@ router.route("/").get((req, res, next) => {
   if (req.cookies.token) return protect(req, res, next);
   next();
 }, getProfiles);
+router.route("/search/:query").get((req, res, next) => {
+  if (req.cookies.token) return protect(req, res, next);
+  next();
+}, searchProfiles);
 
 module.exports = router;

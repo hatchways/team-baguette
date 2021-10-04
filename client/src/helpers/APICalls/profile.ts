@@ -67,3 +67,14 @@ export const getProfiles = async (): Promise<ProfileListingApiData> => {
       error: { message: 'Failed to get user profile' },
     }));
 };
+export const searchProfiles = async (query: string): Promise<ProfileListingApiData> => {
+  const fetchOptions: FetchOptions = {
+    method: 'GET',
+    credentials: 'include',
+  };
+  return await fetch(`/profiles/search/${query}`, fetchOptions)
+    .then((res) => res.json())
+    .catch(() => ({
+      error: { message: 'Failed to get user profile' },
+    }));
+};

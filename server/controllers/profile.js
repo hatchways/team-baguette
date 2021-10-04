@@ -84,7 +84,7 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
 // @access Public
 exports.getProfileById = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
-  const profile = await Profile.findByUserIdPopulated(id)
+  const profile = await Profile.findByUserIdPopulated(id);
   if (!profile) {
     res.status(404);
     throw new Error("No profile");
@@ -113,6 +113,37 @@ exports.getProfiles = asyncHandler(async (req, res, next) => {
     }).populate("user", "avatar");
   } else {
     profiles = await Profile.find({ sitter: true }).populate("user", "avatar");
+  }
+  if (!profiles) {
+    res.status(404);
+    throw new Error("No profiles");
+  }
+  res.status(200).json({
+    success: profiles,
+  });
+});
+
+// @route GET /profiles/search/:query
+// @desc Get profiles by query result
+// @access Public
+exports.searchProfiles = asyncHandler(async (req, res, next) => {
+  const { query } = req.params;
+  let profiles;
+  if (req.user) {
+    profiles = await Profile.find({
+      $and: [
+        { user: { $ne: req.user.id } },
+        { sitter: true },
+        { address: { $regex: "^" + query, $options: "i" } },
+      ],
+    }).populate("user", "avatar");
+  } else {
+    profiles = await Profile.find({
+      $and: [
+        { sitter: true },
+        { address: { $regex: "^" + query, $options: "i" } },
+      ],
+    }).populate("user", "avatar");
   }
   if (!profiles) {
     res.status(404);
