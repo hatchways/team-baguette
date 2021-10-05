@@ -1,6 +1,6 @@
 const Profile = require("../models/Profile");
 const asyncHandler = require("express-async-handler");
-const userSerializer = require("../serializers/userSerializer")
+const {userSerializer} = require("../serializers/userSerializer")
 const profileSerializer = require("../serializers/profileSerializer")
 
 // @route PUT /avatar

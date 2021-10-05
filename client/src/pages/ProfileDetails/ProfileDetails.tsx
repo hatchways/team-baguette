@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import useStyles from './useStyles';
 
@@ -23,18 +24,33 @@ export default function ProfileDetails(): JSX.Element {
     });
   }, [id]);
 
+  const loadingOrRender = () => {
+    if (profile) {
+      return (
+        <>
+          <Grid item xs={12} sm={6} className={classes.mainContent}>
+            {<MainProfileDetails profile={profile} />}
+          </Grid>
+          <Grid item xs={12} sm={3}>
+            {<ProfileBookingCard profile={profile} />}
+          </Grid>
+        </>
+      );
+    } else
+      return (
+        <Grid item xs={12} sm={3}>
+          <CircularProgress />
+        </Grid>
+      );
+  };
+
   return (
     <Grid container component="main" className={classes.root}>
       <Grid item xs={12} style={{ marginBottom: '3em' }}>
         Header place holder
       </Grid>
 
-      <Grid item xs={12} sm={6} className={classes.mainContent}>
-        {profile && <MainProfileDetails profile={profile} />}
-      </Grid>
-      <Grid item xs={12} sm={3}>
-        {profile && <ProfileBookingCard profile={profile} />}
-      </Grid>
+      {loadingOrRender()}
     </Grid>
   );
 }

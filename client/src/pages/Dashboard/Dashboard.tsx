@@ -35,7 +35,17 @@ export default function Dashboard(): JSX.Element {
         <ChatSideBanner loggedInUser={loggedInUser} />
       </Grid>
       <Grid item>
-        <Link to="/profile/6152a59ebbf8dc7f9c895b03"> Demo profile</Link>
+        <ul>
+          <li>
+            <Link to="/profile/6154ba61183da12cf9b3cb17"> Demo profile</Link>
+          </li>
+          <li>
+            <Link to="/profile/user"> Link that doesn&apos;t work profile</Link>
+          </li>
+          <li>
+            <Link to="/bookings"> bookings</Link>
+          </li>
+        </ul>
       </Grid>
     </Grid>
   );

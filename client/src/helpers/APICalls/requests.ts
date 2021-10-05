@@ -27,3 +27,20 @@ export const updateReqs = async (reqId: string, status: string): Promise<ReqValu
       error: { message: 'Unable to update request. Please try again' },
     }));
 };
+
+export const createReqs = async (sitterId: string, start: string, end: string): Promise<ReqValueApiData> => {
+  return await fetch('/requests', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      sitterId,
+      start,
+      end,
+    }),
+    credentials: 'include',
+  })
+    .then((res) => res.json())
+    .catch(() => ({
+      error: { message: 'Unable to update request. Please try again' },
+    }));
+};
