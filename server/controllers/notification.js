@@ -22,11 +22,11 @@ exports.createNotification = asyncHandler(async (req, res, next) => {
   res.status(200);
 });
 
-// @route PUT /notification
+// @route PUT /notification/:id
 // @desc Update notification status
 // @access Private
 exports.updateNotification = asyncHandler(async (req, res, next) => {
-  const { id } = req.user;
+  const { id } = req.params;
   const profile = await Profile.findOne({ user: id });
   const notification = await Notification.updateMany(
     { _id: { $in: profile.notification } },

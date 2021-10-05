@@ -7,9 +7,8 @@ const useStyles = makeStyles(() => ({
   dropDownContent: {
     position: 'absolute',
     minWidth: '180px',
-    // TODO add once navbar is implemented and notification component is moved
-    // left: '50%',
-    // transform: 'translateX(-50%)',
+    left: '50%',
+    transform: 'translateX(-50%)',
     zIndex: 1,
   },
   itemContainer: {
