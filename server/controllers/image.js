@@ -53,12 +53,7 @@ exports.deleteAvatar = asyncHandler(async (req, res, next) => {
 
 exports.uploadGallery = asyncHandler(async (req, res, next) => {
   const user = req.user
-  const profile = await Profile.findByUserIdPopulated(user)
-
-  if(!profile){
-    res.status(404);
-    throw new Error("No profile found");
-  }
+  const profile = req.profile
   const newImageFiles = req.files
   if (!newImageFiles || !newImageFiles.length) {
     // the only reasons the file wouldn't be in req.file is either the file type was wrong, or there was an issue with the actual upload

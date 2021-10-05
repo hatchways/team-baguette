@@ -12,6 +12,7 @@ import { SnackBarProvider } from './context/useSnackbarContext';
 
 import './App.css';
 import { EditProfile } from './pages/EditProfile/EditProfile';
+import ProfileDetails from './pages/ProfileDetails/ProfileDetails';
 import { Listing } from './pages/Listing/Listing';
 
 function App(): JSX.Element {
@@ -32,6 +33,7 @@ function App(): JSX.Element {
                 <Route exact path="/bookings">
                   <Bookings />
                 </Route>
+                <Route path="/profile/:id" component={ProfileDetails} />
                 <Route path="/settings" component={Settings} />
                 <Route path="*">
                   <Redirect to="/login" />
