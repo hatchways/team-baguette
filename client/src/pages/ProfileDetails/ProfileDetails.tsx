@@ -21,7 +21,6 @@ export default function ProfileDetails(): JSX.Element {
 
   useEffect(() => {
     getProfileById(id).then((res) => {
-      console.log(res);
       if (res.success) {
         setProfile(res.success);
       } else if (res.error && res.error.message) {
