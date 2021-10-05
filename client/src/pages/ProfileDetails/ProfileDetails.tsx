@@ -21,16 +21,17 @@ export default function ProfileDetails(): JSX.Element {
 
   useEffect(() => {
     getProfileById(id).then((res) => {
+      console.log(res);
       if (res.success) {
         setProfile(res.success);
-      } else if (res.error && res.error.message === 'No profile') {
-        history.push('/404');
-      } else {
-        updateSnackBarMessage("there was an issue with the server. Please try again later");
+      } else if (res.error && res.error.message) {
+        updateSnackBarMessage(res.error.message);
         history.push('/dashboard');
+      } else {
+        history.push('/404');
       }
     });
-  }, [id, history]);
+  }, [id, history, updateSnackBarMessage]);
 
   const loadingOrRender = () => {
     if (profile) {

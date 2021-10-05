@@ -65,6 +65,6 @@ export const getProfileById = async (id: string): Promise<ProfileApiData> => {
   return await fetch(`/profiles/${id}`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
-      error: { message: 'Failed to get user profile' },
+      error: { message: 'There was an issue while communicating with the server. Please try again later.' },
     }));
 };

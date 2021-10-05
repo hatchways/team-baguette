@@ -34,7 +34,9 @@ export default function Dashboard(): JSX.Element {
       <Grid item className={classes.drawerWrapper}>
         <ChatSideBanner loggedInUser={loggedInUser} />
       </Grid>
-      <Grid item></Grid>
+      <Grid item>
+        <Link to="/profile/6154ba61183da12cf9b3cb17">Profile that works</Link>
+      </Grid>
     </Grid>
   );
 }
