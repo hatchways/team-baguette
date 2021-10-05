@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Grid } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -13,6 +13,7 @@ import { Profile } from '../../interface/Profile';
 
 export default function ProfileDetails(): JSX.Element {
   const classes = useStyles();
+  const history = useHistory();
   const { id } = useParams<{ id: string }>();
   const [profile, setProfile] = useState<Profile | undefined>();
 
@@ -20,9 +21,11 @@ export default function ProfileDetails(): JSX.Element {
     getProfileById(id).then((res) => {
       if (res.success) {
         setProfile(res.success);
+      } else {
+        history.push('/404');
       }
     });
-  }, [id]);
+  }, [id, history]);
 
   const loadingOrRender = () => {
     if (profile) {

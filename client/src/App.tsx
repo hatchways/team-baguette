@@ -14,6 +14,7 @@ import './App.css';
 import { EditProfile } from './pages/EditProfile/EditProfile';
 import ProfileDetails from './pages/ProfileDetails/ProfileDetails';
 import { Listing } from './pages/Listing/Listing';
+import Normal404Page from './pages/404/Normal404';
 
 function App(): JSX.Element {
   return (
@@ -35,6 +36,7 @@ function App(): JSX.Element {
                 </Route>
                 <Route path="/profile/:id" component={ProfileDetails} />
                 <Route path="/settings" component={Settings} />
+                <Route path="/404" component={Normal404Page} />
                 <Route path="*">
                   <Redirect to="/login" />
                 </Route>
