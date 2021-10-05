@@ -10,10 +10,12 @@ import MainProfileDetails from '../../components/ProfileDetails/MainProfileDetai
 import ProfileBookingCard from '../../components/ProfileDetails/ProfileBookingCard';
 
 import { Profile } from '../../interface/Profile';
+import { useSnackBar } from '../../context/useSnackbarContext';
 
 export default function ProfileDetails(): JSX.Element {
   const classes = useStyles();
   const history = useHistory();
+  const { updateSnackBarMessage } = useSnackBar();
   const { id } = useParams<{ id: string }>();
   const [profile, setProfile] = useState<Profile | undefined>();
 
@@ -21,8 +23,11 @@ export default function ProfileDetails(): JSX.Element {
     getProfileById(id).then((res) => {
       if (res.success) {
         setProfile(res.success);
-      } else {
+      } else if (res.error && res.error.message === 'No profile') {
         history.push('/404');
+      } else {
+        updateSnackBarMessage("there was an issue with the server. Please try again later");
+        history.push('/dashboard');
       }
     });
   }, [id, history]);

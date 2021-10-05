@@ -29,11 +29,6 @@ export default function ProfileBookingCard({ profile }: Props): JSX.Element {
   const [dropOffTime, setDropOffTime] = useState<MaterialUiPickersDate>();
 
   const disableDates = (day: MaterialUiPickersDate): boolean => {
-    // if (day) {
-    //   const testDate = new Date('10/7/2021');
-    //   const date = new Date(day?.getDate());
-    //   return day.getDate() === testDate.getDate();
-    // } else return false;
     // TODO
     // figure out the logic of how Available Days, etc Workspaces. right now, not sure. Depending on how that works,currently planning on
     // doing some kind of Set based on the available dates (from the profile object), and returning true unless the date exists within that Set.
