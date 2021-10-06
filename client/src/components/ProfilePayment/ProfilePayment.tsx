@@ -14,15 +14,15 @@ export const ProfilePayment: React.FC = () => {
   const [card, setCard] = useState<PaymentCard>();
   const [show, setShow] = useState(false);
 
-  // useEffect(() => {
-  //   const apiGetResponse = {
-  //     number: 2445,
-  //     name: 'John Doe',
-  //     type: 'visa',
-  //     exp: '11/24',
-  //   };
-  //   setCard(apiGetResponse);
-  // }, [setCard]);
+  useEffect(() => {
+    const apiGetResponse = {
+      number: 2445,
+      name: 'John Doe',
+      type: 'visa',
+      exp: '11/24',
+    };
+    setCard(apiGetResponse);
+  }, [setCard]);
   return (
     <Box width="100%" maxWidth={700} p={6} component={Paper} margin="auto" marginTop="100px">
       <Typography className={classes.welcome} component="h1" variant="h5">
