@@ -29,7 +29,7 @@ const AuthMenu = (): JSX.Element => {
   const handleProfile = () => {
     setAnchorEl(null);
   };
-
+  //TODO remove editprofiles/listing/bookings once navbar/sidebar is merged
   return (
     <div className={classes.avatarContainer}>
       <IconButton aria-label="show auth menu" aria-controls="auth-menu" aria-haspopup="true" onClick={handleClick}>
