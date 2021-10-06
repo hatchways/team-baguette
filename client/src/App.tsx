@@ -10,7 +10,7 @@ import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
 import NavBarTop from './components/NavBarTop/NavBarTop';
-
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import './App.css';
 import ProfileContainer from './pages/ProfileContainer/ProfileContainer';
 import ProfileDetails from './pages/ProfileDetails/ProfileDetails';
@@ -27,19 +27,13 @@ function App(): JSX.Element {
               <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
-                <Route path="/profile" component={ProfileContainer} />
+                <ProtectedRoute exact path="/profile" component={ProfileContainer} />
                 <Route exact path="/listing" component={Listing} />
-                <Route exact path="/dashboard">
-                  <Dashboard />
-                </Route>
-                <Route exact path="/bookings">
-                  <Bookings />
-                </Route>
+                <Route exact path="/dashboard" component={Dashboard} />
+                <ProtectedRoute exact path="/bookings" component={Bookings} />
                 <Route path="/profile/:id" component={ProfileDetails} />
                 <Route path="/settings" component={Settings} />
-                <Route path="*">
-                  <Redirect to="/login" />
-                </Route>
+                <ProtectedRoute path="*" component={Dashboard} />
               </Switch>
             </SocketProvider>
           </AuthProvider>
