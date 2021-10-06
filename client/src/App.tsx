@@ -9,6 +9,7 @@ import Settings from './pages/Settings/Settings';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
+import NavBarTop from './components/NavBarTop/NavBarTop';
 
 import './App.css';
 import { EditProfile } from './pages/EditProfile/EditProfile';
@@ -22,6 +23,7 @@ function App(): JSX.Element {
         <SnackBarProvider>
           <AuthProvider>
             <SocketProvider>
+              <NavBarTop />
               <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
