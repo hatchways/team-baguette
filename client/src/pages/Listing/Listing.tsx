@@ -17,7 +17,7 @@ export const Listing: React.FC = () => {
   const { updateSnackBarMessage } = useSnackBar();
 
   const queryProfiles = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    searchProfiles(e.target.value).then((res) => {
+    searchProfiles(e.target.value, dateFrom, dateTo).then((res) => {
       if (res.success) {
         setProfiles(res.success);
       } else {

@@ -16,7 +16,7 @@ router.route("/").get((req, res, next) => {
   if (req.cookies.token) return protect(req, res, next);
   next();
 }, getProfiles);
-router.route("/search/:query").get((req, res, next) => {
+router.route("/search/:query&:from&:to").get((req, res, next) => {
   if (req.cookies.token) return protect(req, res, next);
   next();
 }, searchProfiles);
