@@ -5,6 +5,7 @@ import Login from './pages/Login/Login';
 import Signup from './pages/SignUp/SignUp';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Bookings from './pages/Bookings/Bookings';
+import Settings from './pages/Settings/Settings';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
@@ -12,6 +13,7 @@ import NavBarTop from './components/NavBarTop/NavBarTop';
 
 import './App.css';
 import ProfileContainer from './pages/ProfileContainer/ProfileContainer';
+import ProfileDetails from './pages/ProfileDetails/ProfileDetails';
 import { Listing } from './pages/Listing/Listing';
 
 function App(): JSX.Element {
@@ -32,6 +34,11 @@ function App(): JSX.Element {
                 </Route>
                 <Route exact path="/bookings">
                   <Bookings />
+                </Route>
+                <Route path="/profile/:id" component={ProfileDetails} />
+                <Route path="/settings" component={Settings} />
+                <Route path="*">
+                  <Redirect to="/login" />
                 </Route>
               </Switch>
             </SocketProvider>

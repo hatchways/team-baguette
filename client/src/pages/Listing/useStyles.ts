@@ -15,7 +15,8 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
   },
   dateInput: {
-    width: '8vw',
+    width: '6vw',
+    minWidth: '100px',
   },
   inputIcon: {
     position: 'absolute',
@@ -81,6 +82,9 @@ const useStyles = makeStyles((theme) => ({
     color: 'gray',
     fontSize: 11,
     lineHeight: '5vh',
+  },
+  price: {
+    fontWeight: 900,
   },
   button: {
     width: 170,
