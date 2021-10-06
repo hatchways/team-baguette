@@ -31,7 +31,7 @@ export const theme = createMuiTheme({
     },
   },
   palette: {
-    primary: { main: '#3A8DFF' },
+    primary: { main: 'rgb(240, 69, 69)' },
     secondary: { main: 'rgb(245, 20, 20)' },
   },
   shape: {

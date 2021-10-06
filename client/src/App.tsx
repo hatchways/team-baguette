@@ -5,6 +5,7 @@ import Login from './pages/Login/Login';
 import Signup from './pages/SignUp/SignUp';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Bookings from './pages/Bookings/Bookings';
+import LandingPage from './pages/LandingPage/LandingPage';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
@@ -23,6 +24,7 @@ function App(): JSX.Element {
             <SocketProvider>
               <NavBarTop />
               <Switch>
+                <Route exact path="/" component={LandingPage} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/edit" component={EditProfile} />

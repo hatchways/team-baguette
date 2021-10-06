@@ -22,7 +22,7 @@ const NavBarTop = (): JSX.Element | null => {
     history.push('/dashboard');
   };
 
-  if (withoutRoutes.some((item) => pathname.includes(item))) return null;
+  if (withoutRoutes.some((item) => pathname.includes(item)) || pathname === '/') return null;
 
   return (
     <Grid container className={classes.navBarContainer}>
