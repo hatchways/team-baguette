@@ -1,6 +1,7 @@
-const User = require("../models/User");
+const Profile = require("../models/Profile");
 const asyncHandler = require("express-async-handler");
 const userSerializer = require("../serializers/userSerializer")
+const profileSerializer = require("../serializers/profileSerializer")
 
 // @route PUT /avatar
 // @desc add or updates user's avatar image
@@ -52,6 +53,7 @@ exports.deleteAvatar = asyncHandler(async (req, res, next) => {
 
 exports.uploadGallery = asyncHandler(async (req, res, next) => {
   const user = req.user
+  const profile = req.profile
   const newImageFiles = req.files
   if (!newImageFiles || !newImageFiles.length) {
     // the only reasons the file wouldn't be in req.file is either the file type was wrong, or there was an issue with the actual upload
@@ -67,10 +69,10 @@ exports.uploadGallery = asyncHandler(async (req, res, next) => {
   }
 
   try {
-    user.addToGallery(galleryURLs)
+    profile.addToGallery(galleryURLs)
     res.status(200).json({
       success: {
-        user: userSerializer(user)
+        user: profileSerializer(profile)
       }
     });
   }
@@ -82,13 +84,19 @@ exports.uploadGallery = asyncHandler(async (req, res, next) => {
 
 exports.deleteGallery = asyncHandler(async (req, res, next) => {
   const user = req.user
+  const profile = await Profile.findByUserIdPopulated(user)
   const deleteLinks = req.body.deleteLinks;
 
+  if(!profile){
+    res.status(404);
+    throw new Error("No profile found");
+  }
+
   try {
-    await user.deleteFromGallery(deleteLinks)
+    await profile.deleteFromGallery(deleteLinks)
     res.status(200).json({
       success: {
-        user: userSerializer(user)
+        user: profileSerializer(profile)
       }
     });
   }

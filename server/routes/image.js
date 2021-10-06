@@ -6,7 +6,7 @@ const { updateAvatar, uploadGallery, deleteAvatar, deleteGallery } = require('..
 
 router.route('/avatar').put(protect, singleUpload, updateAvatar);
 router.route('/avatar').delete(protect, deleteAvatar);
-router.route('/gallery').put(protect, multiUpload, uploadGallery);
+router.route('/gallery').post(protect, multiUpload, uploadGallery);
 router.route('/gallery').delete(protect, deleteGallery);
 
 

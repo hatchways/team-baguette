@@ -51,6 +51,9 @@ const useStyles = makeStyles(() => ({
     textTransform: 'uppercase',
     fontFamily: 'Poppins-Regular',
     boxShadow: 'none',
+    '&:hover': {
+      backgroundColor: 'rgb(240, 69, 69)',
+    },
   },
   login: {
     padding: 15,
@@ -64,18 +67,25 @@ const useStyles = makeStyles(() => ({
     fontFamily: 'Poppins-Regular',
     boxShadow: 'none',
     border: '1px solid rgb(240, 69, 69)',
+    backgroundColor: 'transparent',
+    '&:hover': {
+      backgroundColor: 'transparent',
+    },
   },
   userOptions: {
     fontFamily: 'Poppins-Bold',
     fontSize: 12,
     margin: '0 10px',
-    cursor: 'pointer',
   },
   userAvatar: {
     height: 30,
     width: 'auto',
     fill: 'grey',
     margin: '0 15px',
+  },
+  routerLinkDecoration: {
+    textDecoration: 'none',
+    color: 'inherit',
   },
 }));
 

@@ -23,6 +23,7 @@ export const EditProfile: React.FC = () => {
     phone: 0,
     address: '',
     description: '',
+    gallery: [],
   });
   const handleSubmit = (
     {
@@ -90,7 +91,7 @@ export const EditProfile: React.FC = () => {
     if (loggedInUser && loggedInUser.id) {
       getProfileById(loggedInUser.id).then((res) => {
         if (res.success) {
-          const { firstName, lastName, gender, email, phone, address, description, birthDate } = res.success;
+          const { firstName, lastName, gender, email, phone, address, description, birthDate, gallery } = res.success;
           const birthDateArray = birthDate.split('T')[0].replaceAll('-', '').split('');
           const year = birthDateArray.slice(0, 4).join().replaceAll(',', '');
           const month = birthDateArray.slice(4, 6).join().replaceAll(',', '');
@@ -106,6 +107,7 @@ export const EditProfile: React.FC = () => {
             day,
             month,
             year,
+            gallery,
           };
           setInitValue(initVal);
         } else {
@@ -115,7 +117,15 @@ export const EditProfile: React.FC = () => {
     }
   }, [loggedInUser, updateSnackBarMessage]);
   return (
-    <Box width="100%" maxWidth={700} p={6} component={Paper} margin="auto" marginTop="100px">
+    <Box
+      width="100%"
+      maxWidth={700}
+      p={6}
+      component={Paper}
+      margin="auto"
+      marginTop="10px"
+      boxShadow="0 0 10px rgba(0,0,0,0.2)"
+    >
       <Typography className={classes.welcome} component="h1" variant="h5">
         Edit Profile
       </Typography>

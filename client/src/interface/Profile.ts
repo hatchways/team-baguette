@@ -1,3 +1,5 @@
+const {UserFromProfile} = require("./User")
+
 export interface Profile {
   firstName: string;
   lastName: string;
@@ -7,6 +9,9 @@ export interface Profile {
   phone: number;
   address: string;
   description: string;
+  owner?: boolean;
+  gallery: string[];
+  user?: typeof UserFromProfile;
 }
 export interface InitValue {
   firstName: string;
@@ -20,7 +25,21 @@ export interface InitValue {
   address: string;
   description: string;
 }
+export interface ProfileListing {
+  firstName: string;
+  lastName: string;
+  description: string;
+  address: string;
+  user: {
+    _id: string;
+    avatar: string;
+  };
+}
 export interface ProfileApiData {
   error?: { message: string };
   success?: Profile;
+}
+export interface ProfileListingApiData {
+  error?: { message: string };
+  success?: ProfileListing[];
 }

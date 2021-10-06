@@ -1,6 +1,7 @@
 const multer = require('multer')
 const multerS3 = require('multer-s3')
 const { s3Connect } = require("../utils/aws")
+const Profile = require("../models/Profile");
 
 const acceptedFileTypes = ["image/jpeg", "image/png"]
 
@@ -59,9 +60,20 @@ exports.singleUpload = async (req, res, next) => {
 }
 
 exports.multiUpload = async (req, res, next) => {
-  const gallerySize = req.user.gallery.length
+  const profile = await Profile.findByUserIdPopulated(req.user._id)
+  if (!profile){
+    return res.status(400).json({
+      success: false,
+      errors: {
+        title: "Image Upload Error",
+        detail: "Profile was not found. Please make sure you have created one."
+      },
+    });
+  }
+  const gallerySize = profile.gallery.length
   const maxUploadLength = 5
   const permittedUploadLength = ((maxUploadLength - gallerySize) < 1) ? 0 : maxUploadLength - gallerySize
+
 
   if (!permittedUploadLength) {
     res.status(413).json({
@@ -83,6 +95,7 @@ exports.multiUpload = async (req, res, next) => {
           },
         });
       }
+      req.profile = profile
       next()
     })
   }

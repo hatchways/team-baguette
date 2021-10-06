@@ -1,6 +1,8 @@
 import { useState, useContext, createContext, FunctionComponent, useEffect, useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AuthApiData, AuthApiDataSuccess } from '../interface/AuthApiData';
+import { AvatarApiDataSuccess } from '../interface/AvatarApiData';
+
 import { User } from '../interface/User';
 import loginWithCookies from '../helpers/APICalls/loginWithCookies';
 import logoutAPI from '../helpers/APICalls/logout';
@@ -8,6 +10,8 @@ import logoutAPI from '../helpers/APICalls/logout';
 interface IAuthContext {
   loggedInUser: User | null | undefined;
   updateLoginContext: (data: AuthApiDataSuccess) => void;
+  updateAvatarContext: (data: AvatarApiDataSuccess) => void;
+  deleteAvatarContext: () => void;
   logout: () => void;
   isLoading: boolean;
 }
@@ -15,6 +19,8 @@ interface IAuthContext {
 export const AuthContext = createContext<IAuthContext>({
   loggedInUser: undefined,
   updateLoginContext: () => null,
+  updateAvatarContext: () => null,
+  deleteAvatarContext: () => null,
   logout: () => null,
   isLoading: true,
 });
@@ -29,6 +35,16 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
     setLoggedInUser(data.user);
     setIsLoading(false);
   }, []);
+
+  const updateAvatarContext = (data: AvatarApiDataSuccess) => {
+    setLoggedInUser(data.user);
+  };
+
+  const deleteAvatarContext = () => {
+    if (loggedInUser && loggedInUser.email && loggedInUser.avatar) {
+      setLoggedInUser({ ...loggedInUser, avatar: '' });
+    }
+  };
 
   const logout = useCallback(async () => {
     // needed to remove token cookie
@@ -57,7 +73,9 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
   }, [updateLoginContext, history]);
 
   return (
-    <AuthContext.Provider value={{ loggedInUser, updateLoginContext, logout, isLoading }}>
+    <AuthContext.Provider
+      value={{ loggedInUser, updateLoginContext, logout, updateAvatarContext, deleteAvatarContext, isLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );

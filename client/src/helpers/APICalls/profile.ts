@@ -1,5 +1,5 @@
 import { FetchOptions } from '../../interface/FetchOptions';
-import { ProfileApiData } from '../../interface/Profile';
+import { ProfileApiData, ProfileListingApiData } from '../../interface/Profile';
 
 export const createProfile = async (
   firstName: string,
@@ -51,6 +51,17 @@ export const getProfileById = async (id: string): Promise<ProfileApiData> => {
     credentials: 'include',
   };
   return await fetch(`/profiles/${id}`, fetchOptions)
+    .then((res) => res.json())
+    .catch(() => ({
+      error: { message: 'Failed to get user profile' },
+    }));
+};
+export const getProfiles = async (): Promise<ProfileListingApiData> => {
+  const fetchOptions: FetchOptions = {
+    method: 'GET',
+    credentials: 'include',
+  };
+  return await fetch(`/profiles`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
       error: { message: 'Failed to get user profile' },
