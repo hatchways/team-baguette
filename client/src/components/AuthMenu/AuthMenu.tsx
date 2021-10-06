@@ -52,6 +52,7 @@ const AuthMenu = (): JSX.Element => {
         <MenuItem onClick={() => history.push('/edit')}>Edit Profile</MenuItem>
         <MenuItem onClick={() => history.push('/listing')}>Listing</MenuItem>
         <Notifications />
+        <MenuItem onClick={() => history.push('/profile-payment')}>Profile Payment</MenuItem>
       </Menu>
     </div>
   );
