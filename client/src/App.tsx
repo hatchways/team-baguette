@@ -1,6 +1,6 @@
 import { MuiThemeProvider } from '@material-ui/core';
 import { theme } from './themes/theme';
-import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import Signup from './pages/SignUp/SignUp';
 import Dashboard from './pages/Dashboard/Dashboard';
@@ -12,7 +12,7 @@ import { SnackBarProvider } from './context/useSnackbarContext';
 import NavBarTop from './components/NavBarTop/NavBarTop';
 
 import './App.css';
-import { EditProfile } from './pages/EditProfile/EditProfile';
+import ProfileContainer from './pages/ProfileContainer/ProfileContainer';
 import ProfileDetails from './pages/ProfileDetails/ProfileDetails';
 import { Listing } from './pages/Listing/Listing';
 
@@ -27,7 +27,7 @@ function App(): JSX.Element {
               <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
-                <Route exact path="/edit" component={EditProfile} />
+                <Route path="/profile" component={ProfileContainer} />
                 <Route exact path="/listing" component={Listing} />
                 <Route exact path="/dashboard">
                   <Dashboard />
