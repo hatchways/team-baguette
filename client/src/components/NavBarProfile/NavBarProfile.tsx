@@ -11,30 +11,30 @@ const NavBarProfile = (): JSX.Element => {
   return (
     <Grid item xs={2} className={classes.navBarProfile}>
       <Box className={classes.profileLinksContainer}>
-        <Link to="/profile/edit-profile" className={classes.routerLinkDecoration}>
-          <Typography className={pathname === '/profile/edit-profile' ? classes.profileLink : classes.basicProfileLink}>
+        <Link to="/edit/profile/" className={classes.routerLinkDecoration}>
+          <Typography className={pathname === '/edit/profile/' ? classes.profileLink : classes.basicProfileLink}>
             Edit Profile
           </Typography>
         </Link>
-        <Link to="/profile" className={classes.routerLinkDecoration}>
+        <Link to="/edit/profile/profile-photo" className={classes.routerLinkDecoration}>
           <Typography
-            className={pathname === '/profile/profile-photo' ? classes.profileLink : classes.basicProfileLink}
+            className={pathname === '/edit/profile/profile-photo' ? classes.profileLink : classes.basicProfileLink}
           >
             Profile Photo
           </Typography>
         </Link>
-        <Link to="/profile" className={classes.routerLinkDecoration}>
-          <Typography className={pathname === '/profile/payment' ? classes.profileLink : classes.basicProfileLink}>
+        <Link to="/edit/profile/payment" className={classes.routerLinkDecoration}>
+          <Typography className={pathname === '/edit/profile/payment' ? classes.profileLink : classes.basicProfileLink}>
             Payment
           </Typography>
         </Link>
-        <Link to="/profile" className={classes.routerLinkDecoration}>
-          <Typography className={pathname === '/profile/security' ? classes.profileLink : classes.basicProfileLink}>
+        <Link to="/edit/profile/security" className={classes.routerLinkDecoration}>
+          <Typography className={pathname === '/edit/profile/security' ? classes.profileLink : classes.basicProfileLink}>
             Security
           </Typography>
         </Link>
-        <Link to="/profile" className={classes.routerLinkDecoration}>
-          <Typography className={pathname === '/profile/settings' ? classes.profileLink : classes.basicProfileLink}>
+        <Link to="/edit/profile/settings" className={classes.routerLinkDecoration}>
+          <Typography className={pathname === '/edit/profile/settings' ? classes.profileLink : classes.basicProfileLink}>
             Settings
           </Typography>
         </Link>

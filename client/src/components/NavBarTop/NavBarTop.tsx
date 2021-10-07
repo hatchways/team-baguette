@@ -32,10 +32,9 @@ const NavBarTop = (): JSX.Element | null => {
             <Link to="/bookings" className={classes.routerLinkDecoration}>
               <Typography className={classes.userOptions}>My Sitters</Typography>
             </Link>
-            <Link to="/dashboard" className={classes.routerLinkDecoration}>
+            <Link to="/conversations" className={classes.routerLinkDecoration}>
               <Typography className={classes.userOptions}>Messages</Typography>
             </Link>
-            {/* TODO : check loggedInUser.avatar to conditionally render blank avy pic or user's avy  */}
             <AuthMenu />
           </>
         ) : (
