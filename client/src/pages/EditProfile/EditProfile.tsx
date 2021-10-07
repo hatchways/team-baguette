@@ -23,7 +23,6 @@ export const EditProfile: React.FC = () => {
     phone: 0,
     address: '',
     description: '',
-    gallery: [],
   });
   const handleSubmit = (
     {
@@ -91,11 +90,11 @@ export const EditProfile: React.FC = () => {
     if (loggedInUser && loggedInUser.id) {
       getProfileById(loggedInUser.id).then((res) => {
         if (res.success) {
-          const { firstName, lastName, gender, email, phone, address, description, birthDate, gallery } = res.success;
-          const birthDateArray = birthDate.split('T')[0].replaceAll('-', '').split('');
-          const year = birthDateArray.slice(0, 4).join().replaceAll(',', '');
-          const month = birthDateArray.slice(4, 6).join().replaceAll(',', '');
-          const day = birthDateArray.slice(6, 8).join().replaceAll(',', '');
+          const { firstName, lastName, gender, email, phone, address, description, birthDate } = res.success;
+          const bDate = new Date(birthDate);
+          const year = bDate.getFullYear().toString();
+          const month = (bDate.getMonth() + 1).toString();
+          const day = bDate.getDate().toString();
           const initVal = {
             firstName,
             lastName,
@@ -107,7 +106,6 @@ export const EditProfile: React.FC = () => {
             day,
             month,
             year,
-            gallery,
           };
           setInitValue(initVal);
         } else {

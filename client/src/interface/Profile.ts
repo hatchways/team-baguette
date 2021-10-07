@@ -1,4 +1,4 @@
-const {UserFromProfile} = require("./User")
+const { UserFromProfile } = require('./User');
 
 export interface Profile {
   firstName: string;

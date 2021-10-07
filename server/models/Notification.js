@@ -17,7 +17,7 @@ const notificationSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    user: {
+    sender: {
       type: Schema.Types.ObjectId,
       ref: "User",
     },
@@ -34,13 +34,13 @@ notificationSchema.methods.createNotification = async function (
   start,
   end
 ) {
-  const userProfile = await Profile.findOne({ user: userId }).populate(
-    "user",
+  const senderProfile = await Profile.findOne({ user: userId }).populate(
+    "sender",
     "avatar"
   );
   const formattedName =
-    userProfile.firstName.charAt(0).toUpperCase() +
-    userProfile.firstName.slice(1);
+    senderProfile.firstName.charAt(0).toUpperCase() +
+    senderProfile.firstName.slice(1);
   const startDate = new Date(`${start}`);
   const endDate = new Date(`${end}`);
   const hours = (endDate.getTime() - startDate.getTime()) / 1000 / 60 / 60;
@@ -58,7 +58,7 @@ notificationSchema.methods.createNotification = async function (
   this.type = type;
   this.title = title;
   this.description = description;
-  this.user = userProfile.user;
+  this.sender = senderProfile.user;
   await this.save();
 
   const receiver = await Profile.findOneAndUpdate(

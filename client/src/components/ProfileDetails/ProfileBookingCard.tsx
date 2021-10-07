@@ -81,11 +81,7 @@ export default function ProfileBookingCard({ profile }: Props): JSX.Element {
           />
         </CardContent>
         <CardContent className={classes.profileCardContent}>
-          <Button
-            variant="contained"
-            color="secondary"
-            className={classes.button}
-          >
+          <Button variant="contained" color="secondary" className={classes.button}>
             Send Request
           </Button>
         </CardContent>

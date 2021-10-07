@@ -5,6 +5,7 @@ import PetsIcon from '@material-ui/icons/Pets';
 import { useAuth } from '../../context/useAuthContext';
 import AuthMenu from '../AuthMenu/AuthMenu';
 import { Link } from 'react-router-dom';
+import { Notifications } from '../Notification/Notifications';
 
 const withoutRoutes = ['/login', '/signup'];
 
@@ -25,6 +26,9 @@ const NavBarTop = (): JSX.Element | null => {
         <Typography className={classes.becomeSitter}>Become a sitter</Typography>
         {loggedInUser ? (
           <>
+            <Box className={classes.routerLinkDecoration}>
+              <Notifications />
+            </Box>
             <Link to="/bookings" className={classes.routerLinkDecoration}>
               <Typography className={classes.userOptions}>My Sitters</Typography>
             </Link>
