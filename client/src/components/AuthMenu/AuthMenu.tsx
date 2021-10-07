@@ -2,16 +2,16 @@ import { useState, MouseEvent } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import { useAuth } from '../../context/useAuthContext';
-import { useHistory } from 'react-router';
-import { Notifications } from '../Notification/Notifications';
+import { Link } from 'react-router-dom';
+import useStyles from './useStyles';
 
 const AuthMenu = (): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const { logout } = useAuth();
-  const history = useHistory();
+  const classes = useStyles();
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -26,14 +26,14 @@ const AuthMenu = (): JSX.Element => {
     logout();
   };
 
-  const handleBookings = () => {
-    history.push('/bookings');
+  const handleProfile = () => {
+    setAnchorEl(null);
   };
   //TODO remove editprofiles/listing/bookings once navbar/sidebar is merged
   return (
-    <div>
+    <div className={classes.avatarContainer}>
       <IconButton aria-label="show auth menu" aria-controls="auth-menu" aria-haspopup="true" onClick={handleClick}>
-        <MoreHorizIcon />
+        <AccountCircle className={classes.userAvatar} />
       </IconButton>
       <Menu
         id="auth-menu"
@@ -47,11 +47,10 @@ const AuthMenu = (): JSX.Element => {
         }}
         getContentAnchorEl={null}
       >
+        <Link to="/profile">
+          <MenuItem onClick={handleProfile}>Profile</MenuItem>
+        </Link>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
-        <MenuItem onClick={handleBookings}>Bookings</MenuItem>
-        <MenuItem onClick={() => history.push('/edit')}>Edit Profile</MenuItem>
-        <MenuItem onClick={() => history.push('/listing')}>Listing</MenuItem>
-        <Notifications />
       </Menu>
     </div>
   );
