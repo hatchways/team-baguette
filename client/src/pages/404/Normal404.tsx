@@ -10,7 +10,7 @@ export default function Normal404Page(): JSX.Element {
     <Grid container component="main" className={classes.root}>
       <Grid item xs={12} sm={4} className={classes.content}>
         <Box display="flex" flexDirection="column" justifyContent="center" alignContent="center">
-          <img src={DogPhoto} className={classes.image} />
+          <img src={DogPhoto} className={classes.image} alt="two puppies feeling sorry that you reached this page"/>
         </Box>
       </Grid>
       <Grid item xs={10} sm={7} className={classes.content}>

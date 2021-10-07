@@ -24,9 +24,7 @@ export default function ProfileBookingCard({ profile }: Props): JSX.Element {
   const { user } = profile;
   // TODO make the default dropIn & dropOff states equal to the first available dates( or whatever makes sense)
   const [dropInDate, setDropInDate] = useState<MaterialUiPickersDate>();
-  const [dropInTime, setDropInTime] = useState<MaterialUiPickersDate>();
   const [dropOffDate, setDropOffDate] = useState<MaterialUiPickersDate>();
-  const [dropOffTime, setDropOffTime] = useState<MaterialUiPickersDate>();
 
   const disableDates = (day: MaterialUiPickersDate): boolean => {
     // TODO
@@ -85,8 +83,8 @@ export default function ProfileBookingCard({ profile }: Props): JSX.Element {
               InputLabelProps={{ shrink: true }}
               inputVariant="outlined"
               className={classes.timeFields}
-              onChange={setDropInTime}
-              value={dropInTime}
+              onChange={setDropInDate}
+              value={dropInDate}
             />
           </CardContent>
           <CardContent>
@@ -100,7 +98,7 @@ export default function ProfileBookingCard({ profile }: Props): JSX.Element {
               className={classes.dateFields}
               onChange={setDropOffDate}
               value={dropOffDate}
-              minDate={new Date()}
+              minDate={dropInDate}
             />
             <TimePicker
               required
@@ -109,8 +107,8 @@ export default function ProfileBookingCard({ profile }: Props): JSX.Element {
               InputLabelProps={{ shrink: true }}
               inputVariant="outlined"
               className={classes.timeFields}
-              onChange={setDropOffTime}
-              value={dropOffTime}
+              onChange={setDropOffDate}
+              value={dropOffDate}
             />
           </CardContent>
         </MuiPickersUtilsProvider>
