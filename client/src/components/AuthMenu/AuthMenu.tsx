@@ -34,7 +34,7 @@ const AuthMenu = (): JSX.Element => {
   return (
     <div className={classes.avatarContainer}>
       <IconButton aria-label="show auth menu" aria-controls="auth-menu" aria-haspopup="true" onClick={handleClick}>
-       {loggedInUser? <AvatarDisplay user={loggedInUser} className={classes.userAvatar} /> : <AccountCircle className={classes.userAvatar} /> }
+       {loggedInUser? <AvatarDisplay user={loggedInUser} /> : <AccountCircle className={classes.userAvatar} /> }
       </IconButton>
       <Menu
         id="auth-menu"
@@ -48,7 +48,7 @@ const AuthMenu = (): JSX.Element => {
         }}
         getContentAnchorEl={null}
       >
-        <Link to="/profile">
+        <Link to="/edit/profile/">
           <MenuItem onClick={handleProfile}>Profile</MenuItem>
         </Link>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>

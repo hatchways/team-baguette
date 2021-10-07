@@ -1,11 +1,10 @@
 import { MuiThemeProvider } from '@material-ui/core';
 import { theme } from './themes/theme';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Login from './pages/Login/Login';
 import Signup from './pages/SignUp/SignUp';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Bookings from './pages/Bookings/Bookings';
-import Settings from './pages/Settings/Settings';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
@@ -29,13 +28,14 @@ function App(): JSX.Element {
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/listing" component={Listing} />
-                <Route exact path="/dashboard" component={Dashboard} />
+                <ProtectedRoute exact path="/dashboard" component={Dashboard} />
                 <ProtectedRoute exact path="/bookings" component={Bookings} />
-                <ProtectedRoute path="/profile" component={ProfileContainer} />
+                <ProtectedRoute path="/edit/profile" component={ProfileContainer} />
                 <Route path="/profile/:id" component={ProfileDetails} />
-                <Route path="/settings" component={Settings} />
                 <Route path="/conversations" component={ChatScreen} />
-                <ProtectedRoute path="*" component={Dashboard} />
+
+                
+                <Redirect to="/dashboard"/>
               </Switch>
             </SocketProvider>
           </AuthProvider>
