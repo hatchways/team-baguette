@@ -32,33 +32,22 @@ export default function ProfileDetails(): JSX.Element {
     });
   }, [id, history, updateSnackBarMessage]);
 
-  const loadingOrRender = () => {
-    if (profile) {
-      return (
-        <>
-          <Grid item xs={12} sm={6} className={classes.mainContent}>
-            {<MainProfileDetails profile={profile} />}
-          </Grid>
-          <Grid item xs={12} sm={3}>
-            {<ProfileBookingCard profile={profile} />}
-          </Grid>
-        </>
-      );
-    } else
-      return (
-        <Grid item xs={12} sm={3}>
-          <CircularProgress />
-        </Grid>
-      );
-  };
+  if (!profile) {
+    return (
+      <Grid item xs={12} sm={3}>
+        <CircularProgress />
+      </Grid>
+    );
+  }
 
   return (
     <Grid container component="main" className={classes.root}>
-      <Grid item xs={12} style={{ marginBottom: '3em' }}>
-        Header place holder
+      <Grid item xs={12} sm={6} className={classes.mainContent}>
+        {<MainProfileDetails profile={profile} />}
       </Grid>
-
-      {loadingOrRender()}
+      <Grid item xs={12} sm={3}>
+        {<ProfileBookingCard profile={profile} />}
+      </Grid>
     </Grid>
   );
 }
