@@ -34,8 +34,9 @@ function App(): JSX.Element {
                 <Route path="/profile/:id" component={ProfileDetails} />
                 <Route path="/conversations" component={ChatScreen} />
 
-                
-                <Redirect to="/dashboard"/>
+
+                <Redirect exact from="/" to="/dashboard"/>
+                <Route path="*" render={()=> "pending 404 page" } />
               </Switch>
             </SocketProvider>
           </AuthProvider>
