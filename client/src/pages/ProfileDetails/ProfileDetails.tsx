@@ -25,10 +25,6 @@ export default function ProfileDetails(): JSX.Element {
 
   return (
     <Grid container component="main" className={classes.root}>
-      <Grid item xs={12} style={{ marginBottom: '3em' }}>
-        Header place holder
-      </Grid>
-
       <Grid item xs={12} sm={6} className={classes.mainContent}>
         {profile && <MainProfileDetails profile={profile} />}
       </Grid>

@@ -5,12 +5,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { useAuth } from '../../context/useAuthContext';
 import { Link } from 'react-router-dom';
+import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import useStyles from './useStyles';
 
 const AuthMenu = (): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const { logout } = useAuth();
+  const { logout, loggedInUser } = useAuth();
   const classes = useStyles();
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -33,7 +34,7 @@ const AuthMenu = (): JSX.Element => {
   return (
     <div className={classes.avatarContainer}>
       <IconButton aria-label="show auth menu" aria-controls="auth-menu" aria-haspopup="true" onClick={handleClick}>
-        <AccountCircle className={classes.userAvatar} />
+       {loggedInUser? <AvatarDisplay user={loggedInUser} className={classes.userAvatar} /> : <AccountCircle className={classes.userAvatar} /> }
       </IconButton>
       <Menu
         id="auth-menu"
