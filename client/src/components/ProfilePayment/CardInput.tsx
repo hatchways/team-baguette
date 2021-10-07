@@ -64,8 +64,9 @@ export const CardInput: React.FC<CardInputProps> = ({ setShow, setCard }) => {
       });
       console.log(payload);
       if (payload && payload.paymentMethod) {
-        const { card, billing_details } = payload.paymentMethod;
+        const { card, billing_details, id } = payload.paymentMethod;
         setShow(false);
+        console.log(payload);
         let month = card?.exp_month.toString();
         if (month && month.length === 1) {
           month = '0' + month;
@@ -76,6 +77,7 @@ export const CardInput: React.FC<CardInputProps> = ({ setShow, setCard }) => {
           fullName: billing_details.name,
           type: card?.brand,
           exp: `${month}/${year}`,
+          paymentMethodId: id,
         }).then((res) => {
           if (res.success) {
             setCard(res.success);

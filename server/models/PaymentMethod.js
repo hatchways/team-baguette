@@ -18,6 +18,9 @@ const paymentMethodSchema = new Schema({
   exp: {
     type: String,
   },
+  paymentMethodId: {
+    type: String,
+  },
 });
 module.exports = PaymentMethod = mongoose.model(
   "PaymentMethod",

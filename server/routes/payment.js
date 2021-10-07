@@ -4,9 +4,10 @@ const protect = require("../middleware/auth");
 const {
   savePaymentMethod,
   getPaymentMethodById,
-} = require("../controllers/paymentMethod");
+  paymentIntent,
+} = require("../controllers/payment");
 
-router.route("/").post(protect, savePaymentMethod);
-router.route("/:id").get(getPaymentMethodById);
+router.route("/method").post(protect, savePaymentMethod);
+router.route("/method/:id").get(getPaymentMethodById);
 
 module.exports = router;

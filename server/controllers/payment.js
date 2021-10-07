@@ -1,7 +1,7 @@
 const PaymentMethod = require("../models/PaymentMethod");
 const asyncHandler = require("express-async-handler");
 
-// @route POST /paymentMethod
+// @route POST /payment/method
 // @desc Save payment method
 // @access Private
 exports.savePaymentMethod = asyncHandler(async (req, res, next) => {
@@ -18,6 +18,7 @@ exports.savePaymentMethod = asyncHandler(async (req, res, next) => {
     fullName: paymentMethod.fullName,
     type: paymentMethod.type,
     exp: paymentMethod.exp,
+    paymentMethodId: paymentMethod.paymentMethodId,
   });
   await newPaymentMethod.save();
   if (!newPaymentMethod) {
@@ -29,7 +30,7 @@ exports.savePaymentMethod = asyncHandler(async (req, res, next) => {
   });
 });
 
-// @route GET /paymentMethod/:id
+// @route GET /payment/method/:id
 // @desc get payment method by id
 // @access Public
 exports.getPaymentMethodById = asyncHandler(async (req, res, next) => {
