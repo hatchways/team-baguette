@@ -56,17 +56,6 @@ export const getProfileById = async (id: string): Promise<ProfileApiData> => {
       error: { message: 'Failed to get user profile' },
     }));
 };
-export const getProfiles = async (): Promise<ProfileListingApiData> => {
-  const fetchOptions: FetchOptions = {
-    method: 'GET',
-    credentials: 'include',
-  };
-  return await fetch(`/profiles`, fetchOptions)
-    .then((res) => res.json())
-    .catch(() => ({
-      error: { message: 'Failed to get user profile' },
-    }));
-};
 export const searchProfiles = async (
   query: string,
   from: Date | null,
@@ -76,7 +65,7 @@ export const searchProfiles = async (
     method: 'GET',
     credentials: 'include',
   };
-  return await fetch(`/profiles/search/${query}&${from}&${to}`, fetchOptions)
+  return await fetch(`/profiles?query=${query}&from=${from}&to=${to}`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
       error: { message: 'Failed to get user profile' },
