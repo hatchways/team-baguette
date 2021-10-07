@@ -25,14 +25,14 @@ export const getPaymentMethodById = async (id: string): Promise<PaymentCardApiDa
       error: { message: 'Failed to get payment method' },
     }));
 };
-export const createPaymentIntent = async (price: number): Promise<PaymentIntentApiData> => {
+export const createPaymentIntent = async (sitterId: string, price: number): Promise<PaymentIntentApiData> => {
   const fetchOptions: FetchOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ price }),
     credentials: 'include',
   };
-  return await fetch(`/payment/intent`, fetchOptions)
+  return await fetch(`/requests/${sitterId}/pay`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
       error: { message: 'Failed to save payment method' },

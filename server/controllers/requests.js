@@ -85,23 +85,19 @@ const createPayment = async (req, res, next) => {
       amount: price * 100,
       currency: "cad",
     });
-    const confirmCardPayment = await stripe.confirmCardPayment(
-      paymentIntent.client_secret,
+    const confirmPayment = await stripe.paymentIntents.confirm(
+      paymentIntent.id,
       {
         payment_method: paymentMethodId,
       }
     );
-    if (!confirmCardPayment) {
-      res.status(400);
-      throw new Error("failed to confirm payment");
-    }
     const newPayment = new Payment({
       user: id,
       paymentIntent: {
-        id: confirmCardPayment.id,
-        amount: confirmCardPayment.amount,
-        client_secret: confirmCardPayment.client_secret,
-        payment_method: confirmCardPayment.payment_method,
+        id: confirmPayment.id,
+        amount: confirmPayment.amount,
+        client_secret: confirmPayment.client_secret,
+        payment_method: confirmPayment.payment_method,
       },
       sitter: sitterId,
     });
