@@ -45,7 +45,7 @@ export const Notifications: React.FC = () => {
     <Box onMouseEnter={handleMouseEnter}>
       <Box>
         <Badge badgeContent={badgeContent} classes={{ badge: classes.customBadge }} variant="dot">
-          <Typography>Notifications</Typography>
+          <Typography className={classes.userOptions}>Notifications</Typography>
         </Badge>
       </Box>
       <Box className={classes.dropDownContent} onMouseLeave={handleMouseLeave}>

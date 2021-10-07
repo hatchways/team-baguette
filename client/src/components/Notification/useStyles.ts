@@ -1,15 +1,20 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
+  userOptions: {
+    fontFamily: 'Poppins-Bold',
+    fontSize: 12,
+    margin: '0 10px',
+  },
   customBadge: {
     backgroundColor: '#00FF00',
   },
   dropDownContent: {
     position: 'absolute',
     minWidth: '180px',
-    left: '50%',
-    transform: 'translateX(-50%)',
+    right: '5%',
     zIndex: 1,
+    backgroundColor: 'white',
   },
   itemContainer: {
     display: 'flex',
