@@ -11,10 +11,11 @@ import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
 import NavBarTop from './components/NavBarTop/NavBarTop';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
-import './App.css';
 import ProfileContainer from './pages/ProfileContainer/ProfileContainer';
 import ProfileDetails from './pages/ProfileDetails/ProfileDetails';
+import ChatScreen from './pages/ChatScreen/ChatScreen';
 import { Listing } from './pages/Listing/Listing';
+import './App.css';
 
 function App(): JSX.Element {
   return (
@@ -27,12 +28,13 @@ function App(): JSX.Element {
               <Switch>
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
-                <ProtectedRoute exact path="/profile" component={ProfileContainer} />
                 <Route exact path="/listing" component={Listing} />
                 <Route exact path="/dashboard" component={Dashboard} />
                 <ProtectedRoute exact path="/bookings" component={Bookings} />
+                <ProtectedRoute path="/profile" component={ProfileContainer} />
                 <Route path="/profile/:id" component={ProfileDetails} />
                 <Route path="/settings" component={Settings} />
+                <Route path="/conversations" component={ChatScreen} />
                 <ProtectedRoute path="*" component={Dashboard} />
               </Switch>
             </SocketProvider>
