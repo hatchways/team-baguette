@@ -16,7 +16,7 @@ export const ProfilePayment: React.FC = () => {
 
   useEffect(() => {
     const apiGetResponse = {
-      number: 2445,
+      number: '2445',
       name: 'John Doe',
       type: 'visa',
       exp: '11/24',

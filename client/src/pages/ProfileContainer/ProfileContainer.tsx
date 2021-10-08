@@ -7,6 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { EditProfile } from '../EditProfile/EditProfile';
 import { useAuth } from '../../context/useAuthContext';
 import { Switch, Route, useRouteMatch, Redirect } from 'react-router-dom';
+import { ProfilePayment } from '../../components/ProfilePayment/ProfilePayment';
 
 const ProfileContainer = (): JSX.Element => {
   const classes = useStyles();
@@ -22,6 +23,7 @@ const ProfileContainer = (): JSX.Element => {
         <Switch>
           <Route path={`${path}/profile-photo`} render={() => <EditProfilePicture loggedInUser={loggedInUser} />} />
           <Route exact path={`${path}/`} component={EditProfile} />
+          <Route exact path={`${path}/payment`} component={ProfilePayment} />
 
           <Route path="*">
             <h1>Feature coming shortly </h1>

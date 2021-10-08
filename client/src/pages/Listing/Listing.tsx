@@ -92,7 +92,7 @@ export const Listing: React.FC = () => {
               address={profile.address}
               price={'$15/hr'}
               avatar={profile.user.avatar}
-              profileId={profile.user._id}
+              profileId={profile._id}
             />
           </Grid>
         ))}
