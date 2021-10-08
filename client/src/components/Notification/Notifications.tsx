@@ -17,11 +17,13 @@ export const Notifications: React.FC = () => {
 
   const handleMouseEnter = () => {
     setIsHovering(true);
-    updateNotifications().then((res) => {
-      if (res.success) {
-        setBadgeContent(0);
-      }
-    });
+    if (loggedInUser && loggedInUser.id) {
+      updateNotifications(loggedInUser.id).then((res) => {
+        if (res.success) {
+          setBadgeContent(0);
+        }
+      });
+    }
   };
   const handleMouseLeave = () => {
     setIsHovering(false);
@@ -43,7 +45,7 @@ export const Notifications: React.FC = () => {
     <Box onMouseEnter={handleMouseEnter}>
       <Box>
         <Badge badgeContent={badgeContent} classes={{ badge: classes.customBadge }} variant="dot">
-          <Typography>Notifications</Typography>
+          <Typography className={classes.userOptions}>Notifications</Typography>
         </Badge>
       </Box>
       <Box className={classes.dropDownContent} onMouseLeave={handleMouseLeave}>
