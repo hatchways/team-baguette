@@ -5,6 +5,7 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import PetsIcon from '@material-ui/icons/Pets';
 import LandingPageForm from './LandingPageForm/LandingPageForm';
+import { Link } from 'react-router-dom';
 
 export default function LandingPage(): JSX.Element {
   const classes = useStyles();
@@ -21,12 +22,16 @@ export default function LandingPage(): JSX.Element {
       <Grid item className={classes.rightBox} xs={6}>
         <Box className={classes.fauxHeaderRight}>
           <Typography className={classes.becomeSitter}>Become a sitter</Typography>
-          <Button href="/login" size="large" variant="contained" className={classes.login}>
-            Login
-          </Button>
-          <Button href="/signup" size="large" variant="contained" color="secondary" className={classes.signUp}>
-            Sign up
-          </Button>
+          <Link to="/login" className={classes.links}>
+            <Button size="large" variant="contained" className={classes.login}>
+              Login
+            </Button>
+          </Link>
+          <Link to="/signup" className={classes.links}>
+            <Button size="large" variant="contained" color="secondary" className={classes.signUp}>
+              Sign up
+            </Button>
+          </Link>
         </Box>
       </Grid>
     </Grid>

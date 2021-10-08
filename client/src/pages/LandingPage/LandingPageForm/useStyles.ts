@@ -6,17 +6,10 @@ const useStyles = makeStyles((theme) => ({
     margin: '0 auto',
   },
   landingFormTitle: {
-    fontSize: 30,
     fontFamily: theme.typography.bolded.fontFamily,
-  },
-  landingWhere: {
-    margin: '25px 10px 10px 10px',
   },
   landingWhereField: {
     width: '90%',
-  },
-  landingWhen: {
-    margin: '25px 10px 10px 10px',
   },
   landingWhenField: {
     width: '45%',

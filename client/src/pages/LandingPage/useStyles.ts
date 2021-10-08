@@ -68,6 +68,9 @@ const useStyles = makeStyles((theme) => ({
       color: 'rgba(255, 255, 255, 1)',
     },
   },
+  links: {
+    textDecoration: 'none',
+  },
   leftBox: {
     width: '100%',
     color: 'black',

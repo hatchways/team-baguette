@@ -24,13 +24,15 @@ export default function LandingPageForm(): JSX.Element {
   return (
     <form>
       <Box className={classes.landingFormContainer}>
-        <Typography className={classes.landingFormTitle}>Find the care your dog deserves</Typography>
-        <Box className={classes.landingWhere}>
+        <Typography className={classes.landingFormTitle} variant={'h3'}>
+          Find the care your dog deserves
+        </Typography>
+        <Box m={'25px 10px 10px 10px'}>
           <InputLabel className={classes.inputLabels}>Where</InputLabel>
           <TextField variant={'outlined'} className={classes.landingWhereField} />
         </Box>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <Box className={classes.landingWhen}>
+          <Box m={'25px 10px 10px 10px'}>
             <InputLabel className={classes.inputLabels}>Drop In / Drop Off</InputLabel>
             <DatePicker
               format="MM/dd/yyyy"
