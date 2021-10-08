@@ -17,6 +17,8 @@ const imageRouter = require("./routes/image");
 const notificationRouter = require("./routes/notification");
 
 const { json, urlencoded } = express;
+const cookie = require('cookie');
+const { jwtVerifyUser } = require('./middleware/jwtAuth');
 
 connectDB();
 const app = express();
@@ -28,8 +30,27 @@ const io = socketio(server, {
   },
 });
 
+io.use(async (socket, next) => {
+  if (socket.handshake.headers.cookie) {
+    const authToken = cookie.parse(socket.handshake.headers.cookie).token;
+    if (authToken) {
+      const foundUser = await jwtVerifyUser(authToken, next)
+      if (foundUser) {
+        next();
+      } else {
+        next(new Error('Invalid Auth'))
+      }
+    } else {
+      next(new Error('No Auth Provided'))
+    }
+  } else {
+    next(new Error('Auth Error'))
+  }
+})
+
 io.on("connection", (socket) => {
-  console.log("connected");
+  socket.on('emit-msg', (num, str) => {
+  })
 });
 
 if (process.env.NODE_ENV === "development") {

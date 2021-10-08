@@ -19,6 +19,9 @@ export const SocketProvider: FunctionComponent = ({ children }): JSX.Element => 
     setSocket(
       io('/', {
         withCredentials: true,
+        extraHeaders: {
+          'custom-header': 'test',
+        },
       }),
     );
   }, []);
