@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const { deleteFile } = require("../utils/aws")
-
+const { deleteFile } = require("../utils/aws");
 
 const profileSchema = new Schema({
   user: {
@@ -46,10 +45,10 @@ const profileSchema = new Schema({
   ],
   availablePeriod: {
     start: {
-      type: Date,
+      type: Number,
     },
     end: {
-      type: Date,
+      type: Number,
     },
   },
   notification: [
@@ -78,32 +77,32 @@ profileSchema.statics.findAndPopulateUser = async function (profileId){
 }
 
 profileSchema.methods.addToGallery = async function (newImages) {
-  this.gallery.push(...newImages)
-  await this.save()
-}
+  this.gallery.push(...newImages);
+  await this.save();
+};
 
 profileSchema.methods.deleteFromGallery = async function (links) {
-  let tempGallery = new Set(this.gallery)
-  let filesToBeDeleted = []
+  let tempGallery = new Set(this.gallery);
+  let filesToBeDeleted = [];
 
-  links.forEach(element => {
+  links.forEach((element) => {
     if (tempGallery.delete(element)) {
-      filesToBeDeleted.push(element)
+      filesToBeDeleted.push(element);
     }
-  })
+  });
 
-  this.gallery = [...tempGallery]
+  this.gallery = [...tempGallery];
 
-  await this.save()
+  await this.save();
 
   if (filesToBeDeleted.length) {
-    await cleanUpAWSFolder([...filesToBeDeleted])
+    await cleanUpAWSFolder([...filesToBeDeleted]);
   }
-}
+};
 
 const cleanUpAWSFolder = (keys) => {
-  deleteFile(keys.map(element => element.split(".s3.amazonaws.com/").pop()))
-}
+  deleteFile(keys.map((element) => element.split(".s3.amazonaws.com/").pop()));
+};
 
 const userPopulateFields = "_id username avatar"
 

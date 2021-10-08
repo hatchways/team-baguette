@@ -3,6 +3,7 @@ import { Card, CardActionArea, CardMedia, Typography, CardContent, Box } from '@
 import { Rating } from '@material-ui/lab';
 import useStyles from './useStyles';
 import { LocationOn } from '@material-ui/icons';
+import { useHistory } from 'react-router-dom';
 
 interface CustomCardProps {
   fullName: string;
@@ -11,14 +12,20 @@ interface CustomCardProps {
   address: string;
   price: string;
   avatar: string;
+  profileId: string;
 }
 
 export const CustomCard: React.FC<CustomCardProps> = ({ ...props }) => {
-  const { fullName, description, intro, address, price, avatar } = props;
+  const { fullName, description, intro, address, price, avatar, profileId } = props;
   const classes = useStyles();
+  const history = useHistory();
+
+  const handleClick = () => {
+    history.push(`/profile/${profileId}`);
+  };
   return (
     <Card className={classes.card}>
-      <CardActionArea className={classes.cardButton}>
+      <CardActionArea className={classes.cardButton} onClick={handleClick}>
         <CardMedia className={classes.avatar} component="img" image={avatar} alt="placeholder avatar" />
         <CardContent>
           <Typography className={classes.fullName}>{fullName}</Typography>

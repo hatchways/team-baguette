@@ -85,7 +85,7 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
 // @access Public
 exports.getProfileByUserId = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
-  const profile = await Profile.findByUserIdPopulated(id)
+  const profile = await Profile.findByUserIdPopulated(id);
   if (!profile) {
     res.status(404);
     throw new Error("No profile");
@@ -124,19 +124,61 @@ exports.getProfileById = asyncHandler(async (req, res, next) => {
 // @desc Get all profiles
 // @access Public
 exports.getProfiles = asyncHandler(async (req, res, next) => {
-  let profiles;
-  if (req.user) {
-    profiles = await Profile.find({
-      $and: [{ user: { $ne: req.user.id } }, { sitter: true }],
-    }).populate("user", "avatar");
+  if (!req.query) {
+    let profiles;
+    if (req.user) {
+      profiles = await Profile.find({
+        $and: [{ user: { $ne: req.user.id } }, { sitter: true }],
+      }).populate("user", "avatar");
+    } else {
+      profiles = await Profile.find({ sitter: true }).populate(
+        "user",
+        "avatar"
+      );
+    }
+    if (!profiles) {
+      res.status(404);
+      throw new Error("No profiles");
+    }
+    res.status(200).json({
+      success: profiles,
+    });
   } else {
-    profiles = await Profile.find({ sitter: true }).populate("user", "avatar");
+    const { query, from, to } = req.query;
+    const startDate = new Date(from);
+    const endDate = new Date(to);
+    const startDay = new Intl.DateTimeFormat("en-US", {
+      weekday: "long",
+    }).format(startDate);
+    const endDay = new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(
+      endDate
+    );
+
+    let profiles;
+    if (req.user) {
+      profiles = await Profile.find({
+        $and: [
+          { user: { $ne: req.user.id } },
+          { sitter: true },
+          { address: { $regex: "^" + query, $options: "i" } },
+          { availableDays: { $all: [startDay, endDay] } },
+        ],
+      }).populate("user", "avatar");
+    } else {
+      profiles = await Profile.find({
+        $and: [
+          { sitter: true },
+          { address: { $regex: "^" + query, $options: "i" } },
+          { availableDays: { $all: [startDay, endDay] } },
+        ],
+      }).populate("user", "avatar");
+    }
+    if (!profiles) {
+      res.status(404);
+      throw new Error("No profiles");
+    }
+    res.status(200).json({
+      success: profiles,
+    });
   }
-  if (!profiles) {
-    res.status(404);
-    throw new Error("No profiles");
-  }
-  res.status(200).json({
-    success: profiles,
-  });
 });

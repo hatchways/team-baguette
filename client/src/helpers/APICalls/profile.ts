@@ -68,12 +68,16 @@ export const getProfileById = async (id: string): Promise<ProfileApiData> => {
       error: { message: 'There was an issue while communicating with the server. Please try again later.' },
     }));
 };
-export const getProfiles = async (): Promise<ProfileListingApiData> => {
+export const searchProfiles = async (
+  query: string,
+  from: Date | null,
+  to: Date | null,
+): Promise<ProfileListingApiData> => {
   const fetchOptions: FetchOptions = {
     method: 'GET',
     credentials: 'include',
   };
-  return await fetch(`/profiles`, fetchOptions)
+  return await fetch(`/profiles?query=${query}&from=${from}&to=${to}`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
       error: { message: 'Failed to get user profile' },
