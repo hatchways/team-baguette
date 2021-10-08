@@ -18,7 +18,6 @@ import { Listing } from './pages/Listing/Listing';
 import Normal404Page from './pages/404/Normal404';
 import './App.css';
 
-
 function App(): JSX.Element {
   return (
     <MuiThemeProvider theme={theme}>
@@ -37,10 +36,8 @@ function App(): JSX.Element {
                 <ProtectedRoute path="/edit/profile" component={ProfileContainer} />
                 <Route path="/profile/:id" component={ProfileDetails} />
                 <Route path="/conversations" component={ChatScreen} />
-
                 <Redirect exact from="/" to="/dashboard"/>
                 <Route path="*" component={Normal404Page} />
-                
               </Switch>
             </SocketProvider>
           </AuthProvider>
