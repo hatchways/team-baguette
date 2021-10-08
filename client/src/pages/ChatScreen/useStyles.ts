@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
   root: {
-    minHeight: '90vh',
+    minHeight: '97vh',
     '& .MuiInput-underline:before': {
       borderBottom: '1.2px solid rgba(0, 0, 0, 0.2)',
     },
@@ -14,6 +14,11 @@ const useStyles = makeStyles(() => ({
     flexGrow: 8,
     flexDirection: 'column',
     justifyContent: 'flex-start',
+  },
+  box: {
+    paddingLeft: 21,
+    paddingRight: 21,
+    flexGrow: 1,
   },
 }));
 

@@ -29,12 +29,16 @@ const NavBarProfile = (): JSX.Element => {
           </Typography>
         </Link>
         <Link to="/edit/profile/security" className={classes.routerLinkDecoration}>
-          <Typography className={pathname === '/edit/profile/security' ? classes.profileLink : classes.basicProfileLink}>
+          <Typography
+            className={pathname === '/edit/profile/security' ? classes.profileLink : classes.basicProfileLink}
+          >
             Security
           </Typography>
         </Link>
         <Link to="/edit/profile/settings" className={classes.routerLinkDecoration}>
-          <Typography className={pathname === '/edit/profile/settings' ? classes.profileLink : classes.basicProfileLink}>
+          <Typography
+            className={pathname === '/edit/profile/settings' ? classes.profileLink : classes.basicProfileLink}
+          >
             Settings
           </Typography>
         </Link>

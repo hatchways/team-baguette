@@ -34,7 +34,7 @@ const AuthMenu = (): JSX.Element => {
   return (
     <div className={classes.avatarContainer}>
       <IconButton aria-label="show auth menu" aria-controls="auth-menu" aria-haspopup="true" onClick={handleClick}>
-       {loggedInUser? <AvatarDisplay user={loggedInUser} /> : <AccountCircle className={classes.userAvatar} /> }
+        {loggedInUser ? <AvatarDisplay user={loggedInUser} /> : <AccountCircle className={classes.userAvatar} />}
       </IconButton>
       <Menu
         id="auth-menu"
