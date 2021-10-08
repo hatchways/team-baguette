@@ -1,22 +1,25 @@
-const Request = require('../models/Request')
+const Request = require("../models/Request");
 
 async function getReqs(req, res, next) {
-    try {
-        if (!req.user?.id) {
-            return res.sendStatus(401)
-        }
-        const dogReqs = await Request.find({ 
-                $or: [{
-                    sitterId: req.user.id}, 
-                    {user: req.user.id
-                }]
-            }) 
-            .populate("user", 'username')
-            .sort({ start: 'asc' })
-        res.status(200).json(dogReqs)
-    } catch (error) {
-        next(error)
+
+  try {
+    if (!req.user?.id) {
+      return res.sendStatus(401);
     }
+    const dogReqs = await Request.find({
+      $or: [
+        {
+          sitterId: req.user.id,
+        },
+        { user: req.user.id },
+      ],
+    })
+      .populate("user", "username")
+      .sort({ start: "asc" });
+    res.status(200).json(dogReqs);
+  } catch (error) {
+    next(error);
+  }
 }
 
 async function updateReqs(req, res, next) {
@@ -29,14 +32,14 @@ async function updateReqs(req, res, next) {
     } else {
         updateDoc = {
             accepted: false,
-            declined : true,
+            declined: true,
         }
     }
     try {
-        await Request.findOneAndUpdate({_id: req.body.reqId}, {
+        await Request.findOneAndUpdate({ _id: req.body.reqId }, {
             $set: updateDoc
         })
-        res.status(200).json({success: "Updated Successfully"})
+        res.status(200).json({ success: "Updated Successfully" })
     } catch (error) {
         next(error)
     }
@@ -44,26 +47,28 @@ async function updateReqs(req, res, next) {
 
 async function createReqs(req, res, next) {
     try {
-        const {sitterId, start, end, dogType, specialNotes } = req.body;
-        if (!sitterId|| !start || !end || !req.body.userId) {
-            return res.sendStatus(400)
+        const { sitterId, start, end, dogType, specialNotes } = req.body;
+        if (!sitterId || !start || !end) {
+            return res.status(400).json({ error: "Please make sure all fields are filled out" })
         }
         await Request.create({
-            user: req.body.userId,
+            user: req.user._id,
             sitterId,
             start,
             end,
             dogType,
             specialNotes,
         })
-        res.status(200).json({message: "Created Successfully"})
+        res.status(200).json({ success: "Created Successfully" })
     } catch (error) {
         next(error)
-    }
+      }
 }
 
 module.exports = {
-    getReqs,
-    updateReqs, 
-    createReqs,
-}
+
+  getReqs,
+  updateReqs,
+  createReqs,
+};
+

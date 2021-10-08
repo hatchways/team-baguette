@@ -4,14 +4,14 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { useAuth } from '../../context/useAuthContext';
-import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 import useStyles from './useStyles';
 
 const AuthMenu = (): JSX.Element => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const { logout } = useAuth();
-  const history = useHistory();
+  const { logout, loggedInUser } = useAuth();
   const classes = useStyles();
 
   const handleClick = (event: MouseEvent<HTMLElement>) => {
@@ -27,14 +27,14 @@ const AuthMenu = (): JSX.Element => {
     logout();
   };
 
-  const handleEditProfile = () => {
-    history.push('/edit');
+  const handleProfile = () => {
+    setAnchorEl(null);
   };
-
+  //TODO remove editprofiles/listing/bookings once navbar/sidebar is merged
   return (
     <div className={classes.avatarContainer}>
       <IconButton aria-label="show auth menu" aria-controls="auth-menu" aria-haspopup="true" onClick={handleClick}>
-        <AccountCircle className={classes.userAvatar} />
+       {loggedInUser? <AvatarDisplay user={loggedInUser} /> : <AccountCircle className={classes.userAvatar} /> }
       </IconButton>
       <Menu
         id="auth-menu"
@@ -48,7 +48,9 @@ const AuthMenu = (): JSX.Element => {
         }}
         getContentAnchorEl={null}
       >
-        <MenuItem onClick={handleEditProfile}>Profile</MenuItem>
+        <Link to="/edit/profile/">
+          <MenuItem onClick={handleProfile}>Profile</MenuItem>
+        </Link>
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
     </div>

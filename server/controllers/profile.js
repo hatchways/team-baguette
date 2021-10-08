@@ -1,6 +1,7 @@
 const Profile = require("../models/Profile");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/User");
+const profileSerializer = require("../serializers/profileSerializer")
 
 // @route POST /profiles
 // @desc Create profile
@@ -15,18 +16,14 @@ exports.createProfile = asyncHandler(async (req, res, next) => {
     address,
     description,
   } = req.body;
-  const user = await User.findById(req.user.id);
-  if (!user) {
-    res.status(401);
-    throw new Error("Not authorized");
-  }
-  const profile = await Profile.findOne({ userId: user._id });
+  const user = req.user;
+  const profile = await Profile.findOne({ user: user._id });
   if (profile) {
     res.status(400);
     throw new Error("Profile already exists");
   }
   const newProfile = new Profile({
-    userId: user._id,
+    user: user._id,
     firstName: firstName,
     lastName: lastName,
     gender: gender,
@@ -59,14 +56,9 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
     address,
     description,
   } = req.body;
-  const id = req.user.id;
-  const user = await User.findOne({ _id: id });
-  if (!user) {
-    res.status(401);
-    throw new Error("Not authorized");
-  }
+  const user = req.user;
   const profile = await Profile.findOneAndUpdate(
-    { userId: id },
+    { user: user._id },
     {
       firstName: firstName,
       lastName: lastName,
@@ -88,12 +80,12 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
   });
 });
 
-// @route GET /profiles/:id
-// @desc Get profile by id
+// @route GET /profiles/user/:id
+// @desc Get profile by user id
 // @access Public
-exports.getProfileById = asyncHandler(async (req, res, next) => {
+exports.getProfileByUserId = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
-  const profile = await Profile.findOne({ userId: id });
+  const profile = await Profile.findByUserIdPopulated(id)
   if (!profile) {
     res.status(404);
     throw new Error("No profile");
@@ -103,6 +95,7 @@ exports.getProfileById = asyncHandler(async (req, res, next) => {
     res.status(404);
     throw new Error("No User");
   }
+
   const convertedJSON = profile.toJSON();
   convertedJSON.email = user.email;
   res.status(200).json({
@@ -110,11 +103,35 @@ exports.getProfileById = asyncHandler(async (req, res, next) => {
   });
 });
 
+
+// @route GET /profiles/:id
+// @desc Get profile by id
+// @access Public
+exports.getProfileById = asyncHandler(async (req, res, next) => {
+  const id = req.params.id;
+  const profile = await Profile.findAndPopulateUser(id)
+  if (!profile) {
+    res.status(404);
+    throw new Error("No profile");
+  }
+
+  res.status(200).json({
+    success: profileSerializer(profile),
+  });
+});
+
 // @route GET /profiles
 // @desc Get all profiles
 // @access Public
 exports.getProfiles = asyncHandler(async (req, res, next) => {
-  const profiles = await Profile.find();
+  let profiles;
+  if (req.user) {
+    profiles = await Profile.find({
+      $and: [{ user: { $ne: req.user.id } }, { sitter: true }],
+    }).populate("user", "avatar");
+  } else {
+    profiles = await Profile.find({ sitter: true }).populate("user", "avatar");
+  }
   if (!profiles) {
     res.status(404);
     throw new Error("No profiles");

@@ -11,9 +11,11 @@ import AuthLinks from '../../components/AuthLinks/AuthLinks';
 import { useAuth } from '../../context/useAuthContext';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import DemoLogin from '../../components/DemoLogin/DemoLogin';
+import { useHistory } from 'react-router';
 
 export default function Login(): JSX.Element {
   const classes = useStyles();
+  const history = useHistory();
   const { updateLoginContext } = useAuth();
   const { updateSnackBarMessage } = useSnackBar();
 
@@ -27,6 +29,7 @@ export default function Login(): JSX.Element {
         updateSnackBarMessage(data.error.message);
       } else if (data.success) {
         updateLoginContext(data.success);
+        history.push('/dashboard');
       } else {
         setSubmitting(false);
         updateSnackBarMessage('An unexpected error occurred. Please try again');
