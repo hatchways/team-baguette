@@ -6,7 +6,7 @@ const { deleteFile } = require("../utils/aws")
 const profileSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
-    ref: "user",
+    ref: "User",
   },
   firstName: {
     type: String,
@@ -52,6 +52,16 @@ const profileSchema = new Schema({
       type: Date,
     },
   },
+  notification: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Notification",
+    },
+  ],
+  sitter: {
+    type: Boolean,
+    default: false,
+  },
   gallery: [String],
 });
 
@@ -76,13 +86,11 @@ profileSchema.methods.deleteFromGallery = async function (links) {
   let tempGallery = new Set(this.gallery)
   let filesToBeDeleted = []
 
-
   links.forEach(element => {
     if (tempGallery.delete(element)) {
       filesToBeDeleted.push(element)
     }
   })
-
 
   this.gallery = [...tempGallery]
 
@@ -91,7 +99,6 @@ profileSchema.methods.deleteFromGallery = async function (links) {
   if (filesToBeDeleted.length) {
     await cleanUpAWSFolder([...filesToBeDeleted])
   }
-
 }
 
 const cleanUpAWSFolder = (keys) => {
@@ -102,3 +109,4 @@ const userPopulateFields = "_id username avatar"
 
 
 module.exports = Profile = mongoose.model("profile", profileSchema);
+

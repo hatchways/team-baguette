@@ -32,6 +32,7 @@ export default function ProfileDetails(): JSX.Element {
     });
   }, [id, history, updateSnackBarMessage]);
 
+
   if (!profile) {
     return (
       <Grid item xs={12} sm={3}>

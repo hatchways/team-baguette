@@ -16,8 +16,8 @@ exports.createProfile = asyncHandler(async (req, res, next) => {
     address,
     description,
   } = req.body;
-  const user = req.user
-  const profile = await Profile.findOne({ userId: user._id });
+  const user = req.user;
+  const profile = await Profile.findOne({ user: user._id });
   if (profile) {
     res.status(400);
     throw new Error("Profile already exists");
@@ -58,7 +58,7 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
   } = req.body;
   const user = req.user;
   const profile = await Profile.findOneAndUpdate(
-    { userId: user._id },
+    { user: user._id },
     {
       firstName: firstName,
       lastName: lastName,
@@ -124,7 +124,14 @@ exports.getProfileById = asyncHandler(async (req, res, next) => {
 // @desc Get all profiles
 // @access Public
 exports.getProfiles = asyncHandler(async (req, res, next) => {
-  const profiles = await Profile.find();
+  let profiles;
+  if (req.user) {
+    profiles = await Profile.find({
+      $and: [{ user: { $ne: req.user.id } }, { sitter: true }],
+    }).populate("user", "avatar");
+  } else {
+    profiles = await Profile.find({ sitter: true }).populate("user", "avatar");
+  }
   if (!profiles) {
     res.status(404);
     throw new Error("No profiles");

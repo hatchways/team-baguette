@@ -1,4 +1,4 @@
-const {UserFromProfile} = require("./User")
+const { UserFromProfile } = require('./User');
 
 export interface Profile {
   firstName: string;
@@ -24,9 +24,22 @@ export interface InitValue {
   phone: number;
   address: string;
   description: string;
-  gallery: string[];
+}
+export interface ProfileListing {
+  firstName: string;
+  lastName: string;
+  description: string;
+  address: string;
+  user: {
+    _id: string;
+    avatar: string;
+  };
 }
 export interface ProfileApiData {
   error?: { message: string };
   success?: Profile;
+}
+export interface ProfileListingApiData {
+  error?: { message: string };
+  success?: ProfileListing[];
 }
