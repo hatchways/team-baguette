@@ -11,7 +11,7 @@ export interface Profile {
   description: string;
   owner?: boolean;
   gallery: string[];
-  user?: typeof UserFromProfile;
+  user?: InstanceType<typeof UserFromProfile>;
 }
 export interface InitValue {
   firstName: string;

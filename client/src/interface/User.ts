@@ -15,4 +15,5 @@ export interface UserFromProfile {
   id: string;
   username: string;
   avatar: string;
+  name?: string;
 }

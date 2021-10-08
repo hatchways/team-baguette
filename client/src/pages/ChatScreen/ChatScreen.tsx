@@ -18,33 +18,101 @@ const randomText = [
   "NEO: The world ends with you isn't a bad game",
 ];
 
+const randomUserName = ['paul blart', 'tedLasso2', 'LuLu', 'dannyWho?'];
+const randomName = ['Naruto Uchiha', 'Yusuke Urameshi', 'Ted Lasso', 'Austin Creed', 'Black Dynamite'];
+
 export default function ProfileDetails(): JSX.Element {
   const classes = useStyles();
 
   const conversations = [
     {
-      id: '1',
-      users: ['userid1', 'userid2'],
+      id: `${Math.floor(Math.random() * 1000)}`,
+      users: [
+        {
+          id: '6141d6b0fd48a965b0fc299d',
+          username: randomUserName[Math.floor(Math.random() * randomUserName.length)],
+          avatar: 'https://team-baguette-loving-sitter.s3.amazonaws.com/6141d6b0fd48a965b0fc299d/avatar.jpeg',
+          name: 'Luis Reyes Bartolome',
+        },
+        {
+          id: '2',
+          username: randomUserName[Math.floor(Math.random() * randomUserName.length)],
+          avatar: `https://avatars.dicebear.com/api/avataaars/${Math.floor(Math.random() * randomUserName.length)}.svg`,
+          name: randomName[Math.floor(Math.random() * randomName.length)],
+        },
+      ],
       latestMessage: randomText[Math.floor(Math.random() * randomText.length)],
     },
     {
-      id: '2',
-      users: ['userid1', 'userid2'],
+      id: `${Math.floor(Math.random() * 1000)}`,
+      users: [
+        {
+          id: '6141d6b0fd48a965b0fc299d',
+          username: randomUserName[Math.floor(Math.random() * randomUserName.length)],
+          avatar: 'https://team-baguette-loving-sitter.s3.amazonaws.com/6141d6b0fd48a965b0fc299d/avatar.jpeg',
+          name: randomName[Math.floor(Math.random() * randomName.length)],
+        },
+        {
+          id: '2',
+          username: randomUserName[Math.floor(Math.random() * randomUserName.length)],
+          avatar: `https://avatars.dicebear.com/api/avataaars/${Math.floor(Math.random() * randomUserName.length)}.svg`,
+          name: randomName[Math.floor(Math.random() * randomName.length)],
+        },
+      ],
       latestMessage: randomText[Math.floor(Math.random() * randomText.length)],
     },
     {
-      id: '3',
-      users: ['userid1', 'userid2'],
+      id: `${Math.floor(Math.random() * 1000)}`,
+      users: [
+        {
+          id: '6141d6b0fd48a965b0fc299d',
+          username: randomUserName[Math.floor(Math.random() * randomUserName.length)],
+          avatar: 'https://team-baguette-loving-sitter.s3.amazonaws.com/6141d6b0fd48a965b0fc299d/avatar.jpeg',
+          name: randomName[Math.floor(Math.random() * randomName.length)],
+        },
+        {
+          id: '2',
+          username: randomUserName[Math.floor(Math.random() * randomUserName.length)],
+          avatar: `https://avatars.dicebear.com/api/avataaars/${Math.floor(Math.random() * randomUserName.length)}.svg`,
+          name: randomName[Math.floor(Math.random() * randomName.length)],
+        },
+      ],
       latestMessage: randomText[Math.floor(Math.random() * randomText.length)],
     },
     {
-      id: '4',
-      users: ['userid1', 'userid2'],
+      id: `${Math.floor(Math.random() * 1000)}`,
+      users: [
+        {
+          id: '6141d6b0fd48a965b0fc299d',
+          username: randomUserName[Math.floor(Math.random() * randomUserName.length)],
+          avatar: 'https://team-baguette-loving-sitter.s3.amazonaws.com/6141d6b0fd48a965b0fc299d/avatar.jpeg',
+          name: randomName[Math.floor(Math.random() * randomName.length)],
+        },
+        {
+          id: '2',
+          username: randomUserName[Math.floor(Math.random() * randomUserName.length)],
+          avatar: `https://avatars.dicebear.com/api/avataaars/${Math.floor(Math.random() * randomUserName.length)}.svg`,
+          name: randomName[Math.floor(Math.random() * randomName.length)],
+        },
+      ],
       latestMessage: randomText[Math.floor(Math.random() * randomText.length)],
     },
     {
-      id: '5',
-      users: ['userid1', 'userid2'],
+      id: `${Math.floor(Math.random() * 1000)}`,
+      users: [
+        {
+          id: '6141d6b0fd48a965b0fc299d',
+          username: randomUserName[Math.floor(Math.random() * randomUserName.length)],
+          avatar: 'https://team-baguette-loving-sitter.s3.amazonaws.com/6141d6b0fd48a965b0fc299d/avatar.jpeg',
+          name: randomName[Math.floor(Math.random() * randomName.length)],
+        },
+        {
+          id: '2',
+          username: randomUserName[Math.floor(Math.random() * randomUserName.length)],
+          avatar: `https://avatars.dicebear.com/api/avataaars/${Math.floor(Math.random() * randomUserName.length)}.svg`,
+          name: randomName[Math.floor(Math.random() * randomName.length)],
+        },
+      ],
       latestMessage: randomText[Math.floor(Math.random() * randomText.length)],
     },
   ];

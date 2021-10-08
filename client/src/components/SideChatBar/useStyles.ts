@@ -39,7 +39,7 @@ const useStyles = makeStyles(() => ({
   },
   name: {
     fontWeight: 'bold',
-    letterSpacing: -0.2,
+    maxWidth: '20ch',
   },
   previewText: {
     fontSize: 12,
