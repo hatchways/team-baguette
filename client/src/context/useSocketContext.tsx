@@ -23,10 +23,8 @@ export const SocketProvider: FunctionComponent = ({ children }): JSX.Element => 
           'custom-header': 'test',
         },
       }),
-      );
+    );
   }, []);
-
-  // socket?.emit("emit-msg", 10, 'testing...')
 
   return <SocketContext.Provider value={{ socket, initSocket }}>{children}</SocketContext.Provider>;
 };

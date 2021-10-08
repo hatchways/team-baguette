@@ -35,7 +35,6 @@ io.use(async (socket, next) => {
     if (authToken) {
       const foundUser = await jwtVerifyUser(authToken, next)
       if (foundUser) {
-        console.log(foundUser)
         next();
       } else {
         next(new Error('Invalid Auth'))
@@ -50,7 +49,6 @@ io.use(async (socket, next) => {
 
 io.on("connection", (socket) => {
   socket.on('emit-msg', (num, str) => {
-    console.log(num, '\n', str)
   })
 });
 
