@@ -4,6 +4,7 @@ function userSerializer(user){
         username: user.username,
         email: user.email,
         avatar: user.avatar,
+        name: `${user.firstName} ${user.lastName}`
     }
     )
 }

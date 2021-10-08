@@ -41,6 +41,11 @@ const useStyles = makeStyles(() => ({
     fontWeight: 'bold',
     letterSpacing: -0.2,
   },
+  previewText: {
+    fontSize: 12,
+    color: 'gray',
+    maxWidth: '20ch',
+  },
 }));
 
 export default useStyles;

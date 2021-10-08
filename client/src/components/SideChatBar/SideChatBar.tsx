@@ -3,12 +3,23 @@ import Conversation from './Conversation';
 
 import useStyles from './useStyles';
 
-export default function ProfileDetails(): JSX.Element {
+type conversation = {
+  id: string,
+  users: string[],
+  latestMessage: string
+}
+
+interface Props {
+  conversations: Array<conversation>
+}
+
+
+
+export default function ProfileDetails({conversations}: Props): JSX.Element {
   const classes = useStyles();
-  const conversations = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20];
 
   const renderConversations = () => {
-    return conversations.map((conversation, index) => <Conversation key={`sidebar conversation ${index}`} />);
+    return conversations.map((conversation) => <Conversation key={`sidebar conversation ${conversation.id}`} conversation={conversation}/>);
   };
 
   return (

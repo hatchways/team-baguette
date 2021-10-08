@@ -3,7 +3,17 @@ import AvatarDisplay from '../AvatarDisplay/AvatarDisplay';
 
 import useStyles from './useStyles';
 
-export default function Conversation(): JSX.Element {
+type conversation = {
+  id: string;
+  users: string[];
+  latestMessage: string;
+};
+
+interface Props {
+  conversation: conversation;
+}
+
+export default function Conversation({ conversation }: Props): JSX.Element {
   const classes = useStyles();
 
   const user = {
@@ -21,7 +31,7 @@ export default function Conversation(): JSX.Element {
       <Box display="flex" flexDirection="column" justifyContent="space-between" className={classes.content}>
         <Box>
           <Typography className={classes.name}>{user.username}</Typography>
-          blahblahblah
+          <Typography noWrap className={classes.previewText}>{conversation.latestMessage}</Typography>
         </Box>
       </Box>
     </Box>
