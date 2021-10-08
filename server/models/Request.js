@@ -9,7 +9,7 @@ const requestSchema = new mongoose.Schema(
     },
     sitterId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "sitterId",
+      ref: "user",
       require: true,
     },
     start: {
@@ -47,4 +47,3 @@ const requestSchema = new mongoose.Schema(
 );
 
 module.exports = Request = mongoose.model("Request", requestSchema);
-

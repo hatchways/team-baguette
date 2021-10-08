@@ -11,6 +11,7 @@ const MockUseAuthProvider: FunctionComponent = ({ children }) => {
         updateAvatarContext: jest.fn(),
         deleteAvatarContext: jest.fn(),
         logout: jest.fn(),
+        isLoading: true,
       }}
     >
       {children}

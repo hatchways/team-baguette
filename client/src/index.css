@@ -1,34 +1,30 @@
 @font-face {
-  font-family: "Poppins-Bold";
-  src: local("Poppins-Bold"),
-    url("./fonts/Poppins-Bold.ttf") format("truetype");
+  font-family: 'Poppins-Bold';
+  src: local('Poppins-Bold'), url('./fonts/Poppins-Bold.ttf') format('truetype');
   font-weight: normal;
 }
 
 @font-face {
-  font-family: "Poppins-Regular";
-  src: local("Poppins-Regular"),
-    url("./fonts/Poppins-Regular.ttf") format("truetype");
+  font-family: 'Poppins-Regular';
+  src: local('Poppins-Regular'), url('./fonts/Poppins-Regular.ttf') format('truetype');
   font-weight: normal;
 }
 
 @font-face {
-  font-family: "Poppins-Thin";
-  src: local("Poppins-Thin"),
-    url("./fonts/Poppins-Thin.ttf") format("truetype");
+  font-family: 'Poppins-Thin';
+  src: local('Poppins-Thin'), url('./fonts/Poppins-Thin.ttf') format('truetype');
   font-weight: normal;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+    'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(250, 250, 251);
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }

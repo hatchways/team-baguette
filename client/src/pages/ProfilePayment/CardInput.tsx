@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { Typography, Button, Box } from '@material-ui/core';
 import { CardCvcElement, CardNumberElement, CardExpiryElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import useStyles from './useStyles';
-import { PaymentCard } from '../../interface/PaymentCard';
+import { PaymentCard } from '../../interface/Payment';
+import { useAuth } from '../../context/useAuthContext';
+import { getProfileById } from '../../helpers/APICalls/profile';
+import { savePaymentMethod } from '../../helpers/APICalls/payment';
 
 interface CardInputProps {
   setShow: React.Dispatch<React.SetStateAction<boolean>>;
@@ -13,6 +16,7 @@ export const CardInput: React.FC<CardInputProps> = ({ setShow, setCard }) => {
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setProcessing] = useState(false);
+  const { loggedInUser } = useAuth();
   const options = {
     style: {
       base: {
@@ -35,15 +39,48 @@ export const CardInput: React.FC<CardInputProps> = ({ setShow, setCard }) => {
     if (!stripe || !elements) {
       return;
     }
+    let billingDetails;
+    if (loggedInUser && loggedInUser.id) {
+      await getProfileById(loggedInUser.id).then((res) => {
+        if (res.success) {
+          const { firstName, lastName, address, email } = res.success;
+          const details = {
+            name: `${firstName} ${lastName}`,
+            email: email,
+            address: {
+              city: address,
+            },
+          };
+          billingDetails = details;
+        }
+      });
+    }
     const cardElement = elements.getElement(CardNumberElement);
     if (cardElement) {
       const payload = await stripe.createPaymentMethod({
         type: 'card',
         card: cardElement,
+        billing_details: billingDetails,
       });
-      if (payload) {
+      if (payload && payload.paymentMethod) {
+        const { card, billing_details, id } = payload.paymentMethod;
         setShow(false);
-        setCard({ number: 4242, name: 'Payload Data', type: 'not visa', exp: 'returned from payload' });
+        let month = card?.exp_month.toString();
+        if (month && month.length === 1) {
+          month = '0' + month;
+        }
+        const year = card?.exp_year.toString().slice(-2);
+        await savePaymentMethod({
+          last4: card?.last4,
+          fullName: billing_details.name,
+          type: card?.brand,
+          exp: `${month}/${year}`,
+          paymentMethodId: id,
+        }).then((res) => {
+          if (res.success) {
+            setCard(res.success);
+          }
+        });
       }
     }
   };
