@@ -8,20 +8,22 @@ import { Notification } from '../../interface/Notification';
 import { useSnackBar } from '../../context/useSnackbarContext';
 
 export const Notifications: React.FC = () => {
-  const [isHovering, setIsHovering] = useState(true);
+  const [isHovering, setIsHovering] = useState(false);
   const [notifications, setNotifications] = useState<Array<Notification>>([]);
-  const [badgeContent, setBadgeContent] = useState(1);
+  const [badgeContent, setBadgeContent] = useState(0);
   const classes = useStyles();
   const { loggedInUser } = useAuth();
   const { updateSnackBarMessage } = useSnackBar();
 
   const handleMouseEnter = () => {
     setIsHovering(true);
-    updateNotifications().then((res) => {
-      if (res.success) {
-        setBadgeContent(0);
-      }
-    });
+    if (loggedInUser && loggedInUser.id) {
+      updateNotifications(loggedInUser.id).then((res) => {
+        if (res.success) {
+          setBadgeContent(0);
+        }
+      });
+    }
   };
   const handleMouseLeave = () => {
     setIsHovering(false);
@@ -43,7 +45,7 @@ export const Notifications: React.FC = () => {
     <Box onMouseEnter={handleMouseEnter}>
       <Box>
         <Badge badgeContent={badgeContent} classes={{ badge: classes.customBadge }} variant="dot">
-          <Typography>Notifications</Typography>
+          <Typography className={classes.userOptions}>Notifications</Typography>
         </Badge>
       </Box>
       <Box className={classes.dropDownContent} onMouseLeave={handleMouseLeave}>

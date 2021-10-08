@@ -4,38 +4,34 @@ import { Search } from '@material-ui/icons';
 import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
 import { CustomCard } from './CustomCard';
 import DateFnsUtils from '@date-io/date-fns';
-import { getProfiles, searchProfiles } from '../../helpers/APICalls/profile';
+import { searchProfiles } from '../../helpers/APICalls/profile';
 import { ProfileListing } from '../../interface/Profile';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import useStyles from './useStyles';
+import useDebounce from './useDebounce';
 
 export const Listing: React.FC = () => {
   const classes = useStyles();
   const [dateFrom, setDateFrom] = useState<Date | null>(new Date());
   const [dateTo, setDateTo] = useState<Date | null>(new Date());
   const [profiles, setProfiles] = useState<Array<ProfileListing>>([]);
+  const [debounce, setDebounce] = useState('');
   const { updateSnackBarMessage } = useSnackBar();
+  const debouncedValue = useDebounce(debounce, 500);
 
   const queryProfiles = (e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    searchProfiles(e.target.value, dateFrom, dateTo).then((res) => {
-      if (res.success) {
-        setProfiles(res.success);
-      } else {
-        updateSnackBarMessage('Failed to get sitter profiles');
-      }
-    });
+    setDebounce(e.target.value);
   };
 
   useEffect(() => {
-    getProfiles().then((res) => {
+    searchProfiles(debouncedValue, dateFrom, dateTo).then((res) => {
       if (res.success) {
         setProfiles(res.success);
       } else {
         updateSnackBarMessage('Failed to get sitter profiles');
       }
     });
-  }, [updateSnackBarMessage]);
-
+  }, [debouncedValue, dateFrom, dateTo, updateSnackBarMessage]);
   return (
     <Box width="100%" maxWidth={800} p={3} margin="auto">
       <Typography className={classes.header} component="h1" variant="h5">
@@ -96,6 +92,7 @@ export const Listing: React.FC = () => {
               address={profile.address}
               price={'$15/hr'}
               avatar={profile.user.avatar}
+              profileId={profile.user._id}
             />
           </Grid>
         ))}

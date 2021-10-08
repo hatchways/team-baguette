@@ -13,6 +13,7 @@ interface IAuthContext {
   updateAvatarContext: (data: AvatarApiDataSuccess) => void;
   deleteAvatarContext: () => void;
   logout: () => void;
+  isLoading: boolean;
 }
 
 export const AuthContext = createContext<IAuthContext>({
@@ -21,20 +22,19 @@ export const AuthContext = createContext<IAuthContext>({
   updateAvatarContext: () => null,
   deleteAvatarContext: () => null,
   logout: () => null,
+  isLoading: true,
 });
 
 export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
   // default undefined before loading, once loaded provide user or null if logged out
   const [loggedInUser, setLoggedInUser] = useState<User | null | undefined>();
   const history = useHistory();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const updateLoginContext = useCallback(
-    (data: AuthApiDataSuccess) => {
-      setLoggedInUser(data.user);
-      history.push('/dashboard');
-    },
-    [history],
-  );
+  const updateLoginContext = useCallback((data: AuthApiDataSuccess) => {
+    setLoggedInUser(data.user);
+    setIsLoading(false);
+  }, []);
 
   const updateAvatarContext = (data: AvatarApiDataSuccess) => {
     setLoggedInUser(data.user);
@@ -62,7 +62,6 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
       await loginWithCookies().then((data: AuthApiData) => {
         if (data.success) {
           updateLoginContext(data.success);
-          history.push('/dashboard');
         } else {
           // don't need to provide error feedback as this just means user doesn't have saved cookies or the cookies have not been authenticated on the backend
           setLoggedInUser(null);
@@ -75,7 +74,7 @@ export const AuthProvider: FunctionComponent = ({ children }): JSX.Element => {
 
   return (
     <AuthContext.Provider
-      value={{ loggedInUser, updateLoginContext, logout, updateAvatarContext, deleteAvatarContext }}
+      value={{ loggedInUser, updateLoginContext, logout, updateAvatarContext, deleteAvatarContext, isLoading }}
     >
       {children}
     </AuthContext.Provider>

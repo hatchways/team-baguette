@@ -1,25 +1,19 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const drawerWidth = 240;
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {
-    minHeight: '100vh',
+    minHeight: '90vh',
     '& .MuiInput-underline:before': {
       borderBottom: '1.2px solid rgba(0, 0, 0, 0.2)',
     },
-  },
-  settings: { backgroundColor: '#F5F5F5' },
-  drawerWrapper: {
-    width: drawerWidth,
-    [theme.breakpoints.up('md')]: {
-      width: '300px',
-    },
+    backgroundColor: '#F5F5F5',
+    justifyContent: 'space-evenly',
   },
   mainContent: {
     display: 'flex',
     flexGrow: 8,
     flexDirection: 'column',
+    justifyContent: 'flex-start',
   },
 }));
 
