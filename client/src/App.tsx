@@ -14,7 +14,9 @@ import ProfileContainer from './pages/ProfileContainer/ProfileContainer';
 import ProfileDetails from './pages/ProfileDetails/ProfileDetails';
 import ChatScreen from './pages/ChatScreen/ChatScreen';
 import { Listing } from './pages/Listing/Listing';
+import Normal404Page from './pages/404/Normal404';
 import './App.css';
+
 
 function App(): JSX.Element {
   return (
@@ -34,9 +36,9 @@ function App(): JSX.Element {
                 <Route path="/profile/:id" component={ProfileDetails} />
                 <Route path="/conversations" component={ChatScreen} />
 
-
                 <Redirect exact from="/" to="/dashboard"/>
-                <Route path="*" render={()=> "pending 404 page" } />
+                <Route path="*" component={Normal404Page} />
+                
               </Switch>
             </SocketProvider>
           </AuthProvider>
