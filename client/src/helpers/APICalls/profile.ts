@@ -45,6 +45,18 @@ export const updateProfile = async (
       error: { message: 'Failed to update user profile' },
     }));
 };
+export const getProfileByUserId = async (id: string): Promise<ProfileApiData> => {
+  const fetchOptions: FetchOptions = {
+    method: 'GET',
+    credentials: 'include',
+  };
+  return await fetch(`/profiles/user/${id}`, fetchOptions)
+    .then((res) => res.json())
+    .catch(() => ({
+      error: { message: 'Failed to get user profile' },
+    }));
+};
+
 export const getProfileById = async (id: string): Promise<ProfileApiData> => {
   const fetchOptions: FetchOptions = {
     method: 'GET',
@@ -53,7 +65,7 @@ export const getProfileById = async (id: string): Promise<ProfileApiData> => {
   return await fetch(`/profiles/${id}`, fetchOptions)
     .then((res) => res.json())
     .catch(() => ({
-      error: { message: 'Failed to get user profile' },
+      error: { message: 'There was an issue while communicating with the server. Please try again later.' },
     }));
 };
 export const searchProfiles = async (

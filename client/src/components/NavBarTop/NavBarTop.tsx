@@ -14,7 +14,7 @@ const NavBarTop = (): JSX.Element | null => {
   const classes = useStyles();
   const { loggedInUser } = useAuth();
 
-  if (withoutRoutes.some((item) => pathname.includes(item))) return null;
+  if (withoutRoutes.some((item) => pathname.includes(item)) || pathname === '/') return null;
 
   return (
     <Grid container className={classes.navBarContainer}>

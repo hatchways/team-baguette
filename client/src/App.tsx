@@ -5,6 +5,7 @@ import Login from './pages/Login/Login';
 import Signup from './pages/SignUp/SignUp';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Bookings from './pages/Bookings/Bookings';
+import LandingPage from './pages/LandingPage/LandingPage';
 import { AuthProvider } from './context/useAuthContext';
 import { SocketProvider } from './context/useSocketContext';
 import { SnackBarProvider } from './context/useSnackbarContext';
@@ -14,7 +15,9 @@ import ProfileContainer from './pages/ProfileContainer/ProfileContainer';
 import ProfileDetails from './pages/ProfileDetails/ProfileDetails';
 import ChatScreen from './pages/ChatScreen/ChatScreen';
 import { Listing } from './pages/Listing/Listing';
+import Normal404Page from './pages/404/Normal404';
 import './App.css';
+
 
 function App(): JSX.Element {
   return (
@@ -25,6 +28,7 @@ function App(): JSX.Element {
             <SocketProvider>
               <NavBarTop />
               <Switch>
+                <Route exact path="/" component={LandingPage} />
                 <Route exact path="/login" component={Login} />
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/listing" component={Listing} />
@@ -34,9 +38,9 @@ function App(): JSX.Element {
                 <Route path="/profile/:id" component={ProfileDetails} />
                 <Route path="/conversations" component={ChatScreen} />
 
-
                 <Redirect exact from="/" to="/dashboard"/>
-                <Route path="*" render={()=> "pending 404 page" } />
+                <Route path="*" component={Normal404Page} />
+                
               </Switch>
             </SocketProvider>
           </AuthProvider>

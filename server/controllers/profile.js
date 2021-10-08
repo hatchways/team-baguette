@@ -1,6 +1,7 @@
 const Profile = require("../models/Profile");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/User");
+const profileSerializer = require("../serializers/profileSerializer")
 
 // @route POST /profiles
 // @desc Create profile
@@ -79,10 +80,10 @@ exports.updateProfile = asyncHandler(async (req, res, next) => {
   });
 });
 
-// @route GET /profiles/:id
-// @desc Get profile by id
+// @route GET /profiles/user/:id
+// @desc Get profile by user id
 // @access Public
-exports.getProfileById = asyncHandler(async (req, res, next) => {
+exports.getProfileByUserId = asyncHandler(async (req, res, next) => {
   const id = req.params.id;
   const profile = await Profile.findByUserIdPopulated(id);
   if (!profile) {
@@ -99,6 +100,23 @@ exports.getProfileById = asyncHandler(async (req, res, next) => {
   convertedJSON.email = user.email;
   res.status(200).json({
     success: convertedJSON,
+  });
+});
+
+
+// @route GET /profiles/:id
+// @desc Get profile by id
+// @access Public
+exports.getProfileById = asyncHandler(async (req, res, next) => {
+  const id = req.params.id;
+  const profile = await Profile.findAndPopulateUser(id)
+  if (!profile) {
+    res.status(404);
+    throw new Error("No profile");
+  }
+
+  res.status(200).json({
+    success: profileSerializer(profile),
   });
 });
 
