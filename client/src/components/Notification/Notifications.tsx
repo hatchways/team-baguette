@@ -8,9 +8,9 @@ import { Notification } from '../../interface/Notification';
 import { useSnackBar } from '../../context/useSnackbarContext';
 
 export const Notifications: React.FC = () => {
-  const [isHovering, setIsHovering] = useState(true);
+  const [isHovering, setIsHovering] = useState(false);
   const [notifications, setNotifications] = useState<Array<Notification>>([]);
-  const [badgeContent, setBadgeContent] = useState(1);
+  const [badgeContent, setBadgeContent] = useState(0);
   const classes = useStyles();
   const { loggedInUser } = useAuth();
   const { updateSnackBarMessage } = useSnackBar();

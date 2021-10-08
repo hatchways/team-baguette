@@ -26,6 +26,7 @@ export interface InitValue {
   description: string;
 }
 export interface ProfileListing {
+  _id: string;
   firstName: string;
   lastName: string;
   description: string;

@@ -1,4 +1,5 @@
 const Request = require("../models/Request");
+const Notification = require("../models/Notification");
 
 async function getReqs(req, res, next) {
   try {
@@ -22,26 +23,29 @@ async function getReqs(req, res, next) {
 }
 
 async function updateReqs(req, res, next) {
-    let updateDoc
-    if (req.body.accepted === 'accepted') {
-        updateDoc = {
-            accepted: true,
-            declined: false,
-        }
-    } else {
-        updateDoc = {
-            accepted: false,
-            declined : true,
-        }
-    }
-    try {
-        await Request.findOneAndUpdate({_id: req.body.reqId}, {
-            $set: updateDoc
-        })
-        res.status(200).json({success: "Updated Successfully"})
-    } catch (error) {
-        next(error)
-    }
+  let updateDoc;
+  if (req.body.accepted === "accepted") {
+    updateDoc = {
+      accepted: true,
+      declined: false,
+    };
+  } else {
+    updateDoc = {
+      accepted: false,
+      declined: true,
+    };
+  }
+  try {
+    await Request.findOneAndUpdate(
+      { _id: req.body.reqId },
+      {
+        $set: updateDoc,
+      }
+    );
+    res.status(200).json({ success: "Updated Successfully" });
+  } catch (error) {
+    next(error);
+  }
 }
 
 async function createReqs(req, res, next) {
@@ -58,6 +62,14 @@ async function createReqs(req, res, next) {
       dogType,
       specialNotes,
     });
+    const notification = new Notification();
+    await notification.createNotification(
+      "request",
+      req.body.userId,
+      sitterId,
+      start,
+      end
+    );
     res.status(200).json({ message: "Created Successfully" });
   } catch (error) {
     next(error);
