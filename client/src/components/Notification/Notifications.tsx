@@ -32,7 +32,7 @@ export const Notifications: React.FC = () => {
   useEffect(() => {
     if (loggedInUser) {
       getNotifications().then((res) => {
-        if (res.success) {
+        if (res.success && res.success.length !== 0) {
           setNotifications(res.success);
           setBadgeContent(1);
         } else {

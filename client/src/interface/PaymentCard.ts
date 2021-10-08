@@ -1,6 +1,6 @@
 export interface PaymentCard {
-  number: number;
-  name: string;
+  number: string | undefined;
+  name: string | undefined | null;
   type?: string;
   cvc?: number;
   exp: string;
