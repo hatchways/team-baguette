@@ -1,3 +1,5 @@
+const { userForProfileSerializer } = require('./userSerializer');
+
 function profileSerializer(profile) {
     return ({
         id: profile._id,
@@ -12,9 +14,10 @@ function profileSerializer(profile) {
         ,
         availablePeriod: profile.availablePeriod
         ,
-        gallery: profile.gallery
-    }
-    )
+        gallery: profile.gallery,
+        user: userForProfileSerializer(profile.user),
+
+    })
 }
 
 module.exports = profileSerializer

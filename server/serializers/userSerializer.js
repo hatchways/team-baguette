@@ -1,4 +1,4 @@
-function userSerializer(user){
+exports.userSerializer = (user)=>{
     return ({
         id: user._id,
         username: user.username,
@@ -9,4 +9,11 @@ function userSerializer(user){
     )
 }
 
-module.exports = userSerializer
+exports.userForProfileSerializer = (user)=>{
+    return({
+        id: user._id,
+        email: user.email,
+        avatar: user.avatar
+    })
+}
+

@@ -3,7 +3,7 @@ import { Paper, Box, Typography } from '@material-ui/core';
 import { FormikHelpers } from 'formik';
 import useStyles from './useStyles';
 import EditProfileForm from './EditProfileForm/EditProfileForm';
-import { createProfile, updateProfile, getProfileById } from '../../helpers/APICalls/profile';
+import { createProfile, updateProfile, getProfileByUserId } from '../../helpers/APICalls/profile';
 import { useSnackBar } from '../../context/useSnackbarContext';
 import { useAuth } from '../../context/useAuthContext';
 import { InitValue } from '../../interface/Profile';
@@ -88,7 +88,7 @@ export const EditProfile: React.FC = () => {
   };
   useEffect(() => {
     if (loggedInUser && loggedInUser.id) {
-      getProfileById(loggedInUser.id).then((res) => {
+      getProfileByUserId(loggedInUser.id).then((res) => {
         if (res.success) {
           const { firstName, lastName, gender, email, phone, address, description, birthDate } = res.success;
           const bDate = new Date(birthDate);
