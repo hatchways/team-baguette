@@ -54,7 +54,6 @@ export const CardInput: React.FC<CardInputProps> = ({ setShow, setCard }) => {
         }
       });
     }
-    console.log(billingDetails);
     const cardElement = elements.getElement(CardNumberElement);
     if (cardElement) {
       const payload = await stripe.createPaymentMethod({
