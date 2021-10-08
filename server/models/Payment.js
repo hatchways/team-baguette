@@ -9,15 +9,19 @@ const paymentSchema = new Schema({
   paymentIntent: {
     id: {
       type: String,
+      required: true,
     },
     amount: {
       type: Number,
+      required: true,
     },
     client_secret: {
       type: String,
+      required: true,
     },
     payment_method: {
       type: String,
+      required: true,
     },
   },
   sitter: {

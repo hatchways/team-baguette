@@ -2,6 +2,7 @@ const PaymentMethod = require("../models/PaymentMethod");
 const Payment = require("../models/Payment");
 const Request = require("../models/Request");
 const Stripe = require("stripe");
+const Notification = require("../models/Notification");
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 async function getReqs(req, res, next) {
@@ -65,6 +66,15 @@ async function createReqs(req, res, next) {
       dogType,
       specialNotes,
     });
+    const notification = new Notification();
+    await notification.createNotification(
+      "request",
+      req.body.userId,
+      sitterId,
+      start,
+      end
+    );
+
     res.status(200).json({ message: "Created Successfully" });
   } catch (error) {
     next(error);
@@ -76,6 +86,10 @@ const createPayment = async (req, res, next) => {
     const { sitterId } = req.params;
     const { price } = req.body;
     const { id } = req.user;
+    if (!sitterId || !price || !id) {
+      res.status(400);
+      throw new Error("Invalid request");
+    }
     const { paymentMethodId } = await PaymentMethod.findOne({ user: id });
     if (!paymentMethodId) {
       res.status(400);

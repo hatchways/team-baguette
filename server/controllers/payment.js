@@ -6,6 +6,10 @@ const asyncHandler = require("express-async-handler");
 // @access Private
 exports.savePaymentMethod = asyncHandler(async (req, res, next) => {
   const { paymentMethod } = req.body;
+  if (!paymentMethod) {
+    res.status(400);
+    throw new Error("No request body");
+  }
   const { id } = req.user;
   const payment = await PaymentMethod.findOne({ user: id });
   if (payment) {

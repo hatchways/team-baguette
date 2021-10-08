@@ -62,11 +62,9 @@ export const CardInput: React.FC<CardInputProps> = ({ setShow, setCard }) => {
         card: cardElement,
         billing_details: billingDetails,
       });
-      console.log(payload);
       if (payload && payload.paymentMethod) {
         const { card, billing_details, id } = payload.paymentMethod;
         setShow(false);
-        console.log(payload);
         let month = card?.exp_month.toString();
         if (month && month.length === 1) {
           month = '0' + month;

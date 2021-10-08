@@ -30,6 +30,7 @@ export const Listing: React.FC = () => {
     getProfiles().then((res) => {
       if (res.success) {
         setProfiles(res.success);
+        console.log(res.success);
       } else {
         updateSnackBarMessage('Failed to get sitter profiles');
       }
@@ -96,6 +97,7 @@ export const Listing: React.FC = () => {
               address={profile.address}
               price={'$15/hr'}
               avatar={profile.user.avatar}
+              profileId={profile.user._id}
             />
           </Grid>
         ))}
